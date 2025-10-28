@@ -1,8 +1,13 @@
+// src/redux/slices/usuarioSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UsuarioState {
   nome: string;
   logado: boolean;
+  altura?: number;
+  peso?: number;
+  biotipo?: string;
+  tempoTreino?: string;
 }
 
 const initialState: UsuarioState = {
@@ -21,9 +26,24 @@ export const usuarioSlice = createSlice({
     logout: (state) => {
       state.nome = '';
       state.logado = false;
+      state.altura = undefined;
+      state.peso = undefined;
+      state.biotipo = undefined;
+      state.tempoTreino = undefined;
     },
+    updateUserBody: (state, action: PayloadAction<{
+      altura: number;
+      peso: number;
+      biotipo: string;
+      tempoTreino: string;
+    }>) => {
+      state.altura = action.payload.altura;
+      state.peso = action.payload.peso;
+      state.biotipo = action.payload.biotipo;
+      state.tempoTreino = action.payload.tempoTreino;
+    }
   },
 });
 
-export const { login, logout } = usuarioSlice.actions;
+export const { login, logout, updateUserBody } = usuarioSlice.actions;
 export default usuarioSlice.reducer;
