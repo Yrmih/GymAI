@@ -11,7 +11,7 @@ import logo from "@/assets/brand/logo.png";
 export default function SplashScreen() {
   const router = useRouter();
 
-  // Ajuste aqui conforme seu slice
+  // eu ajusto  aqui conforme meu slice
   const usuarioLogado = useSelector(
     (state: RootState) => state.usuario.logado
   );
