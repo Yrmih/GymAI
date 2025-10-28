@@ -8,3 +8,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </GluestackUIProvider>
   );
 }
+
+
+// define barra de navegação, tema e GluestackUIProvider.
+
+// Todas as telas dentro de (auth) ou (main) herdam esse layout.
+
+// Uso de src/
