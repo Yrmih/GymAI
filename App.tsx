@@ -1,9 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
-import { GluestackUIProvider } from "@/app/components/ui/gluestack-ui-provider";
+import { GluestackUIProvider } from "@/src/components/ui/gluestack-ui-provider";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { store } from "./src/redux/store";
 
 export default function App() {
   return (
