@@ -1,18 +1,9 @@
-// src/redux/slices/usuarioSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Usuario } from '@/src/types/type-files'; 
 
-interface UsuarioState {
-  nome: string;
-  logado: boolean;
-  altura?: number;
-  peso?: number;
-  biotipo?: string;
-  tempoTreino?: string;
-}
-
-const initialState: UsuarioState = {
-  nome: '',
+const initialState: Usuario = {
   logado: false,
+  nome: ''
 };
 
 export const usuarioSlice = createSlice({
