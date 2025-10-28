@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import tw from "twin.macro";
-import ExerciseCard from "@/src/components/cards/ExerciseCard";
+import ExerciseCard from "@/src/components/card/ExerciseCard";
 
 // Mock temporário de exercícios (futuramente vem da IA ou do Firebase)
 const exercises = [
