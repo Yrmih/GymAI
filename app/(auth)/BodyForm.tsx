@@ -1,9 +1,8 @@
-// app/(auth)/BodyForm.tsx
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 import tw from "twin.macro";
 import { useDispatch } from "react-redux";
-import { updateUserBody } from "@/src/redux/slices/usuarioSlice";
+import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 
 // Dropdown simples usando Picker do React Native
@@ -20,6 +19,11 @@ export default function BodyForm() {
   const [loading, setLoading] = useState(false);
 
   const handleContinue = () => {
+    if (!altura || !peso) {
+      alert("Por favor, preencha altura e peso.");
+      return;
+    }
+
     setLoading(true);
 
     // Salva no Redux
@@ -30,15 +34,16 @@ export default function BodyForm() {
       tempoTreino
     }));
 
-    // Simulação de delay
+    // Simula delay e vai para Home
     setTimeout(() => {
       setLoading(false);
-      router.replace("/(main)/index"); // vai para Home
+      router.replace("/(main)/index");
     }, 1000);
   };
 
   return (
     <View style={tw`flex-1 justify-center items-center bg-[#0f0f0f] px-6`}>
+      
       <TextInput
         placeholder="Altura (cm)"
         placeholderTextColor="#f8f8f8"
@@ -93,6 +98,7 @@ export default function BodyForm() {
           <Text style={tw`text-black font-bold`}>Continuar</Text>
         )}
       </TouchableOpacity>
+
     </View>
   );
 }
