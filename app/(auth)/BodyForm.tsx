@@ -6,7 +6,10 @@ import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 
 // Gluestack UI
-import { View, Text, Input, Button, Select, Spinner } from "@gluestack-ui/themed";
+import { View, Input, Button, Select } from "@gluestack-ui/themed";
+
+// Moti
+import { MotiView } from "moti";
 
 export default function BodyForm() {
   const dispatch = useDispatch();
@@ -26,7 +29,6 @@ export default function BodyForm() {
 
     setLoading(true);
 
-    // Salva no Redux
     dispatch(updateUserBody({
       altura: Number(altura),
       peso: Number(peso),
@@ -34,7 +36,6 @@ export default function BodyForm() {
       tempoTreino
     }));
 
-    // Simula delay e vai para Home
     setTimeout(() => {
       setLoading(false);
       router.replace("/(main)/index");
@@ -43,8 +44,12 @@ export default function BodyForm() {
 
   return (
     <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
-      <View style={tw`space-y-4`}>
-
+      <MotiView
+        from={{ opacity: 0, translateY: 20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.6 }}
+        style={tw`space-y-4`}
+      >
         {/* Altura */}
         <Input
           placeholder="Altura (cm)"
@@ -104,20 +109,25 @@ export default function BodyForm() {
           <Select.Item label="+2 anos" value="+2 anos" />
         </Select>
 
-        {/* Botão Continuar */}
-        <Button
-          onPress={handleContinue}
-          isLoading={loading}
-          bg="#5DD26C"
-          borderRadius={30}
-          py={4}
-          _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
-          _loading={{ color: "#0F0F0F" }}
+        {/* Botão Continuar animado */}
+        <MotiView
+          from={{ opacity: 0, translateY: 10 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Continuar
-        </Button>
-
-      </View>
+          <Button
+            onPress={handleContinue}
+            isLoading={loading}
+            bg="#5DD26C"
+            borderRadius={30}
+            py={4}
+            _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
+            _loading={{ color: "#0F0F0F" }}
+          >
+            Continuar
+          </Button>
+        </MotiView>
+      </MotiView>
     </ScrollView>
   );
 }
