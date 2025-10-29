@@ -15,3 +15,9 @@ export default function RootLayout({children}: {children: React.ReactNode}){
     </Provider>
   );
 }
+
+
+// // Responsável por:
+// Redux
+// Gluestack UI (tema dark/light)
+// SafeAreaProvider (compatibilidade com notch/status bar)
