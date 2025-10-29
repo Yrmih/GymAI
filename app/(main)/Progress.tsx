@@ -30,10 +30,10 @@ export default function Progress() {
           >
             <Card style={tw`bg-[#202020] p-5 rounded-2xl border border-[#337418]`}>
               <Text style={tw`text-[#5dd26c] font-semibold text-lg mb-2`}>
-                {item.title}
+                {item.exercise}
               </Text>
               <Text style={tw`text-[#f8f8f8] text-xl font-bold mb-1`}>
-                {item.value}
+                {item.exercise}
               </Text>
               <Text style={tw`text-[#f8f8f8] text-sm`}>{item.date}</Text>
             </Card>
