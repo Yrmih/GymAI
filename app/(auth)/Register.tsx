@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Image, ScrollView } from "react-native";
+import { ScrollView, Image, Text } from "react-native";
 import tw from "twin.macro";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 
+// Gluestack UI
+import { View, Input, Button } from "@gluestack-ui/themed";
 
-import { View, Text, Button, Input } from "@gluestack-ui/themed";
+// Moti
+import { MotiView } from "moti";
 
 // Logo
 import logo from "@/assets/brand/logo.png";
@@ -21,25 +24,39 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
 
   const handleRegister = () => {
+    if (!nome || !email || !senha) return alert("Preencha todos os campos.");
     setLoading(true);
 
     // Simulação de cadastro
     setTimeout(() => {
       dispatch(login({ nome })); // registra e loga direto
       setLoading(false);
-      router.replace("/(main)/index"); // redireciona para Home
+      router.replace("/(main)/index");
     }, 1500);
   };
 
   return (
     <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
-      {/* Logo */}
-      <Image
-        source={logo}
-        style={{ width: 120, height: 120, resizeMode: "contain", marginBottom: 40 }}
-      />
+      <View style={tw`items-center mb-10`}>
+        {/* Logo animada */}
+        <MotiView
+          from={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 120 }}
+        >
+          <Image
+            source={logo}
+            style={{ width: 120, height: 120, resizeMode: "contain" }}
+          />
+        </MotiView>
+      </View>
 
-      <View style={tw`space-y-4`}>
+      <MotiView
+        from={{ opacity: 0, translateY: 10 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        style={tw`space-y-4`}
+      >
         {/* Nome */}
         <Input
           placeholder="Nome"
@@ -96,16 +113,16 @@ export default function Register() {
         </Button>
 
         {/* Link para login */}
-        <Text style={{ color: "#F8F8F8", textAlign: "center", marginTop: 10 }}>
+        <Text style={tw`text-[#F8F8F8] text-center mt-2`}>
           Já tem conta?{" "}
           <Text
-            style={{ color: "#5DD26C" }}
+            style={tw`text-[#5DD26C]`}
             onPress={() => router.push("/(auth)/login")}
           >
             Entrar
           </Text>
         </Text>
-      </View>
+      </MotiView>
     </ScrollView>
   );
 }
