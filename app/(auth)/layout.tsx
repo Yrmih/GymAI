@@ -6,9 +6,17 @@ import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import tw from "twin.macro";
 
-export default function AuthLayout({children}: {children: React.ReactNode}){
-  return(
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
     <MotiView
+      from={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={tw`flex-1 bg-[#0f0f0f]`}
     >
       {children}
     </MotiView>
