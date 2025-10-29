@@ -5,3 +5,12 @@ import { RootState } from "@/src/redux/store";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import tw from "twin.macro";
+
+export default function AuthLayout({children}: {children: React.ReactNode}){
+  return(
+    <MotiView
+    >
+      {children}
+    </MotiView>
+  );
+}
