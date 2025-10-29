@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { Image } from "react-native";
+import { Image, Text } from "react-native";
 import tw from "twin.macro";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 import { useRouter } from "expo-router";
 
 // Gluestack UI
-import { View, Text, Spinner } from "@gluestack-ui/themed";
+import { View, Spinner } from "@gluestack-ui/themed";
 
 // Moti
 import { MotiView } from "moti";
@@ -16,9 +16,7 @@ import logo from "@/assets/brand/logo.png";
 
 export default function SplashScreen() {
   const router = useRouter();
-  const usuarioLogado = useSelector(
-    (state: RootState) => state.usuario.logado
-  );
+  const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,8 +31,7 @@ export default function SplashScreen() {
 
   return (
     <View style={tw`flex-1 justify-center items-center bg-[#0f0f0f]`}>
-      
-      {/* Logo animado com Moti */}
+      {/* Logo animado */}
       <MotiView
         from={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -63,7 +60,6 @@ export default function SplashScreen() {
           Seu treino, seu progresso
         </Text>
       </MotiView>
-
     </View>
   );
 }
