@@ -1,17 +1,6 @@
+// app/(main)/_layout.tsx
+import { Slot } from 'expo-router';
 
-import { GluestackUIProvider } from "@/src/components/ui/gluestack-ui-provider";
-
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <GluestackUIProvider mode="dark">
-      {children}
-    </GluestackUIProvider>
-  );
+export default function MainLayout() {
+  return <Slot />; // Renderiza index.tsx, exercises.tsx, etc.
 }
-
-
-// define barra de navegação, tema e GluestackUIProvider.
-
-// Todas as telas dentro de (auth) ou (main) herdam esse layout.
-
-// Uso de src/
