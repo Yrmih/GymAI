@@ -4,8 +4,14 @@ import { Provider } from "react-redux";
 import { store } from "@/src/redux/store";
 import { GluestackUIProvider } from "@/src/components/ui/gluestack-ui-provider";
 
-export default function RootLayout(){
+export default function RootLayout({children}: {children: React.ReactNode}){
   return (
-    
-  )
+    <Provider store={store}>
+      <GluestackUIProvider mode="dark">
+        <SafeAreaProvider>
+          {children}
+        </SafeAreaProvider>
+      </GluestackUIProvider>
+    </Provider>
+  );
 }
