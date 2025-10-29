@@ -51,7 +51,7 @@ export default function Home() {
         _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 16 }}
         onPress={() => console.log("Botão teste Gluestack")}
       >
-        Botão Gluestack Exemplo
+        Botão teste
       </Button>
     </ScrollView>
   );
