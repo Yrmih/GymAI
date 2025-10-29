@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { GluestackUIProvider } from "@/src/components/ui/gluestack-ui-provider";
 import { Provider } from "react-redux";
@@ -9,10 +10,12 @@ export default function App() {
   return (
     <Provider store={store}>
       <GluestackUIProvider mode="dark">
-        <View style={styles.container}>
-          <Text>Alô mundo</Text>
-          <StatusBar style="auto" />
-        </View>
+        <SafeAreaProvider>
+          <SafeAreaView style={styles.container}>
+            <Text>Alô mundo</Text>
+            <StatusBar style="auto" />
+          </SafeAreaView>
+        </SafeAreaProvider>
       </GluestackUIProvider>
     </Provider>
   );
