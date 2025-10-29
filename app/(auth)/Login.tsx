@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { ScrollView, Image } from "react-native";
+import { ScrollView, Image, Text } from "react-native";
 import tw from "twin.macro";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 
 // Gluestack UI
-import { View, Text, Input, Button, Spinner } from "@gluestack-ui/themed";
+import { View, Input, Button, Spinner } from "@gluestack-ui/themed";
+
+// Moti
+import { MotiView } from "moti";
 
 // Logo
 import logo from "@/assets/brand/logo.png";
@@ -20,23 +23,31 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
+    if (!email || !senha) return alert("Preencha e-mail e senha.");
     setLoading(true);
 
     // Simulação de autenticação
     setTimeout(() => {
       dispatch(login({ nome: email.split("@")[0] })); // só para teste
       setLoading(false);
-      router.replace("/(main)/index"); // redireciona para Home
+      router.replace("/(main)/index");
     }, 1500);
   };
 
   return (
     <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
       <View style={tw`items-center mb-10`}>
-        <Image
-          source={logo}
-          style={{ width: 120, height: 120, resizeMode: "contain" }}
-        />
+        {/* Logo animado */}
+        <MotiView
+          from={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 120 }}
+        >
+          <Image
+            source={logo}
+            style={{ width: 120, height: 120, resizeMode: "contain" }}
+          />
+        </MotiView>
       </View>
 
       {/* Email */}
