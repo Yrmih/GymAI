@@ -1,10 +1,12 @@
-
 import React, { useState } from "react";
-import { View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { ScrollView, Image } from "react-native";
 import tw from "twin.macro";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
+
+// Gluestack UI
+import { View, Text, Input, Button, Spinner } from "@gluestack-ui/themed";
 
 // Logo
 import logo from "@/assets/brand/logo.png";
@@ -29,54 +31,67 @@ export default function Login() {
   };
 
   return (
-    <View style={tw`flex-1 justify-center items-center bg-[#0f0f0f] px-6`}>
-      {/* Logo */}
-      <Image
-        source={logo}
-        style={{ width: 120, height: 120, resizeMode: "contain", marginBottom: 40 }}
-      />
+    <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
+      <View style={tw`items-center mb-10`}>
+        <Image
+          source={logo}
+          style={{ width: 120, height: 120, resizeMode: "contain" }}
+        />
+      </View>
 
       {/* Email */}
-      <TextInput
+      <Input
         placeholder="E-mail"
-        placeholderTextColor="#f8f8f8"
         value={email}
         onChangeText={setEmail}
-        style={tw`w-full mb-4 p-4 rounded bg-[#202020] text-[#f8f8f8]`}
+        bg="#202020"
+        borderRadius={12}
+        px={4}
+        py={3}
+        _input={{ color: "#F8F8F8" }}
+        placeholderTextColor="#F8F8F8"
+        mb={4}
       />
 
       {/* Senha */}
-      <TextInput
+      <Input
         placeholder="Senha"
-        placeholderTextColor="#f8f8f8"
         value={senha}
         onChangeText={setSenha}
         secureTextEntry
-        style={tw`w-full mb-6 p-4 rounded bg-[#202020] text-[#f8f8f8]`}
+        bg="#202020"
+        borderRadius={12}
+        px={4}
+        py={3}
+        _input={{ color: "#F8F8F8" }}
+        placeholderTextColor="#F8F8F8"
+        mb={6}
       />
 
-      {/* Botão de Login */}
-      <TouchableOpacity
+      {/* Botão Entrar */}
+      <Button
         onPress={handleLogin}
-        style={tw`w-full p-4 rounded bg-[#5dd62c] items-center justify-center`}
-        disabled={loading}
+        isLoading={loading}
+        bg="#5DD26C"
+        borderRadius={30}
+        py={4}
+        _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
+        _loading={{ color: "#0F0F0F" }}
+        mb={4}
       >
-        {loading ? (
-          <ActivityIndicator color="#0f0f0f" />
-        ) : (
-          <Text style={tw`text-black font-bold`}>Entrar</Text>
-        )}
-      </TouchableOpacity>
+        Entrar
+      </Button>
 
       {/* Link para cadastro */}
-      <TouchableOpacity
-        onPress={() => router.push("/(auth)/register")}
-        style={tw`mt-4`}
-      >
-        <Text style={tw`text-[#f8f8f8]`}>
-          Não tem conta? <Text style={tw`text-[#5dd62c]`}>Cadastre-se</Text>
+      <Text style={tw`text-[#F8F8F8] text-center`}>
+        Não tem conta?{" "}
+        <Text
+          style={tw`text-[#5DD26C]`}
+          onPress={() => router.push("/(auth)/register")}
+        >
+          Cadastre-se
         </Text>
-      </TouchableOpacity>
-    </View>
+      </Text>
+    </ScrollView>
   );
 }

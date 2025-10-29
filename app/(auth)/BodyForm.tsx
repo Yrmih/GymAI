@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { ScrollView } from "react-native";
 import tw from "twin.macro";
 import { useDispatch } from "react-redux";
 import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 
-// Dropdown simples usando Picker do React Native
-import { Picker } from "@react-native-picker/picker";
+// Gluestack UI
+import { View, Text, Input, Button, Select, Spinner } from "@gluestack-ui/themed";
 
 export default function BodyForm() {
   const dispatch = useDispatch();
@@ -42,63 +42,82 @@ export default function BodyForm() {
   };
 
   return (
-    <View style={tw`flex-1 justify-center items-center bg-[#0f0f0f] px-6`}>
-      
-      <TextInput
-        placeholder="Altura (cm)"
-        placeholderTextColor="#f8f8f8"
-        value={altura}
-        onChangeText={setAltura}
-        keyboardType="numeric"
-        style={tw`w-full mb-4 p-4 rounded bg-[#202020] text-[#f8f8f8]`}
-      />
+    <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
+      <View style={tw`space-y-4`}>
 
-      <TextInput
-        placeholder="Peso (kg)"
-        placeholderTextColor="#f8f8f8"
-        value={peso}
-        onChangeText={setPeso}
-        keyboardType="numeric"
-        style={tw`w-full mb-4 p-4 rounded bg-[#202020] text-[#f8f8f8]`}
-      />
+        {/* Altura */}
+        <Input
+          placeholder="Altura (cm)"
+          value={altura}
+          onChangeText={setAltura}
+          keyboardType="numeric"
+          bg="#202020"
+          borderRadius={12}
+          px={4}
+          py={3}
+          _input={{ color: "#F8F8F8" }}
+          placeholderTextColor="#F8F8F8"
+        />
 
-      <View style={tw`w-full mb-4 bg-[#202020] rounded`}>
-        <Picker
+        {/* Peso */}
+        <Input
+          placeholder="Peso (kg)"
+          value={peso}
+          onChangeText={setPeso}
+          keyboardType="numeric"
+          bg="#202020"
+          borderRadius={12}
+          px={4}
+          py={3}
+          _input={{ color: "#F8F8F8" }}
+          placeholderTextColor="#F8F8F8"
+        />
+
+        {/* Biotipo */}
+        <Select
           selectedValue={biotipo}
-          onValueChange={(itemValue) => setBiotipo(itemValue)}
-          style={{ color: "#f8f8f8" }}
+          onValueChange={setBiotipo}
+          bg="#202020"
+          borderRadius={12}
+          px={4}
+          py={3}
+          _text={{ color: "#F8F8F8" }}
         >
-          <Picker.Item label="Ectomorfo" value="Ectomorfo" />
-          <Picker.Item label="Mesomorfo" value="Mesomorfo" />
-          <Picker.Item label="Endomorfo" value="Endomorfo" />
-        </Picker>
-      </View>
+          <Select.Item label="Ectomorfo" value="Ectomorfo" />
+          <Select.Item label="Mesomorfo" value="Mesomorfo" />
+          <Select.Item label="Endomorfo" value="Endomorfo" />
+        </Select>
 
-      <View style={tw`w-full mb-6 bg-[#202020] rounded`}>
-        <Picker
+        {/* Tempo de treino */}
+        <Select
           selectedValue={tempoTreino}
-          onValueChange={(itemValue) => setTempoTreino(itemValue)}
-          style={{ color: "#f8f8f8" }}
+          onValueChange={setTempoTreino}
+          bg="#202020"
+          borderRadius={12}
+          px={4}
+          py={3}
+          _text={{ color: "#F8F8F8" }}
         >
-          <Picker.Item label="0-6 meses" value="0-6 meses" />
-          <Picker.Item label="6-12 meses" value="6-12 meses" />
-          <Picker.Item label="1-2 anos" value="1-2 anos" />
-          <Picker.Item label="+2 anos" value="+2 anos" />
-        </Picker>
+          <Select.Item label="0-6 meses" value="0-6 meses" />
+          <Select.Item label="6-12 meses" value="6-12 meses" />
+          <Select.Item label="1-2 anos" value="1-2 anos" />
+          <Select.Item label="+2 anos" value="+2 anos" />
+        </Select>
+
+        {/* Botão Continuar */}
+        <Button
+          onPress={handleContinue}
+          isLoading={loading}
+          bg="#5DD26C"
+          borderRadius={30}
+          py={4}
+          _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
+          _loading={{ color: "#0F0F0F" }}
+        >
+          Continuar
+        </Button>
+
       </View>
-
-      <TouchableOpacity
-        onPress={handleContinue}
-        style={tw`w-full p-4 rounded bg-[#5dd62c] items-center justify-center`}
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator color="#0f0f0f" />
-        ) : (
-          <Text style={tw`text-black font-bold`}>Continuar</Text>
-        )}
-      </TouchableOpacity>
-
-    </View>
+    </ScrollView>
   );
 }
