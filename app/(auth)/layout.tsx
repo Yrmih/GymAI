@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { UseSelector } from "react-redux";
+import { useSelector, UseSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
@@ -10,7 +10,12 @@ export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}) 
+{
+
+  const router = useRouter();
+  const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
+  
   return (
     <MotiView
       from={{ opacity: 0 }}
