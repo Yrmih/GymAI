@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text } from "react-native";
 import { useSelector, UseSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
@@ -10,12 +10,15 @@ export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
-}) 
-{
-
+}) {
   const router = useRouter();
   const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
-  
+
+  useEffect(() => {
+    if (usuarioLogado) {
+      router.replace("/(main)/index");
+    }
+  }, [usuarioLogado]);
   return (
     <MotiView
       from={{ opacity: 0 }}
