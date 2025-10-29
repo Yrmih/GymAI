@@ -3,7 +3,7 @@ import { Image, ActivityIndicator } from "react-native";
 import { View, Text, Button } from "@gluestack-ui/themed";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import { analyzeExerciseMock } from "../../mocks/analyzeExerciseMock";
+import { analyzeExerciseMock } from "@/src/mock/analyzeExerciseMock";
 
 export default function CameraScreen() {
   const [imageUri, setImageUri] = useState<string | null>(null);

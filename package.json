@@ -12,6 +12,7 @@
   "dependencies": {
     "@expo/html-elements": "^0.10.1",
     "@gluestack-ui/core": "^3.0.10",
+    "@gluestack-ui/themed": "^1.1.73",
     "@gluestack-ui/utils": "^3.0.11",
     "@legendapp/motion": "^2.5.3",
     "@react-native-picker/picker": "2.11.1",
@@ -20,6 +21,7 @@
     "@reduxjs/toolkit": "^2.9.2",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~54.0.20",
+    "expo-image-picker": "~17.0.8",
     "expo-router": "^6.0.14",
     "expo-status-bar": "~3.0.8",
     "nativewind": "^4.2.1",
@@ -36,8 +38,7 @@
     "tailwind-rn": "^4.2.0",
     "tailwind-variants": "^0.1.20",
     "tailwindcss": "^3.4.18",
-    "twin.macro": "^3.4.1",
-    "expo-image-picker": "~17.0.8"
+    "twin.macro": "^3.4.1"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
