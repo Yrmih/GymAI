@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { Image, Text } from "react-native";
-import tw from "twin.macro";
+import { Image } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 import { useRouter } from "expo-router";
 
 // Gluestack UI
-import { View, Spinner } from "@gluestack-ui/themed";
+import { View, Text, Spinner } from "@gluestack-ui/themed";
 
 // Moti
 import { MotiView } from "moti";
@@ -30,8 +29,13 @@ export default function SplashScreen() {
   }, [usuarioLogado]);
 
   return (
-    <View style={tw`flex-1 justify-center items-center bg-[#0f0f0f]`}>
-      {/* Logo animado */}
+    <View
+      flex={1}
+      justifyContent="center"
+      alignItems="center"
+      backgroundColor="#0F0F0F"
+    >
+      {/* Logo animada */}
       <MotiView
         from={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -43,12 +47,8 @@ export default function SplashScreen() {
         />
       </MotiView>
 
-      {/* Spinner do Gluestack */}
-      <Spinner
-        size="lg"
-        color="#5DD26C"
-        style={tw`mt-6`}
-      />
+      {/* Spinner */}
+      <Spinner size="large" color="#5DD26C" marginTop="$6" />
 
       {/* Texto animado */}
       <MotiView
@@ -56,7 +56,12 @@ export default function SplashScreen() {
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
       >
-        <Text style={tw`text-base mt-4 text-[#f8f8f8]`}>
+        <Text
+          marginTop="$4"
+          color="#F8F8F8"
+          fontSize="$md"
+          textAlign="center"
+        >
           Seu treino, seu progresso
         </Text>
       </MotiView>
