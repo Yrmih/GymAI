@@ -1,23 +1,10 @@
 import React, { useState } from "react";
-import { ScrollView, Image, Text } from "react-native";
+import { ScrollView, Image, Text, View, KeyboardAvoidingView, Platform } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
-
-// Gluestack UI
-import {
-  View,
-  Input,
-  InputField,
-  Button,
-  ButtonText,
-  ButtonSpinner,
-} from "@gluestack-ui/themed";
-
-// Moti
+import { Input, InputField, Button, ButtonText, ButtonSpinner } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
-
-// Logo
 import logo from "@/assets/brand/logo.png";
 
 export default function Login() {
@@ -40,82 +27,93 @@ export default function Login() {
   };
 
   return (
-    <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: "#0F0F0F",
-        paddingHorizontal: 24,
-        paddingTop: 40,
-      }}
-      contentContainerStyle={{ gap: 16 }}
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: "#0F0F0F" }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View style={{ alignItems: "center", marginBottom: 40 }}>
-        <MotiView
-          from={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 120 }}
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+          paddingHorizontal: 24,
+          paddingVertical: 40,
+          gap: 20,
+        }}
+      >
+        <View style={{ alignItems: "center", marginBottom: 40 }}>
+          <MotiView
+            from={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 120 }}
+          >
+            <Image
+              source={logo}
+              style={{ width: 120, height: 120, resizeMode: "contain" }}
+            />
+          </MotiView>
+        </View>
+
+        {/* Email */}
+        <Input
+          backgroundColor="#202020"
+          borderRadius={12} // menos arredondado
+          paddingVertical={14} // mais altura para o texto não cortar
+          paddingHorizontal={12}
+          marginBottom={16}
+          minHeight={50} // garante altura mínima
         >
-          <Image
-            source={logo}
-            style={{ width: 120, height: 120, resizeMode: "contain" }}
+          <InputField
+            value={email}
+            onChangeText={setEmail}
+            placeholder="E-mail"
+            placeholderTextColor="#F8F8F8"
+            color="#F8F8F8"
           />
-        </MotiView>
-      </View>
+        </Input>
 
-      {/* Email */}
-      <Input
-        backgroundColor="#202020"
-        borderRadius="xl"
-        padding="$3"
-        marginBottom="$4"
-      >
-        <InputField
-          value={email}
-          onChangeText={setEmail}
-          placeholder="E-mail"
-          placeholderTextColor="#F8F8F8"
-          color="#F8F8F8"
-        />
-      </Input>
-
-      {/* Senha */}
-      <Input
-        backgroundColor="#202020"
-        borderRadius="xl"
-        padding="$3"
-        marginBottom="$6"
-      >
-        <InputField
-          value={senha}
-          onChangeText={setSenha}
-          placeholder="Senha"
-          placeholderTextColor="#F8F8F8"
-          color="#F8F8F8"
-          secureTextEntry
-        />
-      </Input>
-
-      {/* Botão Entrar */}
-      <Button
-        backgroundColor="$green500"
-        borderRadius="full"
-        padding="$4"
-        onPress={handleLogin}
-      >
-        {loading && <ButtonSpinner color="$black" />}
-        <ButtonText>{loading ? "Carregando..." : "Entrar"}</ButtonText>
-      </Button>
-
-      {/* Link para cadastro */}
-      <Text style={{ color: "#F8F8F8", textAlign: "center" }}>
-        Não tem conta?{" "}
-        <Text
-          style={{ color: "#5DD26C" }}
-          onPress={() => router.push("/(auth)/register")}
+        {/* Senha */}
+        <Input
+          backgroundColor="#202020"
+          borderRadius={12}
+          paddingVertical={14}
+          paddingHorizontal={12}
+          marginBottom={24}
+          minHeight={50}
         >
-          Cadastre-se
+          <InputField
+            value={senha}
+            onChangeText={setSenha}
+            placeholder="Senha"
+            placeholderTextColor="#F8F8F8"
+            color="#F8F8F8"
+            secureTextEntry
+          />
+        </Input>
+
+        {/* Botão Entrar */}
+        <Button
+          backgroundColor="$green500"
+          borderRadius={12} // menos arredondado
+          paddingVertical={16} // mais altura
+          paddingHorizontal={12}
+          minHeight={50}
+          onPress={handleLogin}
+        >
+          {loading && <ButtonSpinner color="$black" />}
+          <ButtonText>{loading ? "Carregando..." : "Entrar"}</ButtonText>
+        </Button>
+
+        {/* Link para cadastro */}
+        <Text style={{ color: "#F8F8F8", textAlign: "center", marginTop: 12 }}>
+          Não tem conta?{" "}
+          <Text
+            style={{ color: "#5DD26C", fontWeight: "bold" }}
+            onPress={() => router.push("/(auth)/register")}
+          >
+            Cadastre-se
+          </Text>
         </Text>
-      </Text>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
