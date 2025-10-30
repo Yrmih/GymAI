@@ -35,74 +35,70 @@ export default function Login() {
   };
 
   return (
-    <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
-      <View style={tw`items-center mb-10`}>
-        {/* Logo animado */}
-        <MotiView
-          from={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 120 }}
-        >
-          <Image
-            source={logo}
-            style={{ width: 120, height: 120, resizeMode: "contain" }}
-          />
-        </MotiView>
-      </View>
-
-      {/* Email */}
-      <Input
-        placeholder="E-mail"
-        value={email}
-        onChangeText={setEmail}
-        bg="#202020"
-        borderRadius={12}
-        px={4}
-        py={3}
-        _input={{ color: "#F8F8F8" }}
-        placeholderTextColor="#F8F8F8"
-        mb={4}
-      />
-
-      {/* Senha */}
-      <Input
-        placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-        bg="#202020"
-        borderRadius={12}
-        px={4}
-        py={3}
-        _input={{ color: "#F8F8F8" }}
-        placeholderTextColor="#F8F8F8"
-        mb={6}
-      />
-
-      {/* Botão Entrar */}
-      <Button
-        onPress={handleLogin}
-        isLoading={loading}
-        bg="#5DD26C"
-        borderRadius={30}
-        py={4}
-        _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
-        _loading={{ color: "#0F0F0F" }}
-        mb={4}
+  <ScrollView tw="flex-1 bg-[#0f0f0f] px-6 pt-10">
+    <View tw="items-center mb-10">
+      {/* Logo animado */}
+      <MotiView
+        from={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 120 }}
       >
-        Entrar
-      </Button>
+        <Image
+          source={logo}
+          style={{ width: 120, height: 120, resizeMode: "contain" }}
+        />
+      </MotiView>
+    </View>
 
-      {/* Link para cadastro */}
-      <Text style={tw`text-[#F8F8F8] text-center`}>
-        Não tem conta?{" "}
-        <Text
-          style={tw`text-[#5DD26C]`}
-          onPress={() => router.push("/(auth)/register")}
-        >
-          Cadastre-se
-        </Text>
+    {/* Email */}
+    <Input
+      placeholder="E-mail"
+      value={email}
+      onChangeText={setEmail}
+      bg="#202020"
+      borderRadius={12}
+      px={4}
+      py={3}
+      _input={{ color: "#F8F8F8" }}
+      placeholderTextColor="#F8F8F8"
+      mb={4}
+    />
+
+    {/* Senha */}
+    <Input
+      placeholder="Senha"
+      value={senha}
+      onChangeText={setSenha}
+      secureTextEntry
+      bg="#202020"
+      borderRadius={12}
+      px={4}
+      py={3}
+      _input={{ color: "#F8F8F8" }}
+      placeholderTextColor="#F8F8F8"
+      mb={6}
+    />
+
+    {/* Botão Entrar */}
+    <Button
+      onPress={handleLogin}
+      isLoading={loading}
+      bg="#5DD26C"
+      borderRadius={30}
+      py={4}
+      _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
+      _loading={{ color: "#0F0F0F" }}
+      mb={4}
+    >
+      Entrar
+    </Button>
+
+    {/* Link para cadastro */}
+    <Text tw="text-[#F8F8F8] text-center">
+      Não tem conta?{" "}
+      <Text tw="text-[#5DD26C]" onPress={() => router.push("/(auth)/register")}>
+        Cadastre-se
       </Text>
-    </ScrollView>
-  );
-}
+    </Text>
+  </ScrollView>
+);
