@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
-import tw from "twin.macro";
 import { useDispatch } from "react-redux";
 import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
-
-// Gluestack UI
-import { View, Input, Button, Select } from "@gluestack-ui/themed";
-
-// Moti
 import { MotiView } from "moti";
+
+// Gluestack Components
+import {
+  View,
+  Input,
+  InputField,
+  Button,
+  ButtonText,
+  ButtonSpinner,
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectIcon,
+  SelectPortal,
+  SelectBackdrop,
+} from "@/src/ui"; // ⬅️ ajusta o caminho conforme tua estrutura (geralmente "@/components/ui/...")
 
 export default function BodyForm() {
   const dispatch = useDispatch();
@@ -29,12 +40,14 @@ export default function BodyForm() {
 
     setLoading(true);
 
-    dispatch(updateUserBody({
-      altura: Number(altura),
-      peso: Number(peso),
-      biotipo,
-      tempoTreino
-    }));
+    dispatch(
+      updateUserBody({
+        altura: Number(altura),
+        peso: Number(peso),
+        biotipo,
+        tempoTreino,
+      })
+    );
 
     setTimeout(() => {
       setLoading(false);
@@ -43,88 +56,92 @@ export default function BodyForm() {
   };
 
   return (
-    <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
+    <ScrollView
+      style={{
+        flex: 1,
+        backgroundColor: "#0f0f0f",
+        paddingHorizontal: 24,
+        paddingTop: 40,
+      }}
+      contentContainerStyle={{ paddingBottom: 60 }}
+    >
       <MotiView
         from={{ opacity: 0, translateY: 20 }}
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 0.6 }}
-        style={tw`space-y-4`}
+        style={{ gap: 16 }}
       >
         {/* Altura */}
-        <Input
-          placeholder="Altura (cm)"
-          value={altura}
-          onChangeText={setAltura}
-          keyboardType="numeric"
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          _input={{ color: "#F8F8F8" }}
-          placeholderTextColor="#F8F8F8"
-        />
+        <Input variant="outline" size="md" className="bg-[#202020] rounded-xl px-4 py-3">
+          <InputField
+            value={altura}
+            onChangeText={setAltura}
+            keyboardType="numeric"
+            placeholder="Altura (cm)"
+            placeholderTextColor="#888888"
+          />
+        </Input>
 
         {/* Peso */}
-        <Input
-          placeholder="Peso (kg)"
-          value={peso}
-          onChangeText={setPeso}
-          keyboardType="numeric"
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          _input={{ color: "#F8F8F8" }}
-          placeholderTextColor="#F8F8F8"
-        />
+        <Input variant="outline" size="md" className="bg-[#202020] rounded-xl px-4 py-3">
+          <InputField
+            value={peso}
+            onChangeText={setPeso}
+            keyboardType="numeric"
+            placeholder="Peso (kg)"
+            placeholderTextColor="#888888"
+          />
+        </Input>
 
         {/* Biotipo */}
-        <Select
-          selectedValue={biotipo}
-          onValueChange={setBiotipo}
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          _text={{ color: "#F8F8F8" }}
-        >
-          <Select.Item label="Ectomorfo" value="Ectomorfo" />
-          <Select.Item label="Mesomorfo" value="Mesomorfo" />
-          <Select.Item label="Endomorfo" value="Endomorfo" />
+        <Select selectedValue={biotipo} onValueChange={setBiotipo}>
+          <SelectTrigger className="bg-[#202020] rounded-xl px-4 py-3">
+            <SelectIcon />
+          </SelectTrigger>
+          <SelectPortal>
+            <SelectBackdrop />
+            <SelectContent>
+              <SelectItem label="Ectomorfo" value="Ectomorfo" />
+              <SelectItem label="Mesomorfo" value="Mesomorfo" />
+              <SelectItem label="Endomorfo" value="Endomorfo" />
+            </SelectContent>
+          </SelectPortal>
         </Select>
 
         {/* Tempo de treino */}
-        <Select
-          selectedValue={tempoTreino}
-          onValueChange={setTempoTreino}
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          _text={{ color: "#F8F8F8" }}
-        >
-          <Select.Item label="0-6 meses" value="0-6 meses" />
-          <Select.Item label="6-12 meses" value="6-12 meses" />
-          <Select.Item label="1-2 anos" value="1-2 anos" />
-          <Select.Item label="+2 anos" value="+2 anos" />
+        <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
+          <SelectTrigger className="bg-[#202020] rounded-xl px-4 py-3">
+            <SelectIcon />
+          </SelectTrigger>
+          <SelectPortal>
+            <SelectBackdrop />
+            <SelectContent>
+              <SelectItem label="0-6 meses" value="0-6 meses" />
+              <SelectItem label="6-12 meses" value="6-12 meses" />
+              <SelectItem label="1-2 anos" value="1-2 anos" />
+              <SelectItem label="+2 anos" value="+2 anos" />
+            </SelectContent>
+          </SelectPortal>
         </Select>
 
-        {/* Botão Continuar animado */}
+        {/* Botão Continuar */}
         <MotiView
           from={{ opacity: 0, translateY: 10 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Button
+            variant="solid"
+            action="primary"
+            size="md"
+            className="bg-[#5DD26C] rounded-full py-4"
             onPress={handleContinue}
-            isLoading={loading}
-            bg="#5DD26C"
-            borderRadius={30}
-            py={4}
-            _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
-            _loading={{ color: "#0F0F0F" }}
+            disabled={loading}
           >
-            Continuar
+            {loading && <ButtonSpinner color="#0F0F0F" />}
+            <ButtonText className="text-[#0F0F0F] font-bold text-lg ml-2">
+              {loading ? "Carregando..." : "Continuar"}
+            </ButtonText>
           </Button>
         </MotiView>
       </MotiView>
