@@ -1,26 +1,25 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
-import tw from "twin.macro";
+import { ScrollView, Text } from "react-native";
+import { View, Card } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 
-// Gluestack UI
-import { Card } from "@gluestack-ui/themed";
-
-// Importa mock
 import { progressoMock } from "@/src/mock/progressMock";
 
 export default function Progress() {
   const usuario = useSelector((state: RootState) => state.usuario);
 
   return (
-    <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
-      <Text style={tw`text-[#f8f8f8] text-2xl font-bold mb-6`}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: "$background" }}
+      contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 40, paddingBottom: 24 }}
+    >
+      <Text style={{ color: "$text", fontSize: 24, fontWeight: "bold", marginBottom: 24 }}>
         Progresso de {usuario.nome || "Treinador"}
       </Text>
 
-      <View style={tw`space-y-4`}>
+      <View style={{ gap: 16 }}>
         {progressoMock.map((item, index) => (
           <MotiView
             key={item.id}
@@ -28,14 +27,31 @@ export default function Progress() {
             animate={{ opacity: 1, translateY: 0 }}
             transition={{ delay: index * 100, type: "timing" }}
           >
-            <Card style={tw`bg-[#202020] p-5 rounded-2xl border border-[#337418]`}>
-              <Text style={tw`text-[#5dd26c] font-semibold text-lg mb-2`}>
+            <Card
+              style={{
+                backgroundColor: "$gray800",
+                padding: 20,
+                borderRadius: "$2xl",
+                borderWidth: 1,
+                borderColor: "$green700",
+              }}
+            >
+              <Text style={{ color: "$green500", fontSize: 18, fontWeight: "600", marginBottom: 4 }}>
                 {item.exercise}
               </Text>
-              <Text style={tw`text-[#f8f8f8] text-xl font-bold mb-1`}>
-                {item.exercise}
-              </Text>
-              <Text style={tw`text-[#f8f8f8] text-sm`}>{item.date}</Text>
+
+              {/* Mostra detalhes dependendo do tipo */}
+              {item.type === "Força" || item.type === "Resistência" ? (
+                <Text style={{ color: "$text", fontSize: 16, fontWeight: "bold", marginBottom: 4 }}>
+                  {item.weight ? `${item.weight} - ` : ""}{item.reps} reps x {item.series} séries
+                </Text>
+              ) : item.type === "Cardio" ? (
+                <Text style={{ color: "$text", fontSize: 16, fontWeight: "bold", marginBottom: 4 }}>
+                  {item.duration}
+                </Text>
+              ) : null}
+
+              <Text style={{ color: "$text", fontSize: 14 }}>{item.date}</Text>
             </Card>
           </MotiView>
         ))}
