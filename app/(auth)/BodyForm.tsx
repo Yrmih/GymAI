@@ -5,7 +5,6 @@ import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 
-// Gluestack Components
 import {
   View,
   Input,
@@ -20,7 +19,7 @@ import {
   SelectIcon,
   SelectPortal,
   SelectBackdrop,
-} from "@/src/ui"; // ⬅️ ajusta o caminho conforme tua estrutura (geralmente "@/components/ui/...")
+} from "@gluestack-ui/themed";
 
 export default function BodyForm() {
   const dispatch = useDispatch();
@@ -57,13 +56,8 @@ export default function BodyForm() {
 
   return (
     <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: "#0f0f0f",
-        paddingHorizontal: 24,
-        paddingTop: 40,
-      }}
-      contentContainerStyle={{ paddingBottom: 60 }}
+      style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24, paddingTop: 40 }}
+      contentContainerStyle={{ gap: 16, paddingBottom: 60 }}
     >
       <MotiView
         from={{ opacity: 0, translateY: 20 }}
@@ -72,7 +66,7 @@ export default function BodyForm() {
         style={{ gap: 16 }}
       >
         {/* Altura */}
-        <Input variant="outline" size="md" className="bg-[#202020] rounded-xl px-4 py-3">
+        <Input variant="outline" size="md" backgroundColor="#202020" borderRadius="xl" padding="$3">
           <InputField
             value={altura}
             onChangeText={setAltura}
@@ -83,7 +77,7 @@ export default function BodyForm() {
         </Input>
 
         {/* Peso */}
-        <Input variant="outline" size="md" className="bg-[#202020] rounded-xl px-4 py-3">
+        <Input variant="outline" size="md" backgroundColor="#202020" borderRadius="xl" padding="$3">
           <InputField
             value={peso}
             onChangeText={setPeso}
@@ -95,7 +89,7 @@ export default function BodyForm() {
 
         {/* Biotipo */}
         <Select selectedValue={biotipo} onValueChange={setBiotipo}>
-          <SelectTrigger className="bg-[#202020] rounded-xl px-4 py-3">
+          <SelectTrigger backgroundColor="#202020" borderRadius="xl" padding="$3">
             <SelectIcon />
           </SelectTrigger>
           <SelectPortal>
@@ -110,7 +104,7 @@ export default function BodyForm() {
 
         {/* Tempo de treino */}
         <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
-          <SelectTrigger className="bg-[#202020] rounded-xl px-4 py-3">
+          <SelectTrigger backgroundColor="#202020" borderRadius="xl" padding="$3">
             <SelectIcon />
           </SelectTrigger>
           <SelectPortal>
@@ -132,14 +126,15 @@ export default function BodyForm() {
         >
           <Button
             variant="solid"
-            action="primary"
             size="md"
-            className="bg-[#5DD26C] rounded-full py-4"
+            backgroundColor="#5DD26C"
+            borderRadius="full"
+            paddingBottom="$4"
             onPress={handleContinue}
             disabled={loading}
           >
             {loading && <ButtonSpinner color="#0F0F0F" />}
-            <ButtonText className="text-[#0F0F0F] font-bold text-lg ml-2">
+            <ButtonText color="#0F0F0F" fontWeight="bold" fontSize="$lg" marginLeft="$2">
               {loading ? "Carregando..." : "Continuar"}
             </ButtonText>
           </Button>
