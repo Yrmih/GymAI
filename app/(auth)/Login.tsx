@@ -35,7 +35,7 @@ export default function Login() {
     setTimeout(() => {
       dispatch(login({ nome: email.split("@")[0] }));
       setLoading(false);
-      router.replace("/index");
+      router.replace("/");
     }, 1500);
   };
 
