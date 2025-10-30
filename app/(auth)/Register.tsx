@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { ScrollView, Image, Text } from "react-native";
-import tw from "twin.macro";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 
 // Gluestack UI
-import { View, Input, Button } from "@gluestack-ui/themed";
+import {
+  View,
+  Input,
+  InputField,
+  Button,
+  ButtonText,
+  ButtonSpinner,
+} from "@gluestack-ui/themed";
 
 // Moti
 import { MotiView } from "moti";
@@ -27,18 +33,24 @@ export default function Register() {
     if (!nome || !email || !senha) return alert("Preencha todos os campos.");
     setLoading(true);
 
-    // Simulação de cadastro
     setTimeout(() => {
-      dispatch(login({ nome })); // registra e loga direto
+      dispatch(login({ nome }));
       setLoading(false);
       router.replace("/(main)/index");
     }, 1500);
   };
 
   return (
-    <ScrollView style={tw`flex-1 bg-[#0f0f0f] px-6 pt-10`}>
-      <View style={tw`items-center mb-10`}>
-        {/* Logo animada */}
+    <ScrollView
+      style={{
+        flex: 1,
+        backgroundColor: "#0F0F0F",
+        paddingHorizontal: 24,
+        paddingTop: 40,
+      }}
+      contentContainerStyle={{ gap: 16 }}
+    >
+      <View style={{ alignItems: "center", marginBottom: 40 }}>
         <MotiView
           from={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -51,78 +63,81 @@ export default function Register() {
         </MotiView>
       </View>
 
-      <MotiView
-        from={{ opacity: 0, translateY: 10 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        style={tw`space-y-4`}
+      {/* Nome */}
+      <Input
+        backgroundColor="#202020"
+        borderRadius="xl"
+        padding="$3"
+        marginBottom="$3"
       >
-        {/* Nome */}
-        <Input
+        <InputField
           placeholder="Nome"
           value={nome}
           onChangeText={setNome}
-          _input={{ color: "#F8F8F8" }}
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          placeholderTextColor="#F8F8F8"
+          color="#F8F8F8"
+          placeholderTextColor="#A3A3A3"
         />
+      </Input>
 
-        {/* Email */}
-        <Input
+      {/* Email */}
+      <Input
+        backgroundColor="#202020"
+        borderRadius="xl"
+        padding="$3"
+        marginBottom="$3"
+      >
+        <InputField
           placeholder="E-mail"
           value={email}
           onChangeText={setEmail}
-          _input={{ color: "#F8F8F8" }}
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          placeholderTextColor="#F8F8F8"
+          color="#F8F8F8"
+          placeholderTextColor="#A3A3A3"
           keyboardType="email-address"
           autoCapitalize="none"
         />
+      </Input>
 
-        {/* Senha */}
-        <Input
+      {/* Senha */}
+      <Input
+        backgroundColor="#202020"
+        borderRadius="xl"
+        padding="$3"
+        marginBottom="$6"
+      >
+        <InputField
           placeholder="Senha"
           value={senha}
           onChangeText={setSenha}
           secureTextEntry
-          _input={{ color: "#F8F8F8" }}
-          bg="#202020"
-          borderRadius={12}
-          px={4}
-          py={3}
-          placeholderTextColor="#F8F8F8"
+          color="#F8F8F8"
+          placeholderTextColor="#A3A3A3"
         />
+      </Input>
 
-        {/* Botão de Registro */}
-        <Button
-          onPress={handleRegister}
-          isLoading={loading}
-          bg="#5DD26C"
-          borderRadius={30}
-          py={4}
-          _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
-          _loading={{ color: "#0F0F0F" }}
+      {/* Botão Cadastrar */}
+      <Button
+        onPress={handleRegister}
+        backgroundColor="#5DD26C"
+        borderRadius="full"
+        padding="$4"
+        marginBottom="$4"
+      >
+        {loading && <ButtonSpinner color="$black" />}
+        <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
+          {loading ? "Carregando..." : "Cadastrar"}
+        </ButtonText>
+      </Button>
+
+      {/* Link para login */}
+      <Text style={{ color: "#F8F8F8", textAlign: "center" }}>
+        Já tem conta?{" "}
+        <Text
+          style={{ color: "#5DD26C" }}
+          onPress={() => router.push("/(auth)/login")}
         >
-          Cadastrar
-        </Button>
-
-        {/* Link para login */}
-        <Text style={tw`text-[#F8F8F8] text-center mt-2`}>
-          Já tem conta?{" "}
-          <Text
-            style={tw`text-[#5DD26C]`}
-            onPress={() => router.push("/(auth)/login")}
-          >
-            Entrar
-          </Text>
+          Entrar
         </Text>
-      </MotiView>
+      </Text>
     </ScrollView>
   );
 }
