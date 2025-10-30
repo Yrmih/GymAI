@@ -3,6 +3,7 @@
     "name": "GymAI",
     "slug": "GymAI",
     "version": "1.0.0",
+    "scheme": "gymai",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

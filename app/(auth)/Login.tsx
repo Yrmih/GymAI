@@ -1,9 +1,22 @@
 import React, { useState } from "react";
-import { ScrollView, Image, Text, View, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  ScrollView,
+  Image,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
-import { Input, InputField, Button, ButtonText, ButtonSpinner } from "@gluestack-ui/themed";
+import {
+  Input,
+  InputField,
+  Button,
+  ButtonText,
+  ButtonSpinner,
+} from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import logo from "@/assets/brand/logo.png";
 
@@ -22,7 +35,7 @@ export default function Login() {
     setTimeout(() => {
       dispatch(login({ nome: email.split("@")[0] }));
       setLoading(false);
-      router.replace("/(main)/index");
+      router.replace("/index");
     }, 1500);
   };
 
