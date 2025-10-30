@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { ScrollView, Image, Text } from "react-native";
-import tw from "twin.macro";
 import { useDispatch } from "react-redux";
 import { login } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 
 // Gluestack UI
-import { View, Input, Button, Spinner } from "@gluestack-ui/themed";
+import {
+  View,
+  Input,
+  InputField,
+  Button,
+  ButtonText,
+  ButtonSpinner,
+} from "@gluestack-ui/themed";
 
 // Moti
 import { MotiView } from "moti";
@@ -26,79 +32,90 @@ export default function Login() {
     if (!email || !senha) return alert("Preencha e-mail e senha.");
     setLoading(true);
 
-    // Simulação de autenticação
     setTimeout(() => {
-      dispatch(login({ nome: email.split("@")[0] })); // só para teste
+      dispatch(login({ nome: email.split("@")[0] }));
       setLoading(false);
       router.replace("/(main)/index");
     }, 1500);
   };
 
   return (
-  <ScrollView tw="flex-1 bg-[#0f0f0f] px-6 pt-10">
-    <View tw="items-center mb-10">
-      {/* Logo animado */}
-      <MotiView
-        from={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 120 }}
-      >
-        <Image
-          source={logo}
-          style={{ width: 120, height: 120, resizeMode: "contain" }}
-        />
-      </MotiView>
-    </View>
-
-    {/* Email */}
-    <Input
-      placeholder="E-mail"
-      value={email}
-      onChangeText={setEmail}
-      bg="#202020"
-      borderRadius={12}
-      px={4}
-      py={3}
-      _input={{ color: "#F8F8F8" }}
-      placeholderTextColor="#F8F8F8"
-      mb={4}
-    />
-
-    {/* Senha */}
-    <Input
-      placeholder="Senha"
-      value={senha}
-      onChangeText={setSenha}
-      secureTextEntry
-      bg="#202020"
-      borderRadius={12}
-      px={4}
-      py={3}
-      _input={{ color: "#F8F8F8" }}
-      placeholderTextColor="#F8F8F8"
-      mb={6}
-    />
-
-    {/* Botão Entrar */}
-    <Button
-      onPress={handleLogin}
-      isLoading={loading}
-      bg="#5DD26C"
-      borderRadius={30}
-      py={4}
-      _text={{ color: "#0F0F0F", fontWeight: "bold", fontSize: 18 }}
-      _loading={{ color: "#0F0F0F" }}
-      mb={4}
+    <ScrollView
+      style={{
+        flex: 1,
+        backgroundColor: "#0F0F0F",
+        paddingHorizontal: 24,
+        paddingTop: 40,
+      }}
+      contentContainerStyle={{ gap: 16 }}
     >
-      Entrar
-    </Button>
+      <View style={{ alignItems: "center", marginBottom: 40 }}>
+        <MotiView
+          from={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 120 }}
+        >
+          <Image
+            source={logo}
+            style={{ width: 120, height: 120, resizeMode: "contain" }}
+          />
+        </MotiView>
+      </View>
 
-    {/* Link para cadastro */}
-    <Text tw="text-[#F8F8F8] text-center">
-      Não tem conta?{" "}
-      <Text tw="text-[#5DD26C]" onPress={() => router.push("/(auth)/register")}>
-        Cadastre-se
+      {/* Email */}
+      <Input
+        backgroundColor="#202020"
+        borderRadius="xl"
+        padding="$3"
+        marginBottom="$4"
+      >
+        <InputField
+          value={email}
+          onChangeText={setEmail}
+          placeholder="E-mail"
+          placeholderTextColor="#F8F8F8"
+          color="#F8F8F8"
+        />
+      </Input>
+
+      {/* Senha */}
+      <Input
+        backgroundColor="#202020"
+        borderRadius="xl"
+        padding="$3"
+        marginBottom="$6"
+      >
+        <InputField
+          value={senha}
+          onChangeText={setSenha}
+          placeholder="Senha"
+          placeholderTextColor="#F8F8F8"
+          color="#F8F8F8"
+          secureTextEntry
+        />
+      </Input>
+
+      {/* Botão Entrar */}
+      <Button
+        backgroundColor="$green500"
+        borderRadius="full"
+        padding="$4"
+        onPress={handleLogin}
+      >
+        {loading && <ButtonSpinner color="$black" />}
+        <ButtonText>{loading ? "Carregando..." : "Entrar"}</ButtonText>
+      </Button>
+
+      {/* Link para cadastro */}
+      <Text style={{ color: "#F8F8F8", textAlign: "center" }}>
+        Não tem conta?{" "}
+        <Text
+          style={{ color: "#5DD26C" }}
+          onPress={() => router.push("/(auth)/register")}
+        >
+          Cadastre-se
+        </Text>
       </Text>
-    </Text>
-  </ScrollView>
-);
+    </ScrollView>
+  );
+}
