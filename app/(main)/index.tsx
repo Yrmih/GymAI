@@ -15,17 +15,17 @@ export default function Home() {
     {
       title: "Exercícios",
       description: "Veja a lista completa de exercícios disponíveis",
-      route: "/exercises",
+      route: "/Exercicies",
     },
     {
       title: "Progresso",
       description: "Acompanhe sua evolução e gráficos de desempenho",
-      route: "/progress",
+      route: "/Progress",
     },
     {
       title: "Perfil",
       description: "Edite suas informações e preferências",
-      route: "/profile",
+      route: "/Profile",
     },
   ];
 
