@@ -11,19 +11,26 @@ export default function Exercises() {
   const router = useRouter();
 
   return (
-    <View flex={1} bg="#0F0F0F" paddingHorizontal="$6" paddingTop="$10">
+    <View flex={1} bg="#0F0F0F">
       {/* Cabeçalho */}
       <View
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        marginBottom="$6"
+        paddingHorizontal="$6"
+        paddingTop="$12"
+        paddingBottom="$6"
       >
-        <Text color="$white" fontSize="$2xl" fontWeight="$bold">
+        <Text
+          color="$white"
+          fontSize="$2xl"
+          fontWeight="$bold"
+          flexShrink={1}
+          flexWrap="wrap"
+        >
           Exercícios Disponíveis
         </Text>
 
-        {/* Botão de Voltar */}
         <Button
           size="sm"
           bg="$green500"
@@ -39,14 +46,22 @@ export default function Exercises() {
       </View>
 
       {/* Lista de Exercícios */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center", // centraliza verticalmente
+          paddingHorizontal: 24,
+          paddingBottom: 60,
+          gap: 20,
+        }}
+      >
         {exercisesMock.map((item, index) => (
           <MotiView
             key={item.id}
             from={{ opacity: 0, translateY: 20 }}
             animate={{ opacity: 1, translateY: 0 }}
             transition={{ delay: index * 100, type: "timing", duration: 400 }}
-            style={{ marginBottom: 16 }}
           >
             <ExerciseCard
               name={item.name}
