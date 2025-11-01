@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { MotiView } from "moti";
-import Icon from "react-native-vector-icons/Feather"; // garante que tenha o pacote instalado
+import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
 export default function FloatingCameraButton() {
@@ -19,7 +19,7 @@ export default function FloatingCameraButton() {
         style={styles.button}
         onPress={() => router.push("/Camera")} // ajusta depois pra sua rota real
       >
-        <Icon name="camera" size={26} color="#0F0F0F" />
+        <Feather name="camera" size={26} color="#0F0F0F" />{" "}
       </TouchableOpacity>
     </MotiView>
   );
