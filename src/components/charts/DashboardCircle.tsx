@@ -7,7 +7,7 @@ interface DashboardCircleProps {
   progress?: number; // 0 a 100
 }
 
-export default function DashboardCircle(progress = 72) {
+export default function DashboardCircle(progress = 72): DashboardCircleProps {
   const radius = 70;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
