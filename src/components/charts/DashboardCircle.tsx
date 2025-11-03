@@ -3,12 +3,17 @@ import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import { MotiView, MotiText } from "moti";
 
-export default function DashboardCircle(){
+interface DashboardCircleProps {
+  progress?: number; // 0 a 100
+}
+
+export default function DashboardCircle(progress = 72) {
   const radius = 70;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (circumference * progress) / 100;
   return (
-    <View style={}>
+    <View>
       <MotiView
         from={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -35,7 +40,6 @@ export default function DashboardCircle(){
           fill="none"
         />
       </Svg>
-      
     </View>
   );
 }
