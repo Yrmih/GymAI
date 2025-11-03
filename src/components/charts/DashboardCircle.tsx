@@ -7,7 +7,7 @@ interface DashboardCircleProps {
   progress?: number; // 0 a 100
 }
 
-export default function DashboardCircle(progress = 72): DashboardCircleProps {
+export default function DashboardCircle({progress = 72}:DashboardCircleProps )  {
   const radius = 70;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
@@ -42,23 +42,23 @@ export default function DashboardCircle(progress = 72): DashboardCircleProps {
         />
       </Svg>
 
-      <View>
+      <View style={styles.centerText}>
         <MotiText
           from={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 300, duration: 500 }}
-          
+          style={styles.progressText}
         >
           {progress}%
         </MotiText>
-        <Text>do treino</Text>
+        <Text style={styles.label}>do treino</Text>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-   container: {
+  container: {
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
