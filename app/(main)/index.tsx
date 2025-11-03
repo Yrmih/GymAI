@@ -4,7 +4,10 @@ import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 import { View, Text, Button, ButtonText } from "@gluestack-ui/themed";
+
 import HomeCard from "@/src/components/card/HomeCard";
+import DashboardCircle from "@/src/components/charts/DashboardCircle";
+import FloatingCameraButton from "@/src/components/button/FloatingCameraButton";
 import { MotiView } from "moti";
 
 export default function Home() {
@@ -30,6 +33,7 @@ export default function Home() {
   ];
 
   return (
+    <View style={{flex: 1, backgroundColor: "#0F0F0F"}}>
     <ScrollView
       style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24 }}
       contentContainerStyle={{
@@ -88,5 +92,7 @@ export default function Home() {
         </Button>
       </MotiView>
     </ScrollView>
+    <FloatingCameraButton/>
+  </View>
   );
 }
