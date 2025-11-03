@@ -12,6 +12,7 @@ export default function DashboardCircle(progress = 72) {
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (circumference * progress) / 100;
+
   return (
     <View>
       <MotiView
