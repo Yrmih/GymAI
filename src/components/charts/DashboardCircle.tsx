@@ -56,3 +56,26 @@ export default function DashboardCircle(progress = 72): DashboardCircleProps {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+   container: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
+  centerText: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  progressText: {
+    color: "#5DD26C",
+    fontSize: 28,
+    fontWeight: "bold",
+  },
+  label: {
+    color: "#F8F8F8",
+    fontSize: 14,
+    marginTop: 2,
+  },
+});
