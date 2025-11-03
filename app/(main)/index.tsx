@@ -3,96 +3,66 @@ import { ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
-import { View, Text, Button, ButtonText } from "@gluestack-ui/themed";
-
-import HomeCard from "@/src/components/card/HomeCard";
-import DashboardCircle from "@/src/components/charts/DashboardCircle";
-import FloatingCameraButton from "@/src/components/button/FloatingCameraButton";
+import { View, Text } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
+
+import DashboardCircle from "@/src/components/charts/DashboardCircle";
+import GridSection from "@/src/components/grid/GridSection";
+import FloatingCameraButton from "@/src/components/button/FloatingCameraButton";
 
 export default function Home() {
   const router = useRouter();
   const usuario = useSelector((state: RootState) => state.usuario);
 
-  const cards = [
-    {
-      title: "Exercícios",
-      description: "Veja a lista completa de exercícios disponíveis",
-      route: "/Exercicies",
-    },
-    {
-      title: "Progresso",
-      description: "Acompanhe sua evolução e gráficos de desempenho",
-      route: "/Progress",
-    },
-    {
-      title: "Perfil",
-      description: "Edite suas informações e preferências",
-      route: "/Profile",
-    },
-  ];
-
   return (
-    <View style={{flex: 1, backgroundColor: "#0F0F0F"}}>
-    <ScrollView
-      style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24 }}
-      contentContainerStyle={{
-        flexGrow: 1,            // garante que o ScrollView ocupe a tela inteira
-        justifyContent: "center", // centraliza verticalmente
-        gap: 16,
-        paddingVertical: 40,     // espaço em cima e embaixo
-      }}
-    >
-      {/* Saudações animadas */}
-      <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ duration: 0.6 }}
+    <View style={{ flex: 1, backgroundColor: "#0F0F0F" }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          alignItems: "center",
+          paddingVertical: 40,
+          gap: 24,
+        }}
+        showsVerticalScrollIndicator={false}
       >
-        <Text color="$white" fontSize="$2xl" fontWeight="$bold" mb="$6">
-          Olá, {usuario.nome || "Treinador"}!
-        </Text>
-      </MotiView>
-
-      <View style={{ gap: 16 }}>
-        {cards.map((item, index) => (
-          <MotiView
-            key={item.title}
-            from={{ opacity: 0, translateY: 15 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 * index }}
-          >
-            <HomeCard
-              title={item.title}
-              description={item.description}
-              onPress={() => router.push(item.route)}
-            />
-          </MotiView>
-        ))}
-      </View>
-
-      {/* Botão extra */}
-      <MotiView
-        from={{ opacity: 0, translateY: 10 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ duration: 0.5, delay: 0.7 }}
-        style={{ marginTop: 32 }} // mais espaço acima do botão
-      >
-        <Button
-          bg="$green500"
-          borderRadius="$2xl"
-          py="$4"
-          px="$6"
-          minHeight={50} // garante altura confortável
-          onPress={() => console.log("Botão teste Gluestack")}
+        {/* Saudação */}
+        <MotiView
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <ButtonText color="$black" fontWeight="$bold" fontSize="$md">
-            Botão teste
-          </ButtonText>
-        </Button>
-      </MotiView>
-    </ScrollView>
-    <FloatingCameraButton/>
-  </View>
+          <Text
+            color="$white"
+            fontSize="$2xl"
+            fontWeight="$bold"
+            textAlign="center"
+            mb="$4"
+          >
+            Olá, {usuario.nome || "Treinador"}!
+          </Text>
+        </MotiView>
+
+        {/* Dashboard (anel de progresso) */}
+        <MotiView
+          from={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <DashboardCircle progress={65} /> {/* 👈 Exemplo com progresso */}
+        </MotiView>
+
+        {/* Grid 2x2 */}
+        <MotiView
+          from={{ opacity: 0, translateY: 15 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <GridSection />
+        </MotiView>
+      </ScrollView>
+
+      {/* Botão flutuante (câmera) */}
+      <FloatingCameraButton />
+    </View>
   );
 }
