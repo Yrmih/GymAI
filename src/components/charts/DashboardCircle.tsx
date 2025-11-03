@@ -41,6 +41,18 @@ export default function DashboardCircle(progress = 72) {
           fill="none"
         />
       </Svg>
+
+      <View>
+        <MotiText
+          from={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 300, duration: 500 }}
+          
+        >
+          {progress}%
+        </MotiText>
+        <Text>do treino</Text>
+      </View>
     </View>
   );
 }
