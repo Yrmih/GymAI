@@ -1,97 +1,71 @@
 import React from "react";
-import { View, Text } from "@gluestack-ui/themed";
-import { TouchableOpacity } from "react-native";
-import { MotiView } from "moti";
+import { View } from "react-native";
 import { useRouter } from "expo-router";
-import AppIcon from "@/src/components/icons/AppIcon"; // 👈 usa o seu componente de ícones
-
-const items = [
-  {
-    title: "Exercícios",
-    description: "Veja a lista completa de treinos",
-    route: "/Exercicies",
-    icon: "barbell-outline", // Ionicons
-  },
-  {
-    title: "Progresso",
-    description: "Acompanhe sua evolução",
-    route: "/Progress",
-    icon: "stats-chart-outline",
-  },
-  {
-    title: "Perfil",
-    description: "Edite suas informações",
-    route: "/Profile",
-    icon: "person-circle-outline",
-  },
-  {
-    title: "Configurações",
-    description: "Ajuste preferências do app",
-    route: "/Settings",
-    icon: "settings-outline",
-  },
-];
+import { MotiView } from "moti";
+import HomeCard from "@/src/components/card/HomeCard";
+import AppIcon from "../icons/AppIcon";
 
 export default function GridSection() {
   const router = useRouter();
 
+  const cards = [
+    {
+      title: "Exercícios",
+      description: "Veja a lista completa de exercícios disponíveis",
+      icon: "barbell-outline",
+      route: "/Exercicies",
+    },
+    {
+      title: "Progresso",
+      description: "Acompanhe sua evolução e gráficos de desempenho",
+      icon: "stats-chart-outline",
+      route: "/Progress",
+    },
+    {
+      title: "Perfil",
+      description: "Edite suas informações e preferências",
+      icon: "person-circle-outline",
+      route: "/Profile",
+    },
+    {
+      title: "Configurações",
+      description: "Personalize seu treino e preferências do app",
+      icon: "settings-outline",
+      route: "/Settings",
+    },
+  ];
+
   return (
-    <View
+    <MotiView
+      from={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ type: "timing", duration: 600 }}
       style={{
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "center",
-        gap: 16,
-        paddingHorizontal: 20,
+        justifyContent: "space-between",
+        gap: 12,
+        width: "100%",
+        paddingHorizontal: 12,
+        marginTop: 10,
       }}
     >
-      {items.map((item, index) => (
+      {cards.map((card, index) => (
         <MotiView
-          key={item.title}
-          from={{ opacity: 0, translateY: 20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.6, delay: index * 0.1 }}
+          key={index}
+          from={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", delay: index * 100 }}
+          style={{ width: "47%" }}
         >
-          <TouchableOpacity
-            onPress={() => router.push(item.route)}
-            style={{
-              width: 150,
-              height: 150,
-              backgroundColor: "#1A1A1A",
-              borderRadius: 20,
-              padding: 16,
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: "#222",
-              shadowColor: "#5DD26C",
-              shadowOpacity: 0.15,
-              shadowOffset: { width: 0, height: 4 },
-              shadowRadius: 6,
-            }}
-          >
-            {/* Ícone centralizado */}
-            <AppIcon name={item.icon as any} size={30} color="#5DD26C" />
-            <Text
-              color="$white"
-              fontWeight="$bold"
-              fontSize="$lg"
-              textAlign="center"
-              mt="$2"
-            >
-              {item.title}
-            </Text>
-            <Text
-              color="$gray400"
-              fontSize="$sm"
-              textAlign="center"
-              mt="$1"
-            >
-              {item.description}
-            </Text>
-          </TouchableOpacity>
+          <HomeCard
+            title={card.title}
+            description={card.description}
+            onPress={() => router.push(card.route)}
+            icon={<AppIcon name={card.icon} size={28} color="#fff" />}
+          />
         </MotiView>
       ))}
-    </View>
+    </MotiView>
   );
 }

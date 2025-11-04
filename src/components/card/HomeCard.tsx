@@ -5,6 +5,7 @@ interface HomeCardProps {
   title: string;
   description: string;
   onPress: () => void;
+  icon?: React.ReactNode
 }
 
 export default function HomeCard({ title, description, onPress }: HomeCardProps) {
