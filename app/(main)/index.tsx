@@ -21,11 +21,11 @@ export default function Home() {
           flexGrow: 1,
           alignItems: "center",
           paddingVertical: 40,
-          gap: 24,
+          gap: 32,
         }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Saudação */}
+        {/* 👋 Saudação */}
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
@@ -36,32 +36,32 @@ export default function Home() {
             fontSize="$2xl"
             fontWeight="$bold"
             textAlign="center"
-            mb="$4"
           >
             Olá, {usuario.nome || "Treinador"}!
           </Text>
         </MotiView>
 
-        {/* Dashboard (anel de progresso) */}
+        {/* 🔵 Dashboard de Progresso */}
         <MotiView
           from={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <DashboardCircle progress={65} /> {/* 👈 Exemplo com progresso */}
+          <DashboardCircle progress={65} />
         </MotiView>
 
-        {/* Grid 2x2 */}
+        {/* 🧩 Grid de Opções */}
         <MotiView
           from={{ opacity: 0, translateY: 15 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
+          style={{ width: "100%" }}
         >
           <GridSection />
         </MotiView>
       </ScrollView>
 
-      {/* Botão flutuante (câmera) */}
+      {/* 📸 Botão flutuante */}
       <FloatingCameraButton />
     </View>
   );

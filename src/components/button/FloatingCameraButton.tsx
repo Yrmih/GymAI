@@ -17,9 +17,9 @@ export default function FloatingCameraButton() {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.button}
-        onPress={() => router.push("/Camera")} // ajusta depois pra sua rota real
+        onPress={() => router.push("/Camera")}
       >
-        <Feather name="camera" size={26} color="#0F0F0F" />{" "}
+        <Feather name="camera" size={26} color="#0F0F0F" />
       </TouchableOpacity>
     </MotiView>
   );
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
-    elevation: 5, // sombra no Android
+    elevation: 5,
   },
 });
