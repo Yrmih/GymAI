@@ -14,9 +14,9 @@ export default function HomeCard({ title, description, onPress }: HomeCardProps)
       onPress={onPress}
       bg="$gray800"
       borderRadius="$lg"
-      py="$10"           // padding vertical maior
-      px="$6"            // padding horizontal confortável
-      minHeight={220}     // altura mínima ainda maior
+      py="$10"           
+      px="$6"            
+      minHeight={220}     
       justifyContent="flex-start"
       alignItems="flex-start"
       style={{
@@ -39,7 +39,7 @@ export default function HomeCard({ title, description, onPress }: HomeCardProps)
         <Text
           color="$white"
           size="sm"
-          lineHeight={26}   // ainda mais espaçamento vertical
+          lineHeight={26}
           flexWrap="wrap"
         >
           {description}

@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 
 interface AppIconProps {
-  name: keyof typeof Ionicons.glyphMap; // garante ícones válidos do Ionicons
+  name: keyof typeof Ionicons.glyphMap;
   size?: number;
   color?: string;
   shadow?: boolean;

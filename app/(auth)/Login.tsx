@@ -69,11 +69,11 @@ export default function Login() {
         {/* Email */}
         <Input
           backgroundColor="#202020"
-          borderRadius={12} // menos arredondado
-          paddingVertical={14} // mais altura para o texto não cortar
+          borderRadius={12} 
+          paddingVertical={14} 
           paddingHorizontal={12}
           marginBottom={16}
-          minHeight={50} // garante altura mínima
+          minHeight={50}
         >
           <InputField
             value={email}
@@ -106,8 +106,8 @@ export default function Login() {
         {/* Botão Entrar */}
         <Button
           backgroundColor="$green500"
-          borderRadius={12} // menos arredondado
-          paddingVertical={16} // mais altura
+          borderRadius={12} 
+          paddingVertical={16}
           paddingHorizontal={12}
           minHeight={50}
           onPress={handleLogin}

@@ -4,7 +4,7 @@ import Svg, { Circle } from "react-native-svg";
 import { MotiView, MotiText } from "moti";
 
 interface DashboardCircleProps {
-  progress?: number; // 0 a 100
+  progress?: number;
 }
 
 export default function DashboardCircle({progress = 72}:DashboardCircleProps )  {

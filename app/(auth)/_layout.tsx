@@ -2,5 +2,5 @@
 import { Slot } from 'expo-router';
 
 export default function AuthLayout() {
-  return <Slot />; // Renderiza login.tsx ou register.tsx
+  return <Slot />; 
 }

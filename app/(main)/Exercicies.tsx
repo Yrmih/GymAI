@@ -50,7 +50,7 @@ export default function Exercises() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: "center", // centraliza verticalmente
+          justifyContent: "center",
           paddingHorizontal: 24,
           paddingBottom: 60,
           gap: 20,
