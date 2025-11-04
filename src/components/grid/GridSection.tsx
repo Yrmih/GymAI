@@ -2,13 +2,15 @@ import React from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
+import { CardItem } from "@/src/types/CardItem";
 import HomeCard from "@/src/components/card/HomeCard";
 import AppIcon from "../icons/AppIcon";
+
 
 export default function GridSection() {
   const router = useRouter();
 
-  const cards = [
+  const cards: CardItem[] = [
     {
       title: "Exercícios",
       description: "Veja a lista completa de exercícios disponíveis",
