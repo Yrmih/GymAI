@@ -1,37 +1,42 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
-import { MotiView, MotiText } from "moti";
+import { MotiText } from "moti";
 
 interface DashboardCircleProps {
   progress?: number;
 }
 
-export default function DashboardCircle({progress = 72}:DashboardCircleProps )  {
-  const radius = 70;
+export default function DashboardCircle({
+  progress = 72,
+}: DashboardCircleProps) {
+  const size = 180; // Tamanho total do componente
+  const center = size / 2; // Centro (90)
+  const radius = 70; // Raio
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (circumference * progress) / 100;
 
   return (
-    <View>
-      <MotiView
-        from={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: "spring", duration: 800 }}
-      ></MotiView>
-      <Svg>
+    // Aplicamos o estilo do container para definir o tamanho
+    <View style={styles.container}>
+      {/* 👇 A CORREÇÃO ESTÁ AQUI 👇
+        Adicionamos width e height ao Svg 
+      */}
+      <Svg width={size} height={size}>
+        {/* Círculo de fundo */}
         <Circle
-          cx="90"
-          cy="90"
+          cx={center}
+          cy={center}
           r={radius}
           stroke="#1C1C1C"
           strokeWidth={strokeWidth}
           fill="none"
         />
+        {/* Círculo de progresso */}
         <Circle
-          cx="90"
-          cy="90"
+          cx={center}
+          cy={center}
           r={radius}
           stroke="#5DD26C"
           strokeWidth={strokeWidth}
@@ -42,6 +47,7 @@ export default function DashboardCircle({progress = 72}:DashboardCircleProps )  
         />
       </Svg>
 
+      {/* Texto centralizado */}
       <View style={styles.centerText}>
         <MotiText
           from={{ opacity: 0 }}
@@ -59,12 +65,14 @@ export default function DashboardCircle({progress = 72}:DashboardCircleProps )  
 
 const styles = StyleSheet.create({
   container: {
+    width: 180, // Define a largura do container
+    height: 180, // Define a altura do container
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
   },
   centerText: {
-    position: "absolute",
+    position: "absolute", // Põe o texto sobre o Svg
     alignItems: "center",
     justifyContent: "center",
   },

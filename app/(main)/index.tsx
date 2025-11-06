@@ -3,6 +3,7 @@ import { ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
+
 import { View, Text } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 
@@ -15,21 +16,21 @@ export default function Home() {
   const usuario = useSelector((state: RootState) => state.usuario);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#0F0F0F" }}>
+    <View flex={1} bg="#0F0F0F">
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          alignItems: "center",
           paddingVertical: 40,
           gap: 32,
         }}
         showsVerticalScrollIndicator={false}
       >
-        {/* 👋 Saudação */}
+        {/* 👋 Saudação: Centralizamos aqui no estilo inline do Moti */}
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.6 }}
+          style={{ width: "100%", alignItems: "center" }}
         >
           <Text
             color="$white"
@@ -41,21 +42,22 @@ export default function Home() {
           </Text>
         </MotiView>
 
-        {/* 🔵 Dashboard de Progresso */}
+        {/* 🔵 Dashboard: Também centralizado individualmente */}
         <MotiView
           from={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
+          style={{ width: "100%", alignItems: "center" }}
         >
           <DashboardCircle progress={65} />
         </MotiView>
 
-        {/* 🧩 Grid de Opções */}
+        {/* 🧩 Grid: Ocupa 100% e NÃO centraliza os itens (deixa o GridSection gerenciar) */}
         <MotiView
           from={{ opacity: 0, translateY: 15 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          style={{ width: "100%" }}
+          style={{ width: "100%", paddingHorizontal: 24 }}
         >
           <GridSection />
         </MotiView>

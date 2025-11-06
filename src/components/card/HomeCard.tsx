@@ -5,18 +5,23 @@ interface HomeCardProps {
   title: string;
   description: string;
   onPress: () => void;
-  icon?: React.ReactNode
+  icon?: React.ReactNode;
 }
 
-export default function HomeCard({ title, description, onPress }: HomeCardProps) {
+export default function HomeCard({
+  title,
+  description,
+  onPress,
+  icon,
+}: HomeCardProps) {
   return (
     <Button
       onPress={onPress}
       bg="$gray800"
       borderRadius="$lg"
-      py="$10"           
-      px="$6"            
-      minHeight={220}     
+      py="$10"
+      px="$6"
+      minHeight={220}
       justifyContent="flex-start"
       alignItems="flex-start"
       style={{
@@ -26,22 +31,14 @@ export default function HomeCard({ title, description, onPress }: HomeCardProps)
         shadowRadius: 6,
       }}
     >
-      <View style={{ flexShrink: 1, width: '100%' }}>
-        <Heading
-          color="$green500"
-          size="md"
-          fontWeight="$bold"
-          mb="$3"
-        >
+      <View style={{ flexShrink: 1, width: "100%" }}>
+        {icon}
+
+        <Heading color="$green500" size="md" fontWeight="$bold" mt="$3" mb="$2">
           {title}
         </Heading>
 
-        <Text
-          color="$white"
-          size="sm"
-          lineHeight={26}
-          flexWrap="wrap"
-        >
+        <Text color="$white" size="sm" lineHeight={22} flexWrap="wrap">
           {description}
         </Text>
       </View>

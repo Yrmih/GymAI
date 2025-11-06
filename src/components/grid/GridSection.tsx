@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import { CardItem } from "@/src/types/CardItem";
