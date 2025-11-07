@@ -5,7 +5,6 @@ import { CardItem } from "@/src/types/CardItem";
 import HomeCard from "@/src/components/card/HomeCard";
 import AppIcon from "../icons/AppIcon";
 
-
 export default function GridSection() {
   const router = useRouter();
 
@@ -54,9 +53,21 @@ export default function GridSection() {
       {cards.map((card, index) => (
         <MotiView
           key={index}
-          from={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", delay: index * 100 }}
+          from={{
+            opacity: 0,
+            translateY: 20,
+            scale: 0.9, // 👈 começa um pouco menor
+          }}
+          animate={{
+            opacity: 1,
+            translateY: 0,
+            scale: 1, // 👈 cresce com elasticidade
+          }}
+          transition={{
+            type: "spring", // 👈 spring dá o efeito “mola”
+            damping: 12, // controla o quão “bouncy” fica
+            delay: index * 120, // 👈 efeito cascata entre os cards
+          }}
           style={{ width: "47%" }}
         >
           <HomeCard
