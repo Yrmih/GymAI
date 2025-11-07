@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text, Heading } from "@gluestack-ui/themed";
+import { Button, VStack, Heading, Text } from "@gluestack-ui/themed";
 
 interface HomeCardProps {
   title: string;
@@ -17,8 +17,10 @@ export default function HomeCard({
   return (
     <Button
       onPress={onPress}
-      bg="$gray800"
-      borderRadius="$lg"
+      bg="#0F0F0F" // fundo preto fosco
+      borderRadius="$xl"
+      borderWidth={2}
+      borderColor="#5DD26C" // borda verde neon
       py="$10"
       px="$6"
       minHeight={220}
@@ -26,22 +28,25 @@ export default function HomeCard({
       alignItems="flex-start"
       style={{
         shadowColor: "#5DD26C",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 6,
       }}
+      $hover-bg="$gray900"
+      $active-bg="$gray800"
     >
-      <View style={{ flexShrink: 1, width: "100%" }}>
+      <VStack space="sm" w="$full">
         {icon}
 
-        <Heading color="$green500" size="md" fontWeight="$bold" mt="$3" mb="$2">
+        <Heading color="#5DD26C" size="md" fontWeight="$bold">
           {title}
         </Heading>
 
         <Text color="$white" size="sm" lineHeight={22} flexWrap="wrap">
           {description}
         </Text>
-      </View>
+      </VStack>
     </Button>
   );
 }
