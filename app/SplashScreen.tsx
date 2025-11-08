@@ -12,21 +12,23 @@ interface SplashScreenProps {
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
   const router = useRouter();
   const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
-  const [hasFinished, setHasFinished] = useState(false);
 
   // 2. Criamos uma "referência" para o componente de Vídeo
   const videoRef = useRef<Video>(null);
 
-  const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+  const handlePlaybackStatus = async (status: AVPlaybackStatus) => {
     // Se não estiver carregado OU se já terminamos, não faça nada.
-    if (!status.isLoaded || hasFinished) return;
+    if (!status.isLoaded) return;
 
     if (status.didJustFinish) {
-      // 3. ❗️ CORREÇÃO AQUI ❗️
-      // Para o vídeo manualmente para quebrar o loop do expo-av
-      videoRef.current?.stopAsync(); 
-      // Define que terminou (só vai rodar o useEffect uma vez)
-      setHasFinished(true);
+      
+      await videoRef.current?.pauseAsync(); 
+      
+      if (usuarioLogado) {
+        onFinish();
+      } else {
+        router.replace("/(auth)/Login");
+      }
     }
   };
 
