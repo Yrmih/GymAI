@@ -1,44 +1,61 @@
-import React, { useState, useEffect, useRef } from "react"; // 1. Importei o useRef
+import React, { useRef } from "react";
 import { Video, ResizeMode, AVPlaybackStatus } from "expo-av";
 import { StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
+import { MotiView, AnimatePresence } from "moti";
 
-interface SplashScreenProps {
-  onFinish: () => void;
-}
-
-export default function SplashScreen({ onFinish }: SplashScreenProps) {
+export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const router = useRouter();
   const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
-
   const videoRef = useRef<Video>(null);
+  const [showSplash, setShowSplash] = React.useState(true);
 
   const handlePlaybackStatus = async (status: AVPlaybackStatus) => {
     if (!status.isLoaded) return;
 
     if (status.didJustFinish) {
+      // Pausa o vídeo
       await videoRef.current?.pauseAsync();
+      // Inicia a animação de fade out
+      setShowSplash(false);
+    }
+  };
 
-      if (usuarioLogado) {
-        onFinish();
-      } else {
-        router.replace("/(auth)/Login");
-        onFinish();
-      }
+  const handleAnimationComplete = () => {
+    // Navega quando a animação termina
+    if (usuarioLogado) {
+      onFinish();
+    } else {
+      router.replace("/(auth)/Login");
+      onFinish();
     }
   };
 
   return (
-    <Video
-      ref={videoRef}
-      source={require("../assets/video/AI_Bodybuilding_Cinematic_Splash_Screen.mp4")}
-      style={StyleSheet.absoluteFill}
-      isMuted
-      resizeMode={ResizeMode.COVER}
-      onPlaybackStatusUpdate={handlePlaybackStatus}
-      isLooping={false}
-    />
+    <AnimatePresence>
+      {showSplash && (
+        <MotiView
+          style={StyleSheet.absoluteFill}
+          from={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          exit={{ opacity: 0 }}
+          transition={{ type: "timing", duration: 800 }}
+          onDidAnimate={handleAnimationComplete}
+        >
+          <Video
+            ref={videoRef}
+            source={require("../assets/video/AI_Bodybuilding_Cinematic_Splash_Screen.mp4")}
+            style={StyleSheet.absoluteFill}
+            isMuted
+            resizeMode={ResizeMode.COVER}
+            onPlaybackStatusUpdate={handlePlaybackStatus}
+            shouldPlay
+            isLooping={false}
+          />
+        </MotiView>
+      )}
+    </AnimatePresence>
   );
 }
