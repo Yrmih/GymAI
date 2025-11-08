@@ -1,65 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react"; // 1. Importei o useRef
+import { Video, ResizeMode, AVPlaybackStatus } from "expo-av";
+import { StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { Video, ResizeMode, AVPlaybackStatusSuccess } from "expo-av";
-import { View } from "@gluestack-ui/themed";
-import { MotiView, AnimatePresence } from "moti";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 
-export default function SplashScreen() {
+interface SplashScreenProps {
+  onFinish: () => void;
+}
+
+export default function SplashScreen({ onFinish }: SplashScreenProps) {
   const router = useRouter();
   const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
+  const [hasFinished, setHasFinished] = useState(false);
 
-  const [finished, setFinished] = useState(false);
+  // 2. Criamos uma "referência" para o componente de Vídeo
+  const videoRef = useRef<Video>(null);
 
-  const handlePlaybackStatusUpdate = (status: AVPlaybackStatusSuccess) => {
+  const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    // Se não estiver carregado OU se já terminamos, não faça nada.
+    if (!status.isLoaded || hasFinished) return;
+
     if (status.didJustFinish) {
-      setFinished(true);
+      // 3. ❗️ CORREÇÃO AQUI ❗️
+      // Para o vídeo manualmente para quebrar o loop do expo-av
+      videoRef.current?.stopAsync(); 
+      // Define que terminou (só vai rodar o useEffect uma vez)
+      setHasFinished(true);
     }
   };
 
+  // O seu useEffect (que está CORRETO) vai "ouvir" o hasFinished
+  // e navegar assim que ele virar true.
   useEffect(() => {
-    if (finished) {
-      const timer = setTimeout(() => {
-        if (usuarioLogado) {
-          router.replace("/(main)/index");
-        } else {
-          router.replace("/(auth)/login");
-        }
-      }, 1000);
-      return () => clearTimeout(timer);
+    if (!hasFinished) return;
+
+    if (usuarioLogado) {
+      onFinish(); 
+    } else {
+      router.replace("/(auth)/Login"); 
+      onFinish(); 
     }
-  }, [finished, usuarioLogado]);
+  }, [hasFinished]); 
 
   return (
-    <View flex={1} justifyContent="center" alignItems="center" bg="#000">
-      <AnimatePresence>
-        {!finished && (
-          <MotiView
-            from={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1000 }} // ← controla fade-in e fade-out (em ms)
-            style={{ flex: 1, width: "100%", height: "100%" }}
-          >
-            <Video
-              source={require("@/assets/video/AI_Bodybuilding_Cinematic_Splash_Screen.mp4")}
-              style={{ flex: 1 }}
-              resizeMode={ResizeMode.COVER}
-              shouldPlay
-              isLooping={false}
-              onPlaybackStatusUpdate={(status) => {
-                if (
-                  status.isLoaded &&
-                  (status as AVPlaybackStatusSuccess).didJustFinish
-                ) {
-                  setFinished(true);
-                }
-              }}
-            />
-          </MotiView>
-        )}
-      </AnimatePresence>
-    </View>
+    <Video
+      ref={videoRef} // 4. Passamos o ref para o componente
+      source={require("../assets/video/AI_Bodybuilding_Cinematic_Splash_Screen.mp4")}
+      style={StyleSheet.absoluteFill}
+      isMuted
+      shouldPlay={!hasFinished} // Isso ainda ajuda
+      resizeMode={ResizeMode.COVER}
+      onPlaybackStatusUpdate={onPlaybackStatusUpdate}
+      isLooping={false} // Mantemos isso por segurança
+    />
   );
 }
