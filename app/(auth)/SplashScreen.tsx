@@ -39,7 +39,7 @@ export default function SplashScreen() {
         shouldPlay
         isLooping={false}
         onPlaybackStatusUpdate={(status) => {
-          if (status.didJustFinish) {
+          if (status.isLoaded && status.didJustFinish) {
             if (usuarioLogado) router.replace("/(main)/index");
             else router.replace("/(auth)/login");
           }
