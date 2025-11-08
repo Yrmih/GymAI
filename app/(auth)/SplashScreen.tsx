@@ -1,30 +1,22 @@
-import React, { useEffect } from "react";
-import { Image } from "react-native";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 import { useRouter } from "expo-router";
-
-// Gluestack UI
-import { View, Text, Spinner } from "@gluestack-ui/themed";
-
-// Moti
-import { MotiView } from "moti";
-
-// Logo
-import logo from "@/assets/brand/logo.png";
+import { View, Spinner } from "@gluestack-ui/themed";
+import { Video, ResizeMode } from "expo-av";
 
 export default function SplashScreen() {
   const router = useRouter();
   const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
+  const videoRef = useRef<Video>(null);
 
   useEffect(() => {
+    // Timer de segurança (caso o vídeo trave)
     const timer = setTimeout(() => {
-      if (usuarioLogado) {
-        router.replace("/(main)/index");
-      } else {
-        router.replace("/(auth)/login");
-      }
-    }, 2000);
+      if (usuarioLogado) router.replace("/(main)/index");
+      else router.replace("/(auth)/login");
+    }, 6000); // tempo máximo de exibição
+
     return () => clearTimeout(timer);
   }, [usuarioLogado]);
 
@@ -33,38 +25,31 @@ export default function SplashScreen() {
       flex={1}
       justifyContent="center"
       alignItems="center"
-      backgroundColor="#0F0F0F"
+      backgroundColor="#000"
     >
-      {/* Logo animada */}
-      <MotiView
-        from={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 120 }}
-      >
-        <Image
-          source={logo}
-          style={{ width: 150, height: 150, resizeMode: "contain" }}
-        />
-      </MotiView>
+      <Video
+        ref={videoRef}
+        source={require("@/assets/video/AI_Bodybuilding_Cinematic_Splash_Screen.mp4")}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+        }}
+        resizeMode={ResizeMode.COVER}
+        shouldPlay
+        isLooping={false}
+        onPlaybackStatusUpdate={(status) => {
+          if (status.didJustFinish) {
+            if (usuarioLogado) router.replace("/(main)/index");
+            else router.replace("/(auth)/login");
+          }
+        }}
+      />
 
-      {/* Spinner */}
-      <Spinner size="large" color="#5DD26C" marginTop="$6" />
-
-      {/* Texto animado */}
-      <MotiView
-        from={{ opacity: 0, translateY: 10 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-      >
-        <Text
-          marginTop="$4"
-          color="#F8F8F8"
-          fontSize="$md"
-          textAlign="center"
-        >
-          Seu treino, seu progresso
-        </Text>
-      </MotiView>
+      {/* Spinner opcional */}
+      <View position="absolute" bottom="$10">
+        <Spinner size="large" color="#5DD26C" />
+      </View>
     </View>
   );
 }
