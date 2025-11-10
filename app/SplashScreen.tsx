@@ -55,7 +55,10 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
     <AnimatePresence>
       {!fadeOut && (
         <MotiView
-          style={[StyleSheet.absoluteFill, { zIndex: 9999, backgroundColor: "black" }]}
+          style={[
+            StyleSheet.absoluteFill,
+            { zIndex: 9999, backgroundColor: "black" },
+          ]}
           from={{ opacity: 1 }}
           animate={{ opacity: fadeOut ? 0 : 1 }}
           transition={{ type: "timing", duration: 1000 }}
