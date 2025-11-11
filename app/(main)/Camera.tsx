@@ -77,19 +77,33 @@ export default function CameraScreen() {
         onPress={openCamera}
         disabled={loading}
         backgroundColor="#5DD26C"
-        borderRadius="full"
-        padding="$3"
-        marginBottom="$3"
+        borderRadius={12}
+        paddingVertical={16}
+        paddingHorizontal={12}
+        minHeight={50}
         opacity={loading ? 0.6 : 1}
       >
-        {/* Spinner inline (opcional) + texto via ButtonText */}
         {loading && <Spinner color="#0F0F0F" mr="$2" />}
-        <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
+        <ButtonText
+          color="#0F0F0F"
+          fontWeight="$bold"
+          fontSize="$lg"
+        >
           Tirar Foto
         </ButtonText>
       </Button>
 
-      <Text marginTop="$4" color="#F8F8F8" fontSize="$sm" textAlign="center">
+      <Text
+        marginTop="$4"
+        color="#D7FFD7"
+        fontSize="$sm"
+        textAlign="center"
+        style={{
+          textShadowColor: "#5DD26C",
+          textShadowOffset: { width: 0, height: 0 },
+          textShadowRadius: 6,
+        }}
+      >
         Aponte a câmera para o equipamento de treino
       </Text>
     </View>
