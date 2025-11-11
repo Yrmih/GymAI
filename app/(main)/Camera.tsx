@@ -78,17 +78,13 @@ export default function CameraScreen() {
         disabled={loading}
         backgroundColor="#5DD26C"
         borderRadius={12}
-        paddingVertical={16}
-        paddingHorizontal={12}
-        minHeight={50}
+        paddingVertical={18}
+        paddingHorizontal={24}
+        minHeight={56}
         opacity={loading ? 0.6 : 1}
       >
         {loading && <Spinner color="#0F0F0F" mr="$2" />}
-        <ButtonText
-          color="#0F0F0F"
-          fontWeight="$bold"
-          fontSize="$lg"
-        >
+        <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
           Tirar Foto
         </ButtonText>
       </Button>
