@@ -1,6 +1,6 @@
 import React from "react";
-import { Image, Text } from "react-native";
-import { View, Button } from "@gluestack-ui/themed";
+import { Image, Text, Pressable } from "react-native";
+import { View } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import { ExerciseCardProps } from "@/src/types/type-files";
 
@@ -17,57 +17,63 @@ export default function ExerciseCard({
       animate={{ opacity: 1, translateY: 0 }}
       transition={{ delay: index * 0.1, type: "timing", duration: 400 }}
     >
-      <Button
+      <Pressable
         onPress={onPress}
-        bg="#151515"
-        borderRadius={14}
-        py="$4"
-        px="$4"
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="flex-start"
         style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: "#151515",
+          borderRadius: 16,
+          paddingVertical: 14,
+          paddingHorizontal: 16,
+          marginBottom: 12,
           shadowColor: "#5DD26C",
-          shadowOffset: { width: 0, height: 2 },
+          shadowOffset: { width: 0, height: 3 },
           shadowOpacity: 0.25,
           shadowRadius: 8,
+          elevation: 5, // android
         }}
       >
         <Image
           source={{ uri: image }}
           style={{
-            width: 70,
-            height: 70,
-            borderRadius: 14,
+            width: 80,
+            height: 80,
+            borderRadius: 16,
             marginRight: 16,
             borderWidth: 2,
             borderColor: "#5DD26C",
           }}
+          resizeMode="cover"
         />
 
         <View style={{ flex: 1 }}>
           <Text
             style={{
               color: "#FFFFFF",
-              fontSize: 17,
+              fontSize: 18,
               fontWeight: "700",
-              marginBottom: 4,
+              marginBottom: 6,
+              flexShrink: 1,
+              flexWrap: "wrap",
             }}
-            numberOfLines={1}
           >
             {name}
           </Text>
+
           <Text
             style={{
               color: "#5DD26C",
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: "600",
+              flexShrink: 1,
+              flexWrap: "wrap",
             }}
           >
             {muscle}
           </Text>
         </View>
-      </Button>
+      </Pressable>
     </MotiView>
   );
 }
