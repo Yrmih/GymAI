@@ -17,9 +17,9 @@ export default function Exercises() {
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        paddingHorizontal="$6"
-        paddingTop="$12"
-        paddingBottom="$6"
+        paddingHorizontal={24}
+        paddingTop={60}
+        paddingBottom={24}
       >
         <Text
           color="$white"
@@ -34,9 +34,9 @@ export default function Exercises() {
         <Button
           size="sm"
           bg="$green500"
-          borderRadius="$lg"
-          px="$3"
-          py="$2"
+          borderRadius={12}
+          px={16}
+          py={12}
           onPress={() => router.back()}
         >
           <ButtonText color="$black" fontWeight="$bold">
@@ -50,10 +50,9 @@ export default function Exercises() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: "center",
-          paddingHorizontal: 24,
-          paddingBottom: 60,
-          gap: 20,
+          paddingHorizontal: 20,
+          paddingBottom: 80,
+          gap: 24,
         }}
       >
         {exercisesMock.map((item, index) => (

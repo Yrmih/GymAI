@@ -4,7 +4,13 @@ import { View, Button } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import { ExerciseCardProps } from "@/src/types/type-files";
 
-export default function ExerciseCard({ name, muscle, image, onPress, index = 0 }: ExerciseCardProps) {
+export default function ExerciseCard({
+  name,
+  muscle,
+  image,
+  onPress,
+  index = 0,
+}: ExerciseCardProps) {
   return (
     <MotiView
       from={{ opacity: 0, translateY: 20 }}
@@ -13,22 +19,53 @@ export default function ExerciseCard({ name, muscle, image, onPress, index = 0 }
     >
       <Button
         onPress={onPress}
-        bg="$gray800"
-        borderRadius="lg"
-        py="$3"
+        bg="#151515"
+        borderRadius={14}
+        py="$4"
         px="$4"
-        mb="$4"
         flexDirection="row"
         alignItems="center"
-        style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 6 }}
+        justifyContent="flex-start"
+        style={{
+          shadowColor: "#5DD26C",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 8,
+        }}
       >
         <Image
           source={{ uri: image }}
-          style={{ width: 64, height: 64, borderRadius: 12, marginRight: 12 }}
+          style={{
+            width: 70,
+            height: 70,
+            borderRadius: 14,
+            marginRight: 16,
+            borderWidth: 2,
+            borderColor: "#5DD26C",
+          }}
         />
-        <View flex={1}>
-          <Text style={{ color: "#F8F8F8", fontSize: 16, fontWeight: "bold" }}>{name}</Text>
-          <Text style={{ color: "$green500", fontSize: 14 }}>{muscle}</Text>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              color: "#FFFFFF",
+              fontSize: 17,
+              fontWeight: "700",
+              marginBottom: 4,
+            }}
+            numberOfLines={1}
+          >
+            {name}
+          </Text>
+          <Text
+            style={{
+              color: "#5DD26C",
+              fontSize: 15,
+              fontWeight: "600",
+            }}
+          >
+            {muscle}
+          </Text>
         </View>
       </Button>
     </MotiView>
