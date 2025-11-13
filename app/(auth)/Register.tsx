@@ -22,6 +22,7 @@ import {
 } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import logo from "@/assets/brand/logo.png";
+import { InputFieldItem } from "@/src/types/InputFieldItem";
 import BodyFormInviteModal from "@/src/components/modal/BodyFormInviteModal";
 
 export default function Register() {
@@ -39,6 +40,15 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  // Array tipado de inputs
+  const inputFields: InputFieldItem[] = [
+    { placeholder: "Nome completo", value: nome, setValue: setNome, keyboardType: "default" },
+    { placeholder: "E-mail", value: email, setValue: setEmail, keyboardType: "email-address", autoCapitalize: "none" },
+    { placeholder: "Idade", value: idade, setValue: setIdade, keyboardType: "numeric" },
+    { placeholder: "Senha", value: senha, setValue: setSenha, secureTextEntry: true },
+    { placeholder: "Confirmar senha", value: confirmarSenha, setValue: setConfirmarSenha, secureTextEntry: true },
+  ];
+
   const validarSenha = (senha: string) => {
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -46,20 +56,11 @@ export default function Register() {
   };
 
   const handleRegister = () => {
-    if (
-      !nome ||
-      !email ||
-      !senha ||
-      !confirmarSenha ||
-      !idade ||
-      !sexo ||
-      !nivel ||
-      !objetivo
-    )
+    if (!nome || !email || !senha || !confirmarSenha || !idade || !sexo || !nivel || !objetivo) {
       return Alert.alert("Erro", "Preencha todos os campos.");
+    }
 
-    if (senha !== confirmarSenha)
-      return Alert.alert("Erro", "As senhas não coincidem.");
+    if (senha !== confirmarSenha) return Alert.alert("Erro", "As senhas não coincidem.");
 
     if (!validarSenha(senha))
       return Alert.alert(
@@ -88,170 +89,116 @@ export default function Register() {
   return (
     <>
       <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: "#0F0F0F",
-          paddingHorizontal: 24,
-          paddingTop: 40,
-        }}
-        contentContainerStyle={{
-          gap: 20,
-          paddingBottom: 60, // evita corte do botão no final
-        }}
+        style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24, paddingTop: 40 }}
+        contentContainerStyle={{ gap: 20, paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Logo */}
         <View style={{ alignItems: "center", marginBottom: 40 }}>
-          <MotiView
-            from={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 120 }}
-          >
-            <Image
-              source={logo}
-              style={{ width: 120, height: 120, resizeMode: "contain" }}
-            />
+          <MotiView from={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 120 }}>
+            <Image source={logo} style={{ width: 120, height: 120, resizeMode: "contain" }} />
           </MotiView>
         </View>
 
-        {/* Nome */}
-        <Input bg="#202020" borderRadius={20} p="$3">
-          <InputField
-            placeholder="Nome completo"
-            value={nome}
-            onChangeText={setNome}
-            color="#F8F8F8"
-            placeholderTextColor="#A3A3A3"
-          />
-        </Input>
-
-        {/* E-mail */}
-        <Input bg="#202020" borderRadius={20} p="$3">
-          <InputField
-            placeholder="E-mail"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            color="#F8F8F8"
-            placeholderTextColor="#A3A3A3"
-          />
-        </Input>
-
-        {/* Idade */}
-        <Input bg="#202020" borderRadius={20} p="$3">
-          <InputField
-            placeholder="Idade"
-            value={idade}
-            onChangeText={setIdade}
-            keyboardType="numeric"
-            color="#F8F8F8"
-            placeholderTextColor="#A3A3A3"
-          />
-        </Input>
-
-        {/* Sexo */}
-        <Select onValueChange={setSexo}>
-          <SelectTrigger bg="#202020" borderRadius={20} p="$3">
-            <SelectInput
-              placeholder="Sexo"
-              color={sexo ? "#F8F8F8" : "#A3A3A3"}
-              value={sexo}
+        {/* Campos de Input */}
+        {inputFields.map((item, index) => (
+          <Input
+            key={index}
+            bg="#202020"
+            borderRadius={24}
+            height={50}
+            p={12}
+            style={{
+              shadowColor: "#5DD26C",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+            }}
+          >
+            <InputField
+              placeholder={item.placeholder}
+              value={item.value}
+              onChangeText={item.setValue}
+              keyboardType={item.keyboardType}
+              autoCapitalize={item.autoCapitalize}
+              secureTextEntry={item.secureTextEntry}
+              color="#F8F8F8"
+              placeholderTextColor="#A3A3A3"
+              style={{ paddingVertical: 0 }}
             />
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectBackdrop />
-            <SelectContent bg="#1A1A1A">
-              <SelectDragIndicatorWrapper>
-                <SelectDragIndicator />
-              </SelectDragIndicatorWrapper>
-              <SelectItem label="Masculino" value="masculino" />
-              <SelectItem label="Feminino" value="feminino" />
-              <SelectItem label="Outro" value="outro" />
-            </SelectContent>
-          </SelectPortal>
-        </Select>
+          </Input>
+        ))}
 
-        {/* Nível */}
-        <Select onValueChange={setNivel}>
-          <SelectTrigger bg="#202020" borderRadius={20} p="$3">
-            <SelectInput
-              placeholder="Nível de experiência"
-              color={nivel ? "#F8F8F8" : "#A3A3A3"}
-              value={nivel}
-            />
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectBackdrop />
-            <SelectContent bg="#1A1A1A">
-              <SelectDragIndicatorWrapper>
-                <SelectDragIndicator />
-              </SelectDragIndicatorWrapper>
-              <SelectItem label="Iniciante" value="iniciante" />
-              <SelectItem label="Intermediário" value="intermediario" />
-              <SelectItem label="Avançado" value="avancado" />
-            </SelectContent>
-          </SelectPortal>
-        </Select>
-
-        {/* Objetivo */}
-        <Select onValueChange={setObjetivo}>
-          <SelectTrigger bg="#202020" borderRadius={20} p="$3">
-            <SelectInput
-              placeholder="Objetivo"
-              color={objetivo ? "#F8F8F8" : "#A3A3A3"}
-              value={objetivo}
-            />
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectBackdrop />
-            <SelectContent bg="#1A1A1A">
-              <SelectDragIndicatorWrapper>
-                <SelectDragIndicator />
-              </SelectDragIndicatorWrapper>
-              <SelectItem label="Ganho de massa" value="massa" />
-              <SelectItem label="Perda de gordura" value="gordura" />
-              <SelectItem label="Condicionamento" value="condicionamento" />
-            </SelectContent>
-          </SelectPortal>
-        </Select>
-
-        {/* Senha */}
-        <Input bg="#202020" borderRadius={20} p="$3">
-          <InputField
-            placeholder="Senha"
-            value={senha}
-            onChangeText={setSenha}
-            secureTextEntry
-            color="#F8F8F8"
-            placeholderTextColor="#A3A3A3"
-          />
-        </Input>
-
-        {/* Confirmar Senha */}
-        <Input bg="#202020" borderRadius={20} p="$3">
-          <InputField
-            placeholder="Confirmar senha"
-            value={confirmarSenha}
-            onChangeText={setConfirmarSenha}
-            secureTextEntry
-            color="#F8F8F8"
-            placeholderTextColor="#A3A3A3"
-          />
-        </Input>
+        {/* Selects */}
+        {[
+          {
+            placeholder: "Sexo",
+            value: sexo,
+            setValue: setSexo,
+            items: [
+              { label: "Masculino", value: "masculino" },
+              { label: "Feminino", value: "feminino" },
+              { label: "Outro", value: "outro" },
+            ],
+          },
+          {
+            placeholder: "Nível de experiência",
+            value: nivel,
+            setValue: setNivel,
+            items: [
+              { label: "Iniciante", value: "iniciante" },
+              { label: "Intermediário", value: "intermediario" },
+              { label: "Avançado", value: "avancado" },
+            ],
+          },
+          {
+            placeholder: "Objetivo",
+            value: objetivo,
+            setValue: setObjetivo,
+            items: [
+              { label: "Ganho de massa", value: "massa" },
+              { label: "Perda de gordura", value: "gordura" },
+              { label: "Condicionamento", value: "condicionamento" },
+            ],
+          },
+        ].map((selectItem, index) => (
+          <Select key={index} onValueChange={selectItem.setValue}>
+            <SelectTrigger
+              bg="#202020"
+              borderRadius={24}
+              height={50}
+              p={12}
+              style={{
+                shadowColor: "#5DD26C",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 4,
+              }}
+            >
+              <SelectInput
+                placeholder={selectItem.placeholder}
+                color={selectItem.value ? "#F8F8F8" : "#A3A3A3"}
+                value={selectItem.value}
+                style={{ paddingVertical: 0 }}
+              />
+            </SelectTrigger>
+            <SelectPortal>
+              <SelectBackdrop />
+              <SelectContent bg="#1A1A1A">
+                <SelectDragIndicatorWrapper>
+                  <SelectDragIndicator />
+                </SelectDragIndicatorWrapper>
+                {selectItem.items.map((item, i) => (
+                  <SelectItem key={i} label={item.label} value={item.value} />
+                ))}
+              </SelectContent>
+            </SelectPortal>
+          </Select>
+        ))}
 
         {/* Dica sobre senha */}
-        <Text
-          style={{
-            color: "#A3A3A3",
-            fontSize: 13,
-            marginTop: 4,
-            marginBottom: 16,
-            textAlign: "center",
-          }}
-        >
-          A senha deve conter pelo menos 8 caracteres, incluindo letra
-          maiúscula, minúscula, número e símbolo.
+        <Text style={{ color: "#A3A3A3", fontSize: 13, marginTop: 4, marginBottom: 16, textAlign: "center" }}>
+          A senha deve conter pelo menos 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo.
         </Text>
 
         {/* Botão Registrar */}
@@ -261,6 +208,12 @@ export default function Register() {
           borderRadius={24}
           padding="$4"
           mt="$3"
+          style={{
+            shadowColor: "#5DD26C",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.4,
+            shadowRadius: 8,
+          }}
         >
           {loading && <ButtonSpinner color="$black" />}
           <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
@@ -269,19 +222,9 @@ export default function Register() {
         </Button>
 
         {/* Link para login */}
-        <Text
-          style={{
-            color: "#F8F8F8",
-            textAlign: "center",
-            marginTop: 24,
-            marginBottom: 60,
-          }}
-        >
+        <Text style={{ color: "#F8F8F8", textAlign: "center", marginTop: 24, marginBottom: 60 }}>
           Já tem conta?{" "}
-          <Text
-            style={{ color: "#5DD26C" }}
-            onPress={() => router.push("/(auth)/login")}
-          >
+          <Text style={{ color: "#5DD26C" }} onPress={() => router.push("/(auth)/login")}>
             Entrar
           </Text>
         </Text>
