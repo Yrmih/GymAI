@@ -1,2 +1,2 @@
-export * from "./userSliceType";
+export * from "./usuario";
 export * from "./ExerciseCardProps"
