@@ -63,10 +63,11 @@ export default function BodyForm() {
       style={{ flex: 1, backgroundColor: "#0F0F0F" }}
       contentContainerStyle={{
         paddingHorizontal: 24,
-        paddingTop: 70,
+        paddingTop: 60,
         paddingBottom: 100,
         gap: 32,
       }}
+      showsVerticalScrollIndicator={false}
     >
       <MotiView
         from={{ opacity: 0, translateY: 25 }}
@@ -75,32 +76,35 @@ export default function BodyForm() {
         style={{ gap: 32 }}
       >
         {/* Cabeçalho */}
-        <View style={{ alignItems: "center", marginBottom: 8 }}>
-          <Text
-            style={{
-              color: "#5DD26C",
-              fontSize: 24,
-              fontWeight: "bold",
-            }}
-          >
-            Dados Corporais
-          </Text>
-          <Text
-            style={{
-              color: "#A1A1A1",
-              fontSize: 14,
-              marginTop: 6,
-              textAlign: "center",
-              maxWidth: 300,
-            }}
-          >
-            Ajude a GymAI a montar treinos sob medida para você 💪
-          </Text>
-        </View>
+        <Text
+          style={{
+            color: "#5DD26C",
+            fontSize: 26,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Dados Corporais
+        </Text>
+        <Text
+          style={{
+            color: "#A1A1A1",
+            fontSize: 15,
+            textAlign: "center",
+            marginTop: -4,
+          }}
+        >
+          Ajude a GymAI a montar treinos sob medida para você 💪
+        </Text>
 
         {/* ===== DADOS FÍSICOS ===== */}
-        <View style={{ gap: 22 }}>
-          <Input backgroundColor="#202020" borderRadius={12} height={56} px={16}>
+        <View style={{ gap: 24 }}>
+          <Input
+            backgroundColor="#202020"
+            borderRadius={14}
+            paddingHorizontal={20}
+            height={56}
+          >
             <InputField
               value={altura}
               onChangeText={setAltura}
@@ -108,10 +112,16 @@ export default function BodyForm() {
               placeholder="Altura (cm)"
               placeholderTextColor="#A1A1A1"
               color="#F8F8F8"
+              fontSize={16}
             />
           </Input>
 
-          <Input backgroundColor="#202020" borderRadius={12} height={56} px={16}>
+          <Input
+            backgroundColor="#202020"
+            borderRadius={14}
+            paddingHorizontal={20}
+            height={56}
+          >
             <InputField
               value={peso}
               onChangeText={setPeso}
@@ -119,14 +129,22 @@ export default function BodyForm() {
               placeholder="Peso (kg)"
               placeholderTextColor="#A1A1A1"
               color="#F8F8F8"
+              fontSize={16}
             />
           </Input>
 
-          <View style={{ gap: 8 }}>
-            <Text style={{ color: "#F8F8F8", fontSize: 14 }}>Biotipo corporal</Text>
+          <View>
+            <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>
+              Biotipo corporal
+            </Text>
             <Select selectedValue={biotipo} onValueChange={setBiotipo}>
-              <SelectTrigger backgroundColor="#202020" borderRadius={12} height={56} px={16}>
-                <Text style={{ color: "#F8F8F8" }}>{biotipo}</Text>
+              <SelectTrigger
+                backgroundColor="#202020"
+                borderRadius={14}
+                paddingHorizontal={20}
+                height={56}
+              >
+                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{biotipo}</Text>
                 <SelectIcon />
               </SelectTrigger>
               <SelectPortal>
@@ -140,11 +158,18 @@ export default function BodyForm() {
             </Select>
           </View>
 
-          <View style={{ gap: 8 }}>
-            <Text style={{ color: "#F8F8F8", fontSize: 14 }}>Tempo de treino</Text>
+          <View>
+            <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>
+              Tempo de treino
+            </Text>
             <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
-              <SelectTrigger backgroundColor="#202020" borderRadius={12} height={56} px={16}>
-                <Text style={{ color: "#F8F8F8" }}>{tempoTreino}</Text>
+              <SelectTrigger
+                backgroundColor="#202020"
+                borderRadius={14}
+                paddingHorizontal={20}
+                height={56}
+              >
+                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{tempoTreino}</Text>
                 <SelectIcon />
               </SelectTrigger>
               <SelectPortal>
@@ -161,23 +186,35 @@ export default function BodyForm() {
         </View>
 
         {/* ===== DADOS DE TREINO ===== */}
-        <View style={{ gap: 22 }}>
+        <View style={{ gap: 24, marginTop: 8 }}>
           <Text
             style={{
               color: "#F8F8F8",
               fontSize: 18,
               fontWeight: "bold",
-              marginBottom: -6,
+              marginBottom: 4,
             }}
           >
             Preferências de treino
           </Text>
 
-          <View style={{ gap: 8 }}>
-            <Text style={{ color: "#F8F8F8", fontSize: 14 }}>Frequência semanal</Text>
-            <Select selectedValue={frequenciaSemanal} onValueChange={setFrequenciaSemanal}>
-              <SelectTrigger backgroundColor="#202020" borderRadius={12} height={56} px={16}>
-                <Text style={{ color: "#F8F8F8" }}>{frequenciaSemanal}</Text>
+          <View>
+            <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>
+              Frequência semanal
+            </Text>
+            <Select
+              selectedValue={frequenciaSemanal}
+              onValueChange={setFrequenciaSemanal}
+            >
+              <SelectTrigger
+                backgroundColor="#202020"
+                borderRadius={14}
+                paddingHorizontal={20}
+                height={56}
+              >
+                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
+                  {frequenciaSemanal}
+                </Text>
                 <SelectIcon />
               </SelectTrigger>
               <SelectPortal>
@@ -193,23 +230,35 @@ export default function BodyForm() {
             </Select>
           </View>
 
-          <Input backgroundColor="#202020" borderRadius={12} height={56} px={16}>
+          <Input
+            backgroundColor="#202020"
+            borderRadius={14}
+            paddingHorizontal={20}
+            height={56}
+          >
             <InputField
               value={gruposPrioritarios}
               onChangeText={setGruposPrioritarios}
               placeholder="Grupos musculares prioritários (ex: costas e pernas)"
               placeholderTextColor="#A1A1A1"
               color="#F8F8F8"
+              fontSize={16}
             />
           </Input>
 
-          <Input backgroundColor="#202020" borderRadius={12} height={56} px={16}>
+          <Input
+            backgroundColor="#202020"
+            borderRadius={14}
+            paddingHorizontal={20}
+            height={56}
+          >
             <InputField
               value={lesoes}
               onChangeText={setLesoes}
               placeholder="Possui alguma lesão ou limitação física?"
               placeholderTextColor="#A1A1A1"
               color="#F8F8F8"
+              fontSize={16}
             />
           </Input>
         </View>
@@ -222,13 +271,18 @@ export default function BodyForm() {
         >
           <Button
             backgroundColor="#5DD26C"
-            borderRadius={12}
+            borderRadius={14}
             height={56}
             onPress={handleContinue}
             disabled={loading}
           >
             {loading && <ButtonSpinner color="#0F0F0F" />}
-            <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
+            <ButtonText
+              color="#0F0F0F"
+              fontWeight="$bold"
+              fontSize="$lg"
+              marginLeft="$2"
+            >
               {loading ? "Carregando..." : "Concluir cadastro corporal"}
             </ButtonText>
           </Button>
