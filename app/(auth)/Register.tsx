@@ -92,7 +92,7 @@ export default function Register() {
 
   const handleIrBodyForm = () => {
     setShowModal(false);
-    router.push("/(auth)/BodyForm");
+    router.push("/BodyForm");
   };
 
   const handlePular = () => {

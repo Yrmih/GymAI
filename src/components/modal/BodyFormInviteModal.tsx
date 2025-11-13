@@ -9,6 +9,7 @@ import {
   Button,
   ButtonText,
   Heading,
+  HStack,
 } from "@gluestack-ui/themed";
 import { Text } from "react-native";
 
@@ -36,38 +37,47 @@ export default function BodyFormInviteModal({
         </ModalHeader>
 
         <ModalBody>
-          <Text style={{ color: "#A3A3A3", marginTop: 8 }}>
-            Quer deixar seu perfil completo pra treinos mais precisos?
+          <Text style={{ color: "#A3A3A3", marginTop: 8, lineHeight: 20 }}>
+            Quer deixar seu perfil completo pra treinos mais precisos?{"\n"}
             Adicione seus dados corporais agora 💪
           </Text>
         </ModalBody>
 
-        <ModalFooter
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 16,
-          }}
-        >
-          <Button
-            bg="#5DD26C"
-            borderRadius="full"
-            paddingHorizontal={24}
-            onPress={onPreencher}
-          >
-            <ButtonText color="#0F0F0F">Preencher agora</ButtonText>
-          </Button>
+        <ModalFooter mt={16}>
+          <HStack space="md" justifyContent="space-between" w="100%">
+            <Button
+              flex={1}
+              bg="#5DD26C"
+              borderRadius={16}
+              height={48}
+              onPress={onPreencher}
+              style={{
+                shadowColor: "#5DD26C",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 3,
+                elevation: 2,
+              }}
+            >
+              <ButtonText color="#0F0F0F" fontWeight="$bold">
+                Preencher
+              </ButtonText>
+            </Button>
 
-          <Button
-            bg="transparent"
-            borderColor="#5DD26C"
-            borderWidth={1}
-            borderRadius="full"
-            paddingHorizontal={24}
-            onPress={onPular}
-          >
-            <ButtonText color="#5DD26C">Depois</ButtonText>
-          </Button>
+            <Button
+              flex={1}
+              bg="transparent"
+              borderColor="#5DD26C"
+              borderWidth={1.5}
+              borderRadius={16}
+              height={48}
+              onPress={onPular}
+            >
+              <ButtonText color="#5DD26C" fontWeight="$semibold">
+                Depois
+              </ButtonText>
+            </Button>
+          </HStack>
         </ModalFooter>
       </ModalContent>
     </Modal>
