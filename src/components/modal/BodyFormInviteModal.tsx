@@ -39,7 +39,7 @@ export default function BodyFormInviteModal({
         <ModalBody>
           <Text
             style={{
-              color: "#6CFF7F", // 💚 verde neon
+              color: "#6CFF7F",
               marginTop: 8,
               lineHeight: 20,
               fontSize: 15,
