@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import {
-  View,
   Input,
   InputField,
   Button,
@@ -28,6 +27,9 @@ export default function BodyForm() {
   const [peso, setPeso] = useState("");
   const [biotipo, setBiotipo] = useState("Ectomorfo");
   const [tempoTreino, setTempoTreino] = useState("0-6 meses");
+  const [frequenciaSemanal, setFrequenciaSemanal] = useState("3x por semana");
+  const [gruposPrioritarios, setGruposPrioritarios] = useState("");
+  const [lesoes, setLesoes] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleContinue = () => {
@@ -44,6 +46,9 @@ export default function BodyForm() {
         peso: Number(peso),
         biotipo,
         tempoTreino,
+        frequenciaSemanal,
+        gruposPrioritarios,
+        lesoes,
       })
     );
 
@@ -55,97 +60,165 @@ export default function BodyForm() {
 
   return (
     <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: "#0F0F0F",
-        paddingHorizontal: 24,
-        paddingTop: 40,
-      }}
+      style={{ flex: 1, backgroundColor: "#0F0F0F" }}
       contentContainerStyle={{
-        gap: 20, // Ajuste no espaçamento para não esmagar o texto
-        paddingBottom: 60,
+        paddingHorizontal: 24,
+        paddingTop: 60,
+        paddingBottom: 100,
+        gap: 28,
       }}
     >
       <MotiView
-        from={{ opacity: 0, translateY: 20 }}
+        from={{ opacity: 0, translateY: 25 }}
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ gap: 20 }} // Maior espaçamento entre os campos
+        style={{ gap: 28 }}
       >
-        {/* Altura */}
-        <Input
-          variant="outline"
-          size="md"
-          backgroundColor="#202020"
-          borderRadius={12} // borderRadius mais leve
-          padding="$3"
+        {/* Cabeçalho */}
+        <Text
+          style={{
+            color: "#5DD26C",
+            fontSize: 24,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
         >
-          <InputField
-            value={altura}
-            onChangeText={setAltura}
-            keyboardType="numeric"
-            placeholder="Altura (cm)"
-            placeholderTextColor="#888888"
-            style={{ paddingVertical: 0 }}
-          />
-        </Input>
-
-        {/* Peso */}
-        <Input
-          variant="outline"
-          size="md"
-          backgroundColor="#202020"
-          borderRadius={12} // borderRadius mais leve
-          padding="$3"
+          Dados Corporais
+        </Text>
+        <Text
+          style={{
+            color: "#A1A1A1",
+            fontSize: 14,
+            textAlign: "center",
+            marginTop: -6,
+          }}
         >
-          <InputField
-            value={peso}
-            onChangeText={setPeso}
-            keyboardType="numeric"
-            placeholder="Peso (kg)"
-            placeholderTextColor="#888888"
-            style={{ paddingVertical: 0 }}
-          />
-        </Input>
+          Ajude a GymAI a montar treinos sob medida para você 💪
+        </Text>
 
-        {/* Biotipo */}
-        <Select selectedValue={biotipo} onValueChange={setBiotipo}>
-          <SelectTrigger
-            backgroundColor="#202020"
-            borderRadius={12} // borderRadius mais leve
-            padding="$3"
-          >
-            <SelectIcon />
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectBackdrop />
-            <SelectContent>
-              <SelectItem label="Ectomorfo" value="Ectomorfo" />
-              <SelectItem label="Mesomorfo" value="Mesomorfo" />
-              <SelectItem label="Endomorfo" value="Endomorfo" />
-            </SelectContent>
-          </SelectPortal>
-        </Select>
+        {/* ===== DADOS FÍSICOS ===== */}
+        <View style={{ gap: 20 }}>
+          <Input backgroundColor="#202020" borderRadius={12} paddingVertical={16} paddingHorizontal={16}>
+            <InputField
+              value={altura}
+              onChangeText={setAltura}
+              keyboardType="numeric"
+              placeholder="Altura (cm)"
+              placeholderTextColor="#A1A1A1"
+              color="#F8F8F8"
+            />
+          </Input>
 
-        {/* Tempo de treino */}
-        <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
-          <SelectTrigger
-            backgroundColor="#202020"
-            borderRadius={12} // borderRadius mais leve
-            padding="$3"
-          >
-            <SelectIcon />
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectBackdrop />
-            <SelectContent>
-              <SelectItem label="0-6 meses" value="0-6 meses" />
-              <SelectItem label="6-12 meses" value="6-12 meses" />
-              <SelectItem label="1-2 anos" value="1-2 anos" />
-              <SelectItem label="+2 anos" value="+2 anos" />
-            </SelectContent>
-          </SelectPortal>
-        </Select>
+          <Input backgroundColor="#202020" borderRadius={12} paddingVertical={16} paddingHorizontal={16}>
+            <InputField
+              value={peso}
+              onChangeText={setPeso}
+              keyboardType="numeric"
+              placeholder="Peso (kg)"
+              placeholderTextColor="#A1A1A1"
+              color="#F8F8F8"
+            />
+          </Input>
+
+          <View>
+            <Text style={{ color: "#F8F8F8", marginBottom: 8 }}>Biotipo corporal</Text>
+            <Select selectedValue={biotipo} onValueChange={setBiotipo}>
+              <SelectTrigger
+                backgroundColor="#202020"
+                borderRadius={12}
+                paddingVertical={16}
+                paddingHorizontal={16}
+              >
+                <Text style={{ color: "#F8F8F8" }}>{biotipo}</Text>
+                <SelectIcon />
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop />
+                <SelectContent>
+                  <SelectItem label="Ectomorfo" value="Ectomorfo" />
+                  <SelectItem label="Mesomorfo" value="Mesomorfo" />
+                  <SelectItem label="Endomorfo" value="Endomorfo" />
+                </SelectContent>
+              </SelectPortal>
+            </Select>
+          </View>
+
+          <View>
+            <Text style={{ color: "#F8F8F8", marginBottom: 8 }}>Tempo de treino</Text>
+            <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
+              <SelectTrigger
+                backgroundColor="#202020"
+                borderRadius={12}
+                paddingVertical={16}
+                paddingHorizontal={16}
+              >
+                <Text style={{ color: "#F8F8F8" }}>{tempoTreino}</Text>
+                <SelectIcon />
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop />
+                <SelectContent>
+                  <SelectItem label="0-6 meses" value="0-6 meses" />
+                  <SelectItem label="6-12 meses" value="6-12 meses" />
+                  <SelectItem label="1-2 anos" value="1-2 anos" />
+                  <SelectItem label="+2 anos" value="+2 anos" />
+                </SelectContent>
+              </SelectPortal>
+            </Select>
+          </View>
+        </View>
+
+        {/* ===== DADOS DE TREINO ===== */}
+        <View style={{ gap: 20, marginTop: 8 }}>
+          <Text style={{ color: "#F8F8F8", fontSize: 18, fontWeight: "bold" }}>
+            Preferências de treino
+          </Text>
+
+          <View>
+            <Text style={{ color: "#F8F8F8", marginBottom: 8 }}>Frequência semanal</Text>
+            <Select selectedValue={frequenciaSemanal} onValueChange={setFrequenciaSemanal}>
+              <SelectTrigger
+                backgroundColor="#202020"
+                borderRadius={12}
+                paddingVertical={16}
+                paddingHorizontal={16}
+              >
+                <Text style={{ color: "#F8F8F8" }}>{frequenciaSemanal}</Text>
+                <SelectIcon />
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop />
+                <SelectContent>
+                  <SelectItem label="3x por semana" value="3x por semana" />
+                  <SelectItem label="4x por semana" value="4x por semana" />
+                  <SelectItem label="5x por semana" value="5x por semana" />
+                  <SelectItem label="6x por semana" value="6x por semana" />
+                  <SelectItem label="Todos os dias" value="Todos os dias" />
+                </SelectContent>
+              </SelectPortal>
+            </Select>
+          </View>
+
+          <Input backgroundColor="#202020" borderRadius={12} paddingVertical={16} paddingHorizontal={16}>
+            <InputField
+              value={gruposPrioritarios}
+              onChangeText={setGruposPrioritarios}
+              placeholder="Grupos musculares prioritários (ex: costas e pernas)"
+              placeholderTextColor="#A1A1A1"
+              color="#F8F8F8"
+            />
+          </Input>
+
+          <Input backgroundColor="#202020" borderRadius={12} paddingVertical={16} paddingHorizontal={16}>
+            <InputField
+              value={lesoes}
+              onChangeText={setLesoes}
+              placeholder="Possui alguma lesão ou limitação física?"
+              placeholderTextColor="#A1A1A1"
+              color="#F8F8F8"
+            />
+          </Input>
+        </View>
 
         {/* Botão Continuar */}
         <MotiView
@@ -154,23 +227,22 @@ export default function BodyForm() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Button
-            variant="solid"
-            size="md"
             backgroundColor="#5DD26C"
-            borderRadius={12} // borderRadius mais leve
-            paddingVertical={16} // Ajuste no padding para mais espaço
+            borderRadius={12}
+            paddingVertical={16}
+            paddingHorizontal={16}
+            minHeight={52}
             onPress={handleContinue}
             disabled={loading}
-            style={{
-              shadowColor: "#5DD26C",
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 6,
-            }}
           >
             {loading && <ButtonSpinner color="#0F0F0F" />}
-            <ButtonText color="#0F0F0F" fontWeight="bold" fontSize="$lg" marginLeft="$2">
-              {loading ? "Carregando..." : "Continuar"}
+            <ButtonText
+              color="#0F0F0F"
+              fontWeight="$bold"
+              fontSize="$lg"
+              marginLeft="$2"
+            >
+              {loading ? "Carregando..." : "Concluir cadastro corporal"}
             </ButtonText>
           </Button>
         </MotiView>
