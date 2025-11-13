@@ -37,9 +37,18 @@ export default function BodyFormInviteModal({
         </ModalHeader>
 
         <ModalBody>
-          <Text style={{ color: "#A3A3A3", marginTop: 8, lineHeight: 20 }}>
+          <Text
+            style={{
+              color: "#6CFF7F", // 💚 verde neon
+              marginTop: 8,
+              lineHeight: 20,
+              fontSize: 15,
+              fontWeight: "500",
+              textAlign: "left",
+            }}
+          >
             Quer deixar seu perfil completo pra treinos mais precisos?{"\n"}
-            Adicione seus dados corporais agora 💪
+            Adicione seus dados corporais agora! 💪
           </Text>
         </ModalBody>
 
