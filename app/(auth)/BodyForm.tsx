@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { updateUserBody } from "@/src/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
-
 import {
   View,
   Input,
@@ -56,40 +55,66 @@ export default function BodyForm() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24, paddingTop: 40 }}
-      contentContainerStyle={{ gap: 16, paddingBottom: 60 }}
+      style={{
+        flex: 1,
+        backgroundColor: "#0F0F0F",
+        paddingHorizontal: 24,
+        paddingTop: 40,
+      }}
+      contentContainerStyle={{
+        gap: 20, // Ajuste no espaçamento para não esmagar o texto
+        paddingBottom: 60,
+      }}
     >
       <MotiView
         from={{ opacity: 0, translateY: 20 }}
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ gap: 16 }}
+        style={{ gap: 20 }} // Maior espaçamento entre os campos
       >
         {/* Altura */}
-        <Input variant="outline" size="md" backgroundColor="#202020" borderRadius="xl" padding="$3">
+        <Input
+          variant="outline"
+          size="md"
+          backgroundColor="#202020"
+          borderRadius={12} // borderRadius mais leve
+          padding="$3"
+        >
           <InputField
             value={altura}
             onChangeText={setAltura}
             keyboardType="numeric"
             placeholder="Altura (cm)"
             placeholderTextColor="#888888"
+            style={{ paddingVertical: 0 }}
           />
         </Input>
 
         {/* Peso */}
-        <Input variant="outline" size="md" backgroundColor="#202020" borderRadius="xl" padding="$3">
+        <Input
+          variant="outline"
+          size="md"
+          backgroundColor="#202020"
+          borderRadius={12} // borderRadius mais leve
+          padding="$3"
+        >
           <InputField
             value={peso}
             onChangeText={setPeso}
             keyboardType="numeric"
             placeholder="Peso (kg)"
             placeholderTextColor="#888888"
+            style={{ paddingVertical: 0 }}
           />
         </Input>
 
         {/* Biotipo */}
         <Select selectedValue={biotipo} onValueChange={setBiotipo}>
-          <SelectTrigger backgroundColor="#202020" borderRadius="xl" padding="$3">
+          <SelectTrigger
+            backgroundColor="#202020"
+            borderRadius={12} // borderRadius mais leve
+            padding="$3"
+          >
             <SelectIcon />
           </SelectTrigger>
           <SelectPortal>
@@ -104,7 +129,11 @@ export default function BodyForm() {
 
         {/* Tempo de treino */}
         <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
-          <SelectTrigger backgroundColor="#202020" borderRadius="xl" padding="$3">
+          <SelectTrigger
+            backgroundColor="#202020"
+            borderRadius={12} // borderRadius mais leve
+            padding="$3"
+          >
             <SelectIcon />
           </SelectTrigger>
           <SelectPortal>
@@ -128,10 +157,16 @@ export default function BodyForm() {
             variant="solid"
             size="md"
             backgroundColor="#5DD26C"
-            borderRadius="full"
-            paddingBottom="$4"
+            borderRadius={12} // borderRadius mais leve
+            paddingVertical={16} // Ajuste no padding para mais espaço
             onPress={handleContinue}
             disabled={loading}
+            style={{
+              shadowColor: "#5DD26C",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.3,
+              shadowRadius: 6,
+            }}
           >
             {loading && <ButtonSpinner color="#0F0F0F" />}
             <ButtonText color="#0F0F0F" fontWeight="bold" fontSize="$lg" marginLeft="$2">
