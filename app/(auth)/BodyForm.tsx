@@ -94,7 +94,7 @@ export default function BodyForm() {
             marginTop: -4,
           }}
         >
-          Ajude a GymAI a montar treinos sob medida para você 💪
+          Ajude a GymAI a montar treinos sob medida para você.
         </Text>
 
         {/* ===== DADOS FÍSICOS ===== */}
