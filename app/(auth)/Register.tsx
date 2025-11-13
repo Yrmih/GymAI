@@ -19,16 +19,10 @@ import {
   SelectDragIndicator,
   SelectDragIndicatorWrapper,
   SelectItem,
-  Modal,
-  ModalBackdrop,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Heading,
 } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import logo from "@/assets/brand/logo.png";
+import BodyFormInviteModal from "@/src/components/modal/BodyFormInviteModal";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -77,7 +71,7 @@ export default function Register() {
     setTimeout(() => {
       dispatch(login({ nome }));
       setLoading(false);
-      setShowModal(true); // 👉 exibe o modal de convite pro BodyForm
+      setShowModal(true);
     }, 1500);
   };
 
@@ -88,7 +82,7 @@ export default function Register() {
 
   const handlePular = () => {
     setShowModal(false);
-    router.push("/(tabs)/Home"); // Vai pra Home sem preencher BodyForm
+    router.push("/(tabs)/Home");
   };
 
   return (
@@ -100,9 +94,13 @@ export default function Register() {
           paddingHorizontal: 24,
           paddingTop: 40,
         }}
-        contentContainerStyle={{ gap: 16 }}
+        contentContainerStyle={{
+          gap: 20,
+          paddingBottom: 60, // evita corte do botão no final
+        }}
         showsVerticalScrollIndicator={false}
       >
+        {/* Logo */}
         <View style={{ alignItems: "center", marginBottom: 40 }}>
           <MotiView
             from={{ scale: 0 }}
@@ -117,7 +115,7 @@ export default function Register() {
         </View>
 
         {/* Nome */}
-        <Input backgroundColor="#202020" borderRadius="xl" padding="$3" mb="$3">
+        <Input bg="#202020" borderRadius={20} p="$3">
           <InputField
             placeholder="Nome completo"
             value={nome}
@@ -128,7 +126,7 @@ export default function Register() {
         </Input>
 
         {/* E-mail */}
-        <Input backgroundColor="#202020" borderRadius="xl" padding="$3" mb="$3">
+        <Input bg="#202020" borderRadius={20} p="$3">
           <InputField
             placeholder="E-mail"
             value={email}
@@ -141,7 +139,7 @@ export default function Register() {
         </Input>
 
         {/* Idade */}
-        <Input backgroundColor="#202020" borderRadius="xl" padding="$3" mb="$3">
+        <Input bg="#202020" borderRadius={20} p="$3">
           <InputField
             placeholder="Idade"
             value={idade}
@@ -154,7 +152,7 @@ export default function Register() {
 
         {/* Sexo */}
         <Select onValueChange={setSexo}>
-          <SelectTrigger bg="#202020" borderRadius="xl" mb="$3">
+          <SelectTrigger bg="#202020" borderRadius={20} p="$3">
             <SelectInput
               placeholder="Sexo"
               color={sexo ? "#F8F8F8" : "#A3A3A3"}
@@ -174,9 +172,9 @@ export default function Register() {
           </SelectPortal>
         </Select>
 
-        {/* Nível de experiência */}
+        {/* Nível */}
         <Select onValueChange={setNivel}>
-          <SelectTrigger bg="#202020" borderRadius="xl" mb="$3">
+          <SelectTrigger bg="#202020" borderRadius={20} p="$3">
             <SelectInput
               placeholder="Nível de experiência"
               color={nivel ? "#F8F8F8" : "#A3A3A3"}
@@ -198,7 +196,7 @@ export default function Register() {
 
         {/* Objetivo */}
         <Select onValueChange={setObjetivo}>
-          <SelectTrigger bg="#202020" borderRadius="xl" mb="$3">
+          <SelectTrigger bg="#202020" borderRadius={20} p="$3">
             <SelectInput
               placeholder="Objetivo"
               color={objetivo ? "#F8F8F8" : "#A3A3A3"}
@@ -219,7 +217,7 @@ export default function Register() {
         </Select>
 
         {/* Senha */}
-        <Input backgroundColor="#202020" borderRadius="xl" padding="$3" mb="$3">
+        <Input bg="#202020" borderRadius={20} p="$3">
           <InputField
             placeholder="Senha"
             value={senha}
@@ -231,7 +229,7 @@ export default function Register() {
         </Input>
 
         {/* Confirmar Senha */}
-        <Input backgroundColor="#202020" borderRadius="xl" padding="$3" mb="$1">
+        <Input bg="#202020" borderRadius={20} p="$3">
           <InputField
             placeholder="Confirmar senha"
             value={confirmarSenha}
@@ -243,7 +241,15 @@ export default function Register() {
         </Input>
 
         {/* Dica sobre senha */}
-        <Text style={{ color: "#A3A3A3", fontSize: 13, marginBottom: 20 }}>
+        <Text
+          style={{
+            color: "#A3A3A3",
+            fontSize: 13,
+            marginTop: 4,
+            marginBottom: 16,
+            textAlign: "center",
+          }}
+        >
           A senha deve conter pelo menos 8 caracteres, incluindo letra
           maiúscula, minúscula, número e símbolo.
         </Text>
@@ -252,9 +258,9 @@ export default function Register() {
         <Button
           onPress={handleRegister}
           backgroundColor="#5DD26C"
-          borderRadius="full"
+          borderRadius={24}
           padding="$4"
-          marginBottom="$4"
+          mt="$3"
         >
           {loading && <ButtonSpinner color="$black" />}
           <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
@@ -263,7 +269,14 @@ export default function Register() {
         </Button>
 
         {/* Link para login */}
-        <Text style={{ color: "#F8F8F8", textAlign: "center" }}>
+        <Text
+          style={{
+            color: "#F8F8F8",
+            textAlign: "center",
+            marginTop: 24,
+            marginBottom: 60,
+          }}
+        >
           Já tem conta?{" "}
           <Text
             style={{ color: "#5DD26C" }}
@@ -274,49 +287,13 @@ export default function Register() {
         </Text>
       </ScrollView>
 
-      {/* 🧩 Modal de convite para BodyForm */}
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <ModalBackdrop />
-        <ModalContent bg="#1A1A1A" borderRadius="$2xl" p="$5">
-          <ModalHeader>
-            <Heading color="$white" fontSize="$xl">
-              Complete seu perfil
-            </Heading>
-          </ModalHeader>
-          <ModalBody>
-            <Text style={{ color: "#A3A3A3", marginTop: 8 }}>
-              Quer deixar seu perfil completo pra treinos mais precisos?
-              Adicione seus dados corporais agora 💪
-            </Text>
-          </ModalBody>
-          <ModalFooter
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 16,
-            }}
-          >
-            <Button
-              bg="#5DD26C"
-              borderRadius="full"
-              paddingHorizontal={24}
-              onPress={handleIrBodyForm}
-            >
-              <ButtonText color="#0F0F0F">Preencher agora</ButtonText>
-            </Button>
-            <Button
-              bg="transparent"
-              borderColor="#5DD26C"
-              borderWidth={1}
-              borderRadius="full"
-              paddingHorizontal={24}
-              onPress={handlePular}
-            >
-              <ButtonText color="#5DD26C">Depois</ButtonText>
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      {/* Modal separado */}
+      <BodyFormInviteModal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+        onPreencher={handleIrBodyForm}
+        onPular={handlePular}
+      />
     </>
   );
 }
