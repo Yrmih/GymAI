@@ -1,97 +1,141 @@
 import React from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
-import { RootState } from "@/src/redux/store";
-
 import { View, Text, Divider } from "@gluestack-ui/themed";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/src/redux/store";
 import AppIcon from "@/src/components/icons/AppIcon";
-import { PerfilUsuario } from "@/src/types/perfil";
+import { logoutUsuario } from "@/src/redux/slices/usuarioSlice";
 
 export default function Settings() {
-  // ✅ obtém os dados do usuário do slice 'usuario'
-  const perfil = useSelector((state: RootState) => state.usuario) as PerfilUsuario;
+  const usuario = useSelector((state: RootState) => state.usuario);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUsuario());
+    console.log("Usuário deslogado");
+    // futuramente: router.replace("/auth/login");
+  };
 
   return (
-    <View flex={1} bg="#0F0F0F" padding={24}>
+    <View flex={1} bg="#0F0F0F">
       <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingVertical: 32,
+          gap: 32,
+        }}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
       >
-        {/* Cabeçalho */}
-        <View alignItems="center" mb={32}>
-          <AppIcon name="settings-outline" size={48} color="#5DD26C" />
-          <Text color="#FFF" fontSize="$2xl" fontWeight="$bold" mt={12}>
-            Configurações
+        {/* 🧑 Perfil */}
+        <View alignItems="center">
+          <View
+            w={96}
+            h={96}
+            borderRadius={48}
+            bg="#1A1A1A"
+            alignItems="center"
+            justifyContent="center"
+            mb={12}
+          >
+            <AppIcon name="person-circle-outline" size={72} color="#5DD26C" />
+          </View>
+          <Text color="#FFF" fontSize="$lg" fontWeight="$bold">
+            {usuario.nome || "Treinador"}
           </Text>
           <Text color="#9B9B9B" fontSize="$sm">
-            {perfil.email || "usuario@email.com"}
+            {usuario.email || "usuario@email.com"}
           </Text>
         </View>
 
-        {/* Seções */}
-        <View mb={24}>
-          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mb={12}>
+        {/* ⚙️ Seções de Configuração */}
+        <View gap={20}>
+          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Conta
           </Text>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <AppIcon name="person-outline" size={24} />
-            <Text color="#FFF" fontSize="$md" ml={12}>
-              Editar Perfil
-            </Text>
+          <TouchableOpacity>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="create-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Editar Perfil
+              </Text>
+            </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
-            <AppIcon name="lock-closed-outline" size={24} />
-            <Text color="#FFF" fontSize="$md" ml={12}>
-              Alterar Senha
-            </Text>
+          <TouchableOpacity>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="key-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Alterar Senha
+              </Text>
+            </View>
           </TouchableOpacity>
-        </View>
 
-        <Divider bg="#1E1E1E" my={16} />
+          <Divider bg="#222" mt={12} />
 
-        <View mb={24}>
-          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mb={12}>
+          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mt={8}>
             Preferências
           </Text>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <AppIcon name="moon-outline" size={24} />
-            <Text color="#FFF" fontSize="$md" ml={12}>
-              Modo Escuro
-            </Text>
+          <TouchableOpacity>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="moon-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Modo Escuro
+              </Text>
+            </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
-            <AppIcon name="notifications-outline" size={24} />
-            <Text color="#FFF" fontSize="$md" ml={12}>
-              Alertas de Treino
-            </Text>
+          <TouchableOpacity>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="notifications-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Alertas de Treino
+              </Text>
+            </View>
           </TouchableOpacity>
-        </View>
 
-        <Divider bg="#1E1E1E" my={16} />
+          <TouchableOpacity>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="language-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Idioma
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-        <View>
-          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mb={12}>
+          <Divider bg="#222" mt={12} />
+
+          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mt={8}>
             Sistema
           </Text>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <AppIcon name="language-outline" size={24} />
-            <Text color="#FFF" fontSize="$md" ml={12}>
-              Idioma
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
-            <AppIcon name="information-circle-outline" size={24} />
-            <Text color="#FFF" fontSize="$md" ml={12}>
-              Sobre o App
-            </Text>
+          <TouchableOpacity>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="information-circle-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Sobre o App
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
+
+        {/* 🚪 Logout */}
+        <TouchableOpacity
+          onPress={handleLogout}
+          style={{
+            marginTop: 40,
+            alignSelf: "center",
+            backgroundColor: "#181818",
+            paddingVertical: 14,
+            paddingHorizontal: 32,
+            borderRadius: 12,
+          }}
+        >
+          <Text color="#FF5C5C" fontSize="$sm" fontWeight="$bold">
+            Sair da Conta
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
