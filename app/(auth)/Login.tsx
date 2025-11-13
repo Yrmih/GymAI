@@ -32,10 +32,11 @@ export default function Login() {
     if (!email || !senha) return alert("Preencha e-mail e senha.");
     setLoading(true);
 
+    // Simula login (placeholder)
     setTimeout(() => {
       dispatch(login({ nome: email.split("@")[0] }));
       setLoading(false);
-      router.replace("/");
+      router.replace("/(main)"); // 👈 após login, envia para a home
     }, 1500);
   };
 
@@ -52,7 +53,9 @@ export default function Login() {
           paddingVertical: 40,
           gap: 20,
         }}
+        keyboardShouldPersistTaps="handled"
       >
+        {/* Logo animado */}
         <View style={{ alignItems: "center", marginBottom: 40 }}>
           <MotiView
             from={{ scale: 0 }}
@@ -66,11 +69,11 @@ export default function Login() {
           </MotiView>
         </View>
 
-        {/* Email */}
+        {/* Campo: E-mail */}
         <Input
           backgroundColor="#202020"
-          borderRadius={12} 
-          paddingVertical={14} 
+          borderRadius={12}
+          paddingVertical={14}
           paddingHorizontal={12}
           marginBottom={16}
           minHeight={50}
@@ -84,7 +87,7 @@ export default function Login() {
           />
         </Input>
 
-        {/* Senha */}
+        {/* Campo: Senha */}
         <Input
           backgroundColor="#202020"
           borderRadius={12}
@@ -103,10 +106,10 @@ export default function Login() {
           />
         </Input>
 
-        {/* Botão Entrar */}
+        {/* Botão: Entrar */}
         <Button
           backgroundColor="$green500"
-          borderRadius={12} 
+          borderRadius={12}
           paddingVertical={16}
           paddingHorizontal={12}
           minHeight={50}
@@ -116,12 +119,12 @@ export default function Login() {
           <ButtonText>{loading ? "Carregando..." : "Entrar"}</ButtonText>
         </Button>
 
-        {/* Link para cadastro */}
+        {/* Link: Ir para cadastro */}
         <Text style={{ color: "#F8F8F8", textAlign: "center", marginTop: 12 }}>
           Não tem conta?{" "}
           <Text
             style={{ color: "#5DD26C", fontWeight: "bold" }}
-            onPress={() => router.push("/(auth)/register")}
+            onPress={() => router.push("/Register")}
           >
             Cadastre-se
           </Text>
