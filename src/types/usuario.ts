@@ -6,4 +6,5 @@ export interface Usuario {
   peso?: number;
   biotipo?: string;
   tempoTreino?: string;
+  email?: string;
 }
