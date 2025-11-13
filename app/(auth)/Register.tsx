@@ -4,10 +4,10 @@ import {
   Image,
   Text,
   Alert,
+  View,
+  TouchableOpacity,
   Platform,
   Modal,
-  TouchableOpacity,
-  View,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
@@ -31,6 +31,7 @@ import {
 import { MotiView } from "moti";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import logo from "@/assets/brand/logo.png";
+import { InputFieldItem } from "@/src/types/InputFieldItem";
 import BodyFormInviteModal from "@/src/components/modal/BodyFormInviteModal";
 
 export default function Register() {
@@ -42,12 +43,25 @@ export default function Register() {
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [dataNascimento, setDataNascimento] = useState<Date | null>(null);
-  const [showDateModal, setShowDateModal] = useState(false);
   const [sexo, setSexo] = useState("");
   const [nivel, setNivel] = useState("");
   const [objetivo, setObjetivo] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showDateModal, setShowDateModal] = useState(false);
+
+  const inputFields: InputFieldItem[] = [
+    { placeholder: "Nome completo", value: nome, setValue: setNome },
+    {
+      placeholder: "E-mail",
+      value: email,
+      setValue: setEmail,
+      keyboardType: "email-address",
+      autoCapitalize: "none",
+    },
+    { placeholder: "Senha", value: senha, setValue: setSenha, secureTextEntry: true },
+    { placeholder: "Confirmar senha", value: confirmarSenha, setValue: setConfirmarSenha, secureTextEntry: true },
+  ];
 
   const validarSenha = (senha: string) => {
     const regex =
@@ -56,16 +70,7 @@ export default function Register() {
   };
 
   const handleRegister = () => {
-    if (
-      !nome ||
-      !email ||
-      !senha ||
-      !confirmarSenha ||
-      !dataNascimento ||
-      !sexo ||
-      !nivel ||
-      !objetivo
-    )
+    if (!nome || !email || !senha || !confirmarSenha || !dataNascimento || !sexo || !nivel || !objetivo)
       return Alert.alert("Erro", "Preencha todos os campos.");
 
     if (senha !== confirmarSenha)
@@ -98,69 +103,26 @@ export default function Register() {
   return (
     <>
       <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: "#0F0F0F",
-          paddingHorizontal: 24,
-          paddingTop: 40,
-        }}
+        style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24, paddingTop: 40 }}
         contentContainerStyle={{ gap: 20, paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Logo */}
         <View style={{ alignItems: "center", marginBottom: 40 }}>
-          <MotiView
-            from={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 120 }}
-          >
-            <Image
-              source={logo}
-              style={{ width: 120, height: 120, resizeMode: "contain" }}
-            />
+          <MotiView from={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 120 }}>
+            <Image source={logo} style={{ width: 120, height: 120, resizeMode: "contain" }} />
           </MotiView>
         </View>
 
         {/* Campos de Input */}
-        {[
-          {
-            placeholder: "Nome completo",
-            value: nome,
-            setValue: setNome,
-            keyboardType: "default",
-          },
-          {
-            placeholder: "E-mail",
-            value: email,
-            setValue: setEmail,
-            keyboardType: "email-address",
-            autoCapitalize: "none",
-          },
-          {
-            placeholder: "Senha",
-            value: senha,
-            setValue: setSenha,
-            secureTextEntry: true,
-          },
-          {
-            placeholder: "Confirmar senha",
-            value: confirmarSenha,
-            setValue: setConfirmarSenha,
-            secureTextEntry: true,
-          },
-        ].map((item, index) => (
+        {inputFields.map((item, index) => (
           <Input
             key={index}
             bg="#202020"
-            borderRadius={12} // levemente retangular
+            borderRadius={12}
             height={50}
             p={12}
-            style={{
-              shadowColor: "#5DD26C",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 4,
-            }}
+            style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 }}
           >
             <InputField
               placeholder={item.placeholder}
@@ -183,64 +145,17 @@ export default function Register() {
             borderRadius={12}
             height={50}
             p={12}
-            style={{
-              shadowColor: "#5DD26C",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 4,
-              justifyContent: "center",
-            }}
+            style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 }}
           >
-            <Text style={{ color: dataNascimento ? "#F8F8F8" : "#A3A3A3" }}>
-              {dataNascimento
-                ? dataNascimento.toLocaleDateString()
-                : "Data de nascimento"}
-            </Text>
+            <InputField
+              placeholder="Data de Nascimento"
+              value={dataNascimento ? dataNascimento.toLocaleDateString() : ""}
+              editable={false}
+              color="#F8F8F8"
+              placeholderTextColor="#A3A3A3"
+            />
           </Input>
         </TouchableOpacity>
-
-        {/* Modal Picker */}
-        {showDateModal && (
-          <Modal transparent animationType="slide">
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                backgroundColor: "rgba(0,0,0,0.5)",
-                justifyContent: "flex-end",
-              }}
-              activeOpacity={1}
-              onPressOut={() => setShowDateModal(false)}
-            >
-              <View
-                style={{
-                  backgroundColor: "#1A1A1A",
-                  padding: 16,
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
-                }}
-              >
-                <DateTimePicker
-                  value={dataNascimento || new Date(2000, 0, 1)}
-                  mode="date"
-                  display={Platform.OS === "ios" ? "spinner" : "default"}
-                  onChange={(_, selectedDate) => {
-                    if (selectedDate) setDataNascimento(selectedDate);
-                    setShowDateModal(false);
-                  }}
-                  maximumDate={new Date()}
-                />
-                <Button
-                  mt="$2"
-                  backgroundColor="#5DD26C"
-                  borderRadius={12}
-                  onPress={() => setShowDateModal(false)}
-                >
-                  <ButtonText>Confirmar</ButtonText>
-                </Button>
-              </View>
-            </TouchableOpacity>
-          </Modal>
-        )}
 
         {/* Selects */}
         {[
@@ -281,12 +196,7 @@ export default function Register() {
               borderRadius={12}
               height={50}
               p={12}
-              style={{
-                shadowColor: "#5DD26C",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                shadowRadius: 4,
-              }}
+              style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 }}
             >
               <SelectInput
                 placeholder={selectItem.placeholder}
@@ -310,66 +220,57 @@ export default function Register() {
         ))}
 
         {/* Dica sobre senha */}
-        <Text
-          style={{
-            color: "#A3A3A3",
-            fontSize: 13,
-            marginTop: 4,
-            marginBottom: 16,
-            textAlign: "center",
-          }}
-        >
-          A senha deve conter pelo menos 8 caracteres, incluindo letra
-          maiúscula, minúscula, número e símbolo.
+        <Text style={{ color: "#A3A3A3", fontSize: 13, marginTop: 4, marginBottom: 16, textAlign: "center" }}>
+          A senha deve conter pelo menos 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo.
         </Text>
 
         {/* Botão Registrar */}
         <Button
           onPress={handleRegister}
           backgroundColor="#5DD26C"
-          borderRadius={12} // levemente retangular
+          borderRadius={12}
           paddingVertical={16}
           paddingHorizontal={12}
           minHeight={50}
-          style={{
-            shadowColor: "#5DD26C",
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.4,
-            shadowRadius: 8,
-          }}
+          style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.4, shadowRadius: 8 }}
         >
           {loading && <ButtonSpinner color="$black" />}
-          <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg">
-            {loading ? "Carregando..." : "Registrar"}
-          </ButtonText>
+          <ButtonText>{loading ? "Carregando..." : "Registrar"}</ButtonText>
         </Button>
 
         {/* Link para login */}
-        <Text
-          style={{
-            color: "#F8F8F8",
-            textAlign: "center",
-            marginTop: 24,
-            marginBottom: 60,
-          }}
-        >
+        <Text style={{ color: "#F8F8F8", textAlign: "center", marginTop: 24, marginBottom: 60 }}>
           Já tem conta?{" "}
-          <Text
-            style={{ color: "#5DD26C" }}
-            onPress={() => router.push("/(auth)/login")}
-          >
+          <Text style={{ color: "#5DD26C" }} onPress={() => router.push("/(auth)/login")}>
             Entrar
           </Text>
         </Text>
       </ScrollView>
 
       {/* Modal separado */}
-      <BodyFormInviteModal
-        showModal={showModal}
-        onClose={() => setShowModal(false)}
-        onPreencher={handleIrBodyForm}
-        onPular={handlePular}
-      />
+      <BodyFormInviteModal showModal={showModal} onClose={() => setShowModal(false)} onPreencher={handleIrBodyForm} onPular={handlePular} />
+
+      {/* Modal Data de Nascimento */}
+      {showDateModal && (
+        <Modal transparent animationType="slide">
+          <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "flex-end" }}>
+            <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => setShowDateModal(false)} />
+            <View style={{ backgroundColor: "#1A1A1A", padding: 16, borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
+              <DateTimePicker
+                value={dataNascimento || new Date(2000, 0, 1)}
+                mode="date"
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(_, selectedDate) => selectedDate && setDataNascimento(selectedDate)}
+                maximumDate={new Date()}
+                style={{ backgroundColor: "#1A1A1A" }}
+              />
+              <Button mt="$2" backgroundColor="#5DD26C" borderRadius={12} onPress={() => setShowDateModal(false)} style={{ alignSelf: "flex-end" }}>
+                <ButtonText>Confirmar</ButtonText>
+              </Button>
+            </View>
+          </View>
+        </Modal>
+      )}
     </>
   );
 }
