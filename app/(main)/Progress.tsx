@@ -7,7 +7,6 @@ import { RootState } from "@/src/data/redux/store";
 import { LineChart } from "react-native-chart-kit";
 import { useRouter } from "expo-router";
 
-// ---- NOVOS MOCKS DO MVP ----
 import {
   progressSummaryMock,
   weeklyFrequencyMock,
