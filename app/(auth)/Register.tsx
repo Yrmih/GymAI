@@ -3,7 +3,6 @@ import {
   ScrollView,
   Image,
   Text,
-  Alert,
   View,
   TouchableOpacity,
   Platform,
@@ -11,7 +10,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
-import { login } from "@/src/data/redux/usuarioSlice";
+import { setUsuario } from "@/src/data/redux/slices/usuarioSlice";
 import {
   Input,
   InputField,
@@ -31,83 +30,54 @@ import {
 import { MotiView } from "moti";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import logo from "@/assets/brand/logo.png";
-import { InputFieldItem } from "@/src/types/InputFieldItem";
 import BodyFormInviteModal from "@/src/components/modal/BodyFormInviteModal";
+
+import { useForm, Controller, SubmitHandler,} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, RegisterFormData, SexoEnum, NivelEnum, ObjetivoEnum } from "@/src/data/schemas/registerSchema";
 
 export default function Register() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [dataNascimento, setDataNascimento] = useState<Date | null>(null);
-  const [sexo, setSexo] = useState("");
-  const [nivel, setNivel] = useState("");
-  const [objetivo, setObjetivo] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const inputFields: InputFieldItem[] = [
-    { placeholder: "Nome completo", value: nome, setValue: setNome },
-    {
-      placeholder: "E-mail",
-      value: email,
-      setValue: setEmail,
-      keyboardType: "email-address",
-      autoCapitalize: "none",
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema) as unknown as Resolver<RegisterFormData>,
+    defaultValues: {
+      nome: "",
+      email: "",
+      senha: "",
+      confirmarSenha: "",
+      dataNascimento: undefined,
+      sexo: undefined,
+      nivel: undefined,
+      objetivo: undefined,
     },
-    {
-      placeholder: "Senha",
-      value: senha,
-      setValue: setSenha,
-      secureTextEntry: true,
-    },
-    {
-      placeholder: "Confirmar senha",
-      value: confirmarSenha,
-      setValue: setConfirmarSenha,
-      secureTextEntry: true,
-    },
-  ];
+  });
 
-  const validarSenha = (senha: string) => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    return regex.test(senha);
-  };
-
-  const handleRegister = () => {
-    if (
-      !nome ||
-      !email ||
-      !senha ||
-      !confirmarSenha ||
-      !dataNascimento ||
-      !sexo ||
-      !nivel ||
-      !objetivo
-    )
-      return Alert.alert("Erro", "Preencha todos os campos.");
-
-    if (senha !== confirmarSenha)
-      return Alert.alert("Erro", "As senhas não coincidem.");
-
-    if (!validarSenha(senha))
-      return Alert.alert(
-        "Senha inválida",
-        "A senha deve ter pelo menos 8 caracteres, com letra maiúscula, minúscula, número e símbolo."
-      );
-
-    setLoading(true);
-    setTimeout(() => {
-      dispatch(login({ nome }));
-      setLoading(false);
-      setShowModal(true);
-    }, 1500);
-  };
+  const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
+  setLoading(true);
+  setTimeout(() => {
+    dispatch(
+      setUsuario({
+        nome: data.nome,
+        email: data.email,
+        logado: true,
+      })
+    );
+    setLoading(false);
+    setShowModal(true);
+  }, 1500);
+};
 
   const handleIrBodyForm = () => {
     setShowModal(false);
@@ -145,127 +115,266 @@ export default function Register() {
           </MotiView>
         </View>
 
-        {/* Campos de Input */}
-        {inputFields.map((item, index) => (
-          <Input
-            key={index}
-            bg="#202020"
-            borderRadius={12}
-            height={50}
-            p={12}
-            style={{
-              shadowColor: "#5DD26C",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 4,
-            }}
-          >
-            <InputField
-              placeholder={item.placeholder}
-              value={item.value}
-              onChangeText={item.setValue}
-              keyboardType={item.keyboardType}
-              autoCapitalize={item.autoCapitalize}
-              secureTextEntry={item.secureTextEntry}
-              color="#F8F8F8"
-              placeholderTextColor="#A3A3A3"
-              style={{ paddingVertical: 0 }}
-            />
-          </Input>
-        ))}
+        {/* Inputs de texto */}
+        <Controller
+          control={control}
+          name="nome"
+          render={({ field }) => (
+            <>
+              <Input
+                bg="#202020"
+                borderRadius={12}
+                height={50}
+                p={12}
+                style={{
+                  shadowColor: errors.nome ? "red" : "#5DD26C",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 4,
+                  borderWidth: errors.nome ? 1 : 0,
+                  borderColor: errors.nome ? "red" : "transparent",
+                }}
+              >
+                <InputField
+                  placeholder="Nome completo"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  color="#F8F8F8"
+                  placeholderTextColor="#A3A3A3"
+                  style={{ paddingVertical: 0 }}
+                />
+              </Input>
+              {errors.nome && (
+                <Text style={{ color: "red", fontSize: 12 }}>{errors.nome.message}</Text>
+              )}
+            </>
+          )}
+        />
 
-        {/* Campo Data de Nascimento */}
+        <Controller
+          control={control}
+          name="email"
+          render={({ field }) => (
+            <>
+              <Input
+                bg="#202020"
+                borderRadius={12}
+                height={50}
+                p={12}
+                style={{
+                  shadowColor: errors.email ? "red" : "#5DD26C",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 4,
+                  borderWidth: errors.email ? 1 : 0,
+                  borderColor: errors.email ? "red" : "transparent",
+                }}
+              >
+                <InputField
+                  placeholder="E-mail"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  color="#F8F8F8"
+                  placeholderTextColor="#A3A3A3"
+                  style={{ paddingVertical: 0 }}
+                />
+              </Input>
+              {errors.email && (
+                <Text style={{ color: "red", fontSize: 12 }}>{errors.email.message}</Text>
+              )}
+            </>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="senha"
+          render={({ field }) => (
+            <>
+              <Input
+                bg="#202020"
+                borderRadius={12}
+                height={50}
+                p={12}
+                style={{
+                  shadowColor: errors.senha ? "red" : "#5DD26C",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 4,
+                  borderWidth: errors.senha ? 1 : 0,
+                  borderColor: errors.senha ? "red" : "transparent",
+                }}
+              >
+                <InputField
+                  placeholder="Senha"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  secureTextEntry
+                  color="#F8F8F8"
+                  placeholderTextColor="#A3A3A3"
+                  style={{ paddingVertical: 0 }}
+                />
+              </Input>
+              {errors.senha && (
+                <Text style={{ color: "red", fontSize: 12 }}>{errors.senha.message}</Text>
+              )}
+            </>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="confirmarSenha"
+          render={({ field }) => (
+            <>
+              <Input
+                bg="#202020"
+                borderRadius={12}
+                height={50}
+                p={12}
+                style={{
+                  shadowColor: errors.confirmarSenha ? "red" : "#5DD26C",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 4,
+                  borderWidth: errors.confirmarSenha ? 1 : 0,
+                  borderColor: errors.confirmarSenha ? "red" : "transparent",
+                }}
+              >
+                <InputField
+                  placeholder="Confirmar senha"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  secureTextEntry
+                  color="#F8F8F8"
+                  placeholderTextColor="#A3A3A3"
+                  style={{ paddingVertical: 0 }}
+                />
+              </Input>
+              {errors.confirmarSenha && (
+                <Text style={{ color: "red", fontSize: 12 }}>
+                  {errors.confirmarSenha.message}
+                </Text>
+              )}
+            </>
+          )}
+        />
+
+        {/* Data de nascimento */}
         <TouchableOpacity onPress={() => setShowDateModal(true)}>
-          <Input
-            bg="#202020"
-            borderRadius={12}
-            height={50}
-            p={12}
-            style={{
-              shadowColor: "#5DD26C",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 4,
-            }}
-          >
-            <InputField
-              placeholder="Data de Nascimento"
-              value={dataNascimento ? dataNascimento.toLocaleDateString() : ""}
-              editable={false}
-              color="#F8F8F8"
-              placeholderTextColor="#A3A3A3"
-            />
-          </Input>
+          <Controller
+            control={control}
+            name="dataNascimento"
+            render={({ field }) => (
+              <>
+                <Input
+                  bg="#202020"
+                  borderRadius={12}
+                  height={50}
+                  p={12}
+                  style={{
+                    shadowColor: errors.dataNascimento ? "red" : "#5DD26C",
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 4,
+                    borderWidth: errors.dataNascimento ? 1 : 0,
+                    borderColor: errors.dataNascimento ? "red" : "transparent",
+                  }}
+                >
+                  <InputField
+                    placeholder="Data de Nascimento"
+                    value={field.value ? field.value.toLocaleDateString() : ""}
+                    editable={false}
+                    color="#F8F8F8"
+                    placeholderTextColor="#A3A3A3"
+                  />
+                </Input>
+                {errors.dataNascimento && (
+                  <Text style={{ color: "red", fontSize: 12 }}>
+                    {errors.dataNascimento.message}
+                  </Text>
+                )}
+              </>
+            )}
+          />
         </TouchableOpacity>
 
         {/* Selects */}
-        {[
-          {
-            placeholder: "Sexo",
-            value: sexo,
-            setValue: setSexo,
-            items: [
-              { label: "Masculino", value: "masculino" },
-              { label: "Feminino", value: "feminino" },
-              { label: "Outro", value: "outro" },
-            ],
-          },
-          {
-            placeholder: "Nível de experiência",
-            value: nivel,
-            setValue: setNivel,
-            items: [
-              { label: "Iniciante", value: "iniciante" },
-              { label: "Intermediário", value: "intermediario" },
-              { label: "Avançado", value: "avancado" },
-            ],
-          },
-          {
-            placeholder: "Objetivo",
-            value: objetivo,
-            setValue: setObjetivo,
-            items: [
-              { label: "Ganho de massa", value: "massa" },
-              { label: "Perda de gordura", value: "gordura" },
-              { label: "Condicionamento", value: "condicionamento" },
-            ],
-          },
-        ].map((selectItem, index) => (
-          <Select key={index} onValueChange={selectItem.setValue}>
-            <SelectTrigger
-              bg="#202020"
-              borderRadius={12}
-              height={50}
-              p={12}
-              style={{
-                shadowColor: "#5DD26C",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                shadowRadius: 4,
-              }}
-            >
-              <SelectInput
-                placeholder={selectItem.placeholder}
-                color={selectItem.value ? "#F8F8F8" : "#A3A3A3"}
-                value={selectItem.value}
-                style={{ paddingVertical: 0 }}
-              />
-            </SelectTrigger>
-            <SelectPortal>
-              <SelectBackdrop />
-              <SelectContent bg="#1A1A1A">
-                <SelectDragIndicatorWrapper>
-                  <SelectDragIndicator />
-                </SelectDragIndicatorWrapper>
-                {selectItem.items.map((item, i) => (
-                  <SelectItem key={i} label={item.label} value={item.value} />
-                ))}
-              </SelectContent>
-            </SelectPortal>
-          </Select>
-        ))}
+        {(["sexo", "nivel", "objetivo"] as const).map((fieldName) => {
+          const options =
+            fieldName === "sexo"
+              ? [
+                  { label: "Masculino", value: SexoEnum.Masculino },
+                  { label: "Feminino", value: SexoEnum.Feminino },
+                  { label: "Outro", value: SexoEnum.Outro },
+                ]
+              : fieldName === "nivel"
+              ? [
+                  { label: "Iniciante", value: NivelEnum.Iniciante },
+                  { label: "Intermediário", value: NivelEnum.Intermediario },
+                  { label: "Avançado", value: NivelEnum.Avancado },
+                ]
+              : [
+                  { label: "Ganho de massa", value: ObjetivoEnum.Massa },
+                  { label: "Perda de gordura", value: ObjetivoEnum.Gordura },
+                  { label: "Condicionamento", value: ObjetivoEnum.Condicionamento },
+                ];
 
-        {/* Dica sobre senha */}
+          return (
+            <Controller
+              key={fieldName}
+              control={control}
+              name={fieldName}
+              render={({ field }) => (
+                <>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger
+                      bg="#202020"
+                      borderRadius={12}
+                      height={50}
+                      p={12}
+                      style={{
+                        shadowColor: errors[fieldName] ? "red" : "#5DD26C",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.3,
+                        shadowRadius: 4,
+                        borderWidth: errors[fieldName] ? 1 : 0,
+                        borderColor: errors[fieldName] ? "red" : "transparent",
+                      }}
+                    >
+                      <SelectInput
+                        placeholder={fieldName}
+                        color={field.value ? "#F8F8F8" : "#A3A3A3"}
+                        value={field.value}
+                        style={{ paddingVertical: 0 }}
+                      />
+                    </SelectTrigger>
+                    <SelectPortal>
+                      <SelectBackdrop />
+                      <SelectContent bg="#1A1A1A">
+                        <SelectDragIndicatorWrapper>
+                          <SelectDragIndicator />
+                        </SelectDragIndicatorWrapper>
+                        {options.map((item, i) => (
+                          <SelectItem key={i} label={item.label} value={item.value} />
+                        ))}
+                      </SelectContent>
+                    </SelectPortal>
+                  </Select>
+                  {errors[fieldName] && (
+                    <Text style={{ color: "red", fontSize: 12 }}>
+                      {errors[fieldName]?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+            />
+          );
+        })}
+
+        {/* Dica de senha */}
         <Text
           style={{
             color: "#A3A3A3",
@@ -279,9 +388,9 @@ export default function Register() {
           maiúscula, minúscula, número e símbolo.
         </Text>
 
-        {/* Botão Registrar */}
+        {/* Botão */}
         <Button
-          onPress={handleRegister}
+          onPress={handleSubmit(onSubmit)}
           backgroundColor="#5DD26C"
           borderRadius={12}
           paddingVertical={16}
@@ -298,7 +407,6 @@ export default function Register() {
           <ButtonText>{loading ? "Carregando..." : "Registrar"}</ButtonText>
         </Button>
 
-        {/* Link para login */}
         <Text
           style={{
             color: "#F8F8F8",
@@ -317,7 +425,7 @@ export default function Register() {
         </Text>
       </ScrollView>
 
-      {/* Modal separado */}
+      {/* Modal */}
       <BodyFormInviteModal
         showModal={showModal}
         onClose={() => setShowModal(false)}
@@ -349,12 +457,12 @@ export default function Register() {
               }}
             >
               <DateTimePicker
-                value={dataNascimento || new Date(2000, 0, 1)}
+                value={watch("dataNascimento") || new Date(2000, 0, 1)}
                 mode="date"
                 display={Platform.OS === "ios" ? "spinner" : "default"}
-                onChange={(_, selectedDate) =>
-                  selectedDate && setDataNascimento(selectedDate)
-                }
+                onChange={(_, selectedDate) => {
+                  if (selectedDate) setValue("dataNascimento", selectedDate);
+                }}
                 maximumDate={new Date()}
                 style={{ backgroundColor: "#1A1A1A" }}
               />
