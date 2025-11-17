@@ -1,11 +1,19 @@
 import React from "react";
 import { ScrollView, Text } from "react-native";
 import { MotiView } from "moti";
-import { View, Button, Switch, Avatar, Image } from "@gluestack-ui/themed";
+import { View, Avatar, Image } from "@gluestack-ui/themed";
+import { useRouter } from "expo-router";
+import AppIcon from "@/src/components/icons/AppIcon";
 
 export default function ProfileScreen() {
-  const [darkMode, setDarkMode] = React.useState(true);
-  const [notifications, setNotifications] = React.useState(true);
+  const router = useRouter();
+
+  // Mock (depois conecta com Firebase)
+  const nivel = 5;
+  const xpAtual = 300;
+  const xpProximo = 500;
+  const progressoXP = xpAtual / xpProximo;
+  const aparelhosDescobertos = 12;
 
   return (
     <View flex={1} bg="#0F0F0F">
@@ -22,7 +30,8 @@ export default function ProfileScreen() {
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ type: "timing", duration: 600 }}
         >
-          {/* 🧠 Avatar e informações do usuário */}
+
+          {/* Avatar e Identidade */}
           <View style={{ alignItems: "center", marginBottom: 32 }}>
             <Avatar
               size="xl"
@@ -51,10 +60,11 @@ export default function ProfileScreen() {
             >
               Ian Gonçalves
             </Text>
+
             <Text style={{ color: "#AAAAAA", fontSize: 16 }}>@iangymai</Text>
           </View>
 
-          {/* 💪 Dados físicos */}
+          {/* Barra de Nível / XP */}
           <View
             style={{
               backgroundColor: "#1A1A1A",
@@ -71,38 +81,88 @@ export default function ProfileScreen() {
                 marginBottom: 12,
               }}
             >
-              Dados físicos
+              Nível {nivel} — Explorador
             </Text>
 
             <View
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: 8,
+                width: "100%",
+                height: 10,
+                backgroundColor: "#333",
+                borderRadius: 10,
+                overflow: "hidden",
               }}
             >
-              <Text style={{ color: "#B0B0B0" }}>Altura:</Text>
-              <Text style={{ color: "#FFFFFF", fontWeight: "600" }}>1.70 m</Text>
+              <View
+                style={{
+                  width: `${progressoXP * 100}%`,
+                  height: "100%",
+                  backgroundColor: "#5DD26C",
+                }}
+              />
             </View>
 
-            <View
+            <Text
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: 8,
+                color: "#AAAAAA",
+                fontSize: 12,
+                marginTop: 8,
+                textAlign: "right",
               }}
             >
-              <Text style={{ color: "#B0B0B0" }}>Peso:</Text>
-              <Text style={{ color: "#FFFFFF", fontWeight: "600" }}>79 kg</Text>
-            </View>
-
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={{ color: "#B0B0B0" }}>Meta:</Text>
-              <Text style={{ color: "#FFFFFF", fontWeight: "600" }}>Hipertrofia</Text>
-            </View>
+              {xpAtual} / {xpProximo} XP
+            </Text>
           </View>
 
-          {/* ⚙️ Preferências */}
+          {/* Card Minha Jornada */}
+          <View
+            style={{
+              backgroundColor: "#1A1A1A",
+              padding: 24,
+              borderRadius: 16,
+              marginBottom: 24,
+            }}
+            onTouchEnd={() => router.push("/main/Progress")}
+          >
+            <View style={{ alignItems: "center", marginBottom: 16 }}>
+              <View
+                style={{
+                  width: 70,
+                  height: 70,
+                  borderRadius: 16,
+                  backgroundColor: "#5DD26C20",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <AppIcon name="stats-chart" size={40} color="#5DD26C" />
+              </View>
+            </View>
+
+            <Text
+              style={{
+                color: "#FFFFFF",
+                fontSize: 20,
+                fontWeight: "600",
+                textAlign: "center",
+                marginBottom: 6,
+              }}
+            >
+              Minha Jornada
+            </Text>
+
+            <Text
+              style={{
+                color: "#AAAAAA",
+                textAlign: "center",
+                fontSize: 14,
+              }}
+            >
+              Seu progresso, aparelhos usados e evolução geral
+            </Text>
+          </View>
+
+          {/* Resumo da Coleção */}
           <View
             style={{
               backgroundColor: "#1A1A1A",
@@ -116,63 +176,35 @@ export default function ProfileScreen() {
                 color: "#FFFFFF",
                 fontSize: 18,
                 fontWeight: "600",
-                marginBottom: 12,
+                marginBottom: 8,
               }}
             >
-              Preferências
+              Coleção de Equipamentos
             </Text>
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: 12,
-              }}
-            >
-              <Text style={{ color: "#B0B0B0" }}>Modo escuro</Text>
-              <Switch
-                value={darkMode}
-                onValueChange={setDarkMode}
-                trackColor={{ true: "#5DD26C", false: "#333" }}
-                thumbColor={darkMode ? "#0F0F0F" : "#999"}
-              />
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "#B0B0B0" }}>Notificações</Text>
-              <Switch
-                value={notifications}
-                onValueChange={setNotifications}
-                trackColor={{ true: "#5DD26C", false: "#333" }}
-                thumbColor={notifications ? "#0F0F0F" : "#999"}
-              />
-            </View>
+            <Text style={{ color: "#AAAAAA", fontSize: 14 }}>
+              {aparelhosDescobertos} aparelhos descobertos até agora 🔥
+            </Text>
           </View>
 
-          {/* 🚪 Botão de logout */}
+          {/* Botão de Logout */}
           <MotiView
             from={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", delay: 200 }}
           >
-            <Button
-              size="lg"
-              bg="#E53935"
-              borderRadius={12}
-              onPress={() => console.log("Logout")}
+            <View
               style={{
+                backgroundColor: "#E53935",
+                padding: 16,
+                borderRadius: 12,
+                alignItems: "center",
                 shadowColor: "#E53935",
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.5,
                 shadowRadius: 6,
               }}
+              onTouchEnd={() => console.log("Logout")}
             >
               <Text
                 style={{
@@ -183,7 +215,7 @@ export default function ProfileScreen() {
               >
                 Sair
               </Text>
-            </Button>
+            </View>
           </MotiView>
         </MotiView>
       </ScrollView>
