@@ -3,7 +3,7 @@ import { ScrollView, Dimensions } from "react-native";
 import { View, Text, Button, ButtonText } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 import { useSelector } from "react-redux";
-import { RootState } from "@/src/redux/store";
+import { RootState } from "@/src/data/redux/store";
 import { LineChart } from "react-native-chart-kit";
 
 import { progressoMock } from "@/src/mock/progressMock";
@@ -86,7 +86,9 @@ export default function Progress() {
                   marginBottom: 8,
                 }}
               >
-                <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
+                <Text
+                  style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}
+                >
                   {item.value}
                 </Text>
               </View>

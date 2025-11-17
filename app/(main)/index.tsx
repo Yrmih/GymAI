@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { RootState } from "@/src/redux/store";
+import { RootState } from "@/src/data/redux/store";
 
 import { View, Text } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
