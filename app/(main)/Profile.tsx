@@ -122,7 +122,7 @@ export default function ProfileScreen() {
               borderRadius: 16,
               marginBottom: 24,
             }}
-            onTouchEnd={() => router.push("/main/Progress")}
+            onTouchEnd={() => router.push("/Progress")}
           >
             <View style={{ alignItems: "center", marginBottom: 16 }}>
               <View
