@@ -76,7 +76,7 @@ export default function Settings() {
           </TouchableOpacity>
 
           {/* Alterar Senha */}
-          <TouchableOpacity onPress={() => router.push("/main/settings/change-password")}>
+          <TouchableOpacity onPress={() => router.push("/Change-password")}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="key-outline" size={22} />
               <Text color="#FFF" fontSize="$sm">Alterar Senha</Text>
