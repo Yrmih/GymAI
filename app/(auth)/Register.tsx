@@ -32,7 +32,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import logo from "@/assets/brand/logo.png";
 import BodyFormInviteModal from "@/src/components/modal/BodyFormInviteModal";
 
-import { useForm, Controller, SubmitHandler,} from "react-hook-form";
+import { useForm, Controller, SubmitHandler, Resolver} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterFormData, SexoEnum, NivelEnum, ObjetivoEnum } from "@/src/data/schemas/registerSchema";
 
