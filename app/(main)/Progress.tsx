@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/src/data/redux/store";
 import { LineChart } from "react-native-chart-kit";
 
-import { progressoMock } from "@/src/mock/progressMock";
+import { progressoMock } from "@/src/data/mock/progressMock";
 import { useRouter } from "expo-router";
 
 export default function Progress() {

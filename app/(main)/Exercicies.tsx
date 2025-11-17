@@ -5,7 +5,7 @@ import { View, Text, Button, ButtonText } from "@gluestack-ui/themed";
 import { MotiView } from "moti";
 
 import ExerciseCard from "@/src/components/card/ExerciseCard";
-import { exercisesMock } from "@/src/mock/exercisesMock";
+import { exercisesMock } from "@/src/data/mock/exercisesMock";
 
 export default function Exercises() {
   const router = useRouter();
