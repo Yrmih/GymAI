@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { useDispatch } from "react-redux";
-import { updateUserBody } from "@/src/redux/usuarioSlice";
+import { updateUserBody } from "@/src/data/redux/usuarioSlice";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import {
@@ -144,7 +144,9 @@ export default function BodyForm() {
                 paddingHorizontal={20}
                 height={56}
               >
-                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{biotipo}</Text>
+                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
+                  {biotipo}
+                </Text>
                 <SelectIcon />
               </SelectTrigger>
               <SelectPortal>
@@ -169,7 +171,9 @@ export default function BodyForm() {
                 paddingHorizontal={20}
                 height={56}
               >
-                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{tempoTreino}</Text>
+                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
+                  {tempoTreino}
+                </Text>
                 <SelectIcon />
               </SelectTrigger>
               <SelectPortal>

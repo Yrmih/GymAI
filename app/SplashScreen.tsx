@@ -4,7 +4,7 @@ import { VideoView, useVideoPlayer } from "expo-video";
 import { MotiView, AnimatePresence } from "moti";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { RootState } from "@/src/redux/store";
+import { RootState } from "@/src/data/redux/store";
 
 interface SplashScreenProps {
   onFinish: () => void;

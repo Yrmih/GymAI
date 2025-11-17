@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "../gluestack-ui.config";
-import { store } from "../src/redux/store";
+import { store } from "../src/data/redux/store";
 import { Slot } from "expo-router";
 import SplashScreen from "./SplashScreen";
 
