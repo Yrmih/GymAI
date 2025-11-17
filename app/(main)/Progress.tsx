@@ -5,9 +5,15 @@ import { MotiView } from "moti";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/data/redux/store";
 import { LineChart } from "react-native-chart-kit";
-
-import { progressoMock } from "@/src/data/mock/progressMock";
 import { useRouter } from "expo-router";
+
+// ---- NOVOS MOCKS DO MVP ----
+import {
+  progressSummaryMock,
+  weeklyFrequencyMock,
+  machinesCollectionMock,
+  recentActivitiesMock,
+} from "@/src/data/mock/progressMock";
 
 export default function Progress() {
   const usuario = useSelector((state: RootState) => state.usuario);
@@ -35,10 +41,11 @@ export default function Progress() {
               marginBottom: 4,
             }}
           >
-            Progresso de {usuario.nome || "Treinador"}
+            Progresso de {usuario.nome || "Atleta"}
           </Text>
+
           <Text style={{ color: "#B5B5B5", fontSize: 14 }}>
-            Acompanhe seu desempenho e evolução
+            Sua jornada até agora
           </Text>
         </View>
 
@@ -59,13 +66,12 @@ export default function Progress() {
       <View
         flexDirection="row"
         justifyContent="space-between"
-        alignItems="center"
         marginBottom={30}
       >
         {[
-          { label: "Treinos Concluídos", value: "15" },
-          { label: "Peso Médio", value: "85 kg" },
-          { label: "Consistência", value: "90%" },
+          { label: "Treinos Concluídos", value: progressSummaryMock.treinosConcluidos },
+          { label: "Aparelhos Usados", value: progressSummaryMock.aparelhosUnicos },
+          { label: "Consistência", value: `${progressSummaryMock.consistencia}%` },
         ].map((item, i) => (
           <MotiView
             key={i}
@@ -92,6 +98,7 @@ export default function Progress() {
                   {item.value}
                 </Text>
               </View>
+
               <Text
                 style={{
                   color: "#B5B5B5",
@@ -107,7 +114,7 @@ export default function Progress() {
         ))}
       </View>
 
-      {/* Gráfico de evolução */}
+      {/* Gráfico de evolução semanal */}
       <Text
         style={{
           color: "#fff",
@@ -116,15 +123,15 @@ export default function Progress() {
           marginBottom: 12,
         }}
       >
-        Evolução de Peso
+        Evolução Semanal
       </Text>
 
       <LineChart
         data={{
-          labels: ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN"],
+          labels: weeklyFrequencyMock.map((d) => d.label),
           datasets: [
             {
-              data: [70, 72, 74, 78, 82, 85],
+              data: weeklyFrequencyMock.map((d) => d.value),
             },
           ],
         }}
@@ -149,7 +156,7 @@ export default function Progress() {
         }}
       />
 
-      {/* Histórico de treinos */}
+      {/* Coleção de Equipamentos */}
       <Text
         style={{
           color: "#fff",
@@ -158,15 +165,72 @@ export default function Progress() {
           marginBottom: 16,
         }}
       >
-        Histórico de Treino
+        Coleção de Equipamentos
       </Text>
 
-      {progressoMock.map((item, index) => (
+      <View
+        flexDirection="row"
+        flexWrap="wrap"
+        justifyContent="space-between"
+        marginBottom={32}
+      >
+        {machinesCollectionMock.map((machine, index) => (
+          <MotiView
+            key={machine.id}
+            from={{ opacity: 0, translateY: 20 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ delay: index * 120 }}
+          >
+            <View
+              style={{
+                width: (screenWidth - 72) / 2,
+                backgroundColor: "#1A1A1A",
+                padding: 14,
+                borderRadius: 14,
+                marginBottom: 12,
+                borderWidth: 1,
+                borderColor: machine.used ? "#5DD26C" : "#333",
+              }}
+            >
+              <Text
+                style={{
+                  color: machine.used ? "#5DD26C" : "#777",
+                  fontSize: 16,
+                  fontWeight: "600",
+                  marginBottom: 4,
+                }}
+              >
+                {machine.name}
+              </Text>
+
+              {machine.used && (
+                <Text style={{ color: "#999", fontSize: 12 }}>
+                  Último uso: {machine.lastUsed}
+                </Text>
+              )}
+            </View>
+          </MotiView>
+        ))}
+      </View>
+
+      {/* Atividades Recentes */}
+      <Text
+        style={{
+          color: "#fff",
+          fontSize: 18,
+          fontWeight: "bold",
+          marginBottom: 16,
+        }}
+      >
+        Atividades Recentes
+      </Text>
+
+      {recentActivitiesMock.map((item, index) => (
         <MotiView
           key={item.id}
-          from={{ opacity: 0, translateY: 20 }}
+          from={{ opacity: 0, translateY: 15 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ delay: index * 100, type: "timing" }}
+          transition={{ delay: index * 100 }}
         >
           <View
             style={{
@@ -183,25 +247,19 @@ export default function Progress() {
                 color: "#5DD26C",
                 fontSize: 16,
                 fontWeight: "600",
-                marginBottom: 6,
-              }}
-            >
-              {item.exercise}
-            </Text>
-
-            <Text
-              style={{
-                color: "#EAEAEA",
-                fontSize: 14,
                 marginBottom: 4,
               }}
             >
-              {item.weight
-                ? `${item.weight} - ${item.reps} reps x ${item.series} séries`
-                : item.duration}
+              {item.machine}
             </Text>
 
-            <Text style={{ color: "#888", fontSize: 12 }}>{item.date}</Text>
+            <Text style={{ color: "#EAEAEA", fontSize: 14 }}>
+              {item.status}
+            </Text>
+
+            <Text style={{ color: "#888", fontSize: 12, marginTop: 4 }}>
+              {item.date}
+            </Text>
           </View>
         </MotiView>
       ))}

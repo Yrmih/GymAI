@@ -1,96 +1,71 @@
-export const progressoMock = [
+
+// Resumo — topo da tela
+export const progressSummaryMock = {
+  treinosConcluidos: 42,
+  consistencia: 86,
+  aparelhosUnicos: 12,
+};
+
+// Evolução de Peso Corporal
+export const weeklyFrequencyMock = [
+  { label: "JAN", value: 82 },
+  { label: "FEV", value: 81.2 },
+  { label: "MAR", value: 80.4 },
+  { label: "ABR", value: 79.8 },
+  { label: "MAI", value: 79.1 },
+  { label: "JUN", value: 78.5 },
+];
+
+// "Coleção de Aparelhos" — estilo Pokédex
+export const machinesCollectionMock = [
+  {
+    id: "supino-reto",
+    name: "Supino Reto",
+    used: true,
+    lastUsed: "2025-11-15",
+  },
+  {
+    id: "puxada-frontal",
+    name: "Puxada na Polia",
+    used: true,
+    lastUsed: "2025-11-12",
+  },
+  {
+    id: "leg-press",
+    name: "Leg Press",
+    used: true,
+    lastUsed: "2025-11-10",
+  },
+  {
+    id: "agachamento-smith",
+    name: "Smith Machine",
+    used: false,
+  },
+  {
+    id: "cadeira-extensora",
+    name: "Cadeira Extensora",
+    used: false,
+  },
+];
+
+// Atividades Recentes — simplificadas
+export const recentActivitiesMock = [
   {
     id: 1,
-    exercise: "Supino Reto",
-    type: "Força",
-    weight: "75 kg",
-    reps: 10,
-    series: 4,
-    notes: "Sentir o peitoral trabalhando, controle total na descida",
-    date: "28/10/2025",
+    date: "2025-11-15",
+    machine: "Supino Reto",
+    status: "Concluído",
   },
   {
     id: 2,
-    exercise: "Agachamento",
-    type: "Força",
-    weight: "100 kg",
-    reps: 8,
-    series: 4,
-    notes: "Mantenha coluna reta, vá até paralelo",
-    date: "27/10/2025",
+    date: "2025-11-12",
+    machine: "Puxada na Polia",
+    status: "Concluído",
   },
   {
     id: 3,
-    exercise: "Levantamento Terra",
-    type: "Força",
-    weight: "120 kg",
-    reps: 6,
-    series: 3,
-    notes: "Concentre-se na postura, evite curvar a lombar",
-    date: "26/10/2025",
-  },
-  {
-    id: 4,
-    exercise: "Desenvolvimento Ombro",
-    type: "Força",
-    weight: "40 kg",
-    reps: 12,
-    series: 3,
-    notes: "Controle na descida, ombros estáveis",
-    date: "25/10/2025",
-  },
-  {
-    id: 5,
-    exercise: "Remada Curvada",
-    type: "Força",
-    weight: "50 kg",
-    reps: 10,
-    series: 4,
-    notes: "Contraia as escápulas ao puxar",
-    date: "24/10/2025",
-  },
-  {
-    id: 6,
-    exercise: "Corda de Pular",
-    type: "Cardio",
-    duration: "10 min",
-    notes: "Intervalo 30s rápido / 30s lento",
-    date: "23/10/2025",
-  },
-  {
-    id: 7,
-    exercise: "Abdominais",
-    type: "Resistência",
-    reps: 25,
-    series: 3,
-    notes: "Mantenha lombar no chão",
-    date: "22/10/2025",
-  },
-  {
-    id: 8,
-    exercise: "Bicicleta Ergométrica",
-    type: "Cardio",
-    duration: "20 min",
-    notes: "Resistência média, cadência constante",
-    date: "21/10/2025",
-  },
-  {
-    id: 9,
-    exercise: "Supino Inclinado",
-    type: "Força",
-    weight: "60 kg",
-    reps: 10,
-    series: 4,
-    notes: "Foco na parte superior do peitoral",
-    date: "20/10/2025",
-  },
-  {
-    id: 10,
-    exercise: "Flexão de Braço",
-    type: "Força/Resistência",
-    reps: 15,
-    series: 3,
-    notes: "Mantenha o core firme e movimentos controlados",
-    date: "19/10/2025",
+    date: "2025-11-10",
+    machine: "Leg Press",
+    status: "Concluído",
   },
 ];
