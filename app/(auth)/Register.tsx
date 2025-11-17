@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
-import { login } from "@/src/redux/usuarioSlice";
+import { login } from "@/src/data/redux/usuarioSlice";
 import {
   Input,
   InputField,
@@ -59,8 +59,18 @@ export default function Register() {
       keyboardType: "email-address",
       autoCapitalize: "none",
     },
-    { placeholder: "Senha", value: senha, setValue: setSenha, secureTextEntry: true },
-    { placeholder: "Confirmar senha", value: confirmarSenha, setValue: setConfirmarSenha, secureTextEntry: true },
+    {
+      placeholder: "Senha",
+      value: senha,
+      setValue: setSenha,
+      secureTextEntry: true,
+    },
+    {
+      placeholder: "Confirmar senha",
+      value: confirmarSenha,
+      setValue: setConfirmarSenha,
+      secureTextEntry: true,
+    },
   ];
 
   const validarSenha = (senha: string) => {
@@ -70,7 +80,16 @@ export default function Register() {
   };
 
   const handleRegister = () => {
-    if (!nome || !email || !senha || !confirmarSenha || !dataNascimento || !sexo || !nivel || !objetivo)
+    if (
+      !nome ||
+      !email ||
+      !senha ||
+      !confirmarSenha ||
+      !dataNascimento ||
+      !sexo ||
+      !nivel ||
+      !objetivo
+    )
       return Alert.alert("Erro", "Preencha todos os campos.");
 
     if (senha !== confirmarSenha)
@@ -103,14 +122,26 @@ export default function Register() {
   return (
     <>
       <ScrollView
-        style={{ flex: 1, backgroundColor: "#0F0F0F", paddingHorizontal: 24, paddingTop: 40 }}
+        style={{
+          flex: 1,
+          backgroundColor: "#0F0F0F",
+          paddingHorizontal: 24,
+          paddingTop: 40,
+        }}
         contentContainerStyle={{ gap: 20, paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Logo */}
         <View style={{ alignItems: "center", marginBottom: 40 }}>
-          <MotiView from={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 120 }}>
-            <Image source={logo} style={{ width: 120, height: 120, resizeMode: "contain" }} />
+          <MotiView
+            from={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 120 }}
+          >
+            <Image
+              source={logo}
+              style={{ width: 120, height: 120, resizeMode: "contain" }}
+            />
           </MotiView>
         </View>
 
@@ -122,7 +153,12 @@ export default function Register() {
             borderRadius={12}
             height={50}
             p={12}
-            style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 }}
+            style={{
+              shadowColor: "#5DD26C",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+            }}
           >
             <InputField
               placeholder={item.placeholder}
@@ -145,7 +181,12 @@ export default function Register() {
             borderRadius={12}
             height={50}
             p={12}
-            style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 }}
+            style={{
+              shadowColor: "#5DD26C",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+            }}
           >
             <InputField
               placeholder="Data de Nascimento"
@@ -196,7 +237,12 @@ export default function Register() {
               borderRadius={12}
               height={50}
               p={12}
-              style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 }}
+              style={{
+                shadowColor: "#5DD26C",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 4,
+              }}
             >
               <SelectInput
                 placeholder={selectItem.placeholder}
@@ -220,8 +266,17 @@ export default function Register() {
         ))}
 
         {/* Dica sobre senha */}
-        <Text style={{ color: "#A3A3A3", fontSize: 13, marginTop: 4, marginBottom: 16, textAlign: "center" }}>
-          A senha deve conter pelo menos 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo.
+        <Text
+          style={{
+            color: "#A3A3A3",
+            fontSize: 13,
+            marginTop: 4,
+            marginBottom: 16,
+            textAlign: "center",
+          }}
+        >
+          A senha deve conter pelo menos 8 caracteres, incluindo letra
+          maiúscula, minúscula, número e símbolo.
         </Text>
 
         {/* Botão Registrar */}
@@ -232,39 +287,84 @@ export default function Register() {
           paddingVertical={16}
           paddingHorizontal={12}
           minHeight={50}
-          style={{ shadowColor: "#5DD26C", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.4, shadowRadius: 8 }}
+          style={{
+            shadowColor: "#5DD26C",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.4,
+            shadowRadius: 8,
+          }}
         >
           {loading && <ButtonSpinner color="$black" />}
           <ButtonText>{loading ? "Carregando..." : "Registrar"}</ButtonText>
         </Button>
 
         {/* Link para login */}
-        <Text style={{ color: "#F8F8F8", textAlign: "center", marginTop: 24, marginBottom: 60 }}>
+        <Text
+          style={{
+            color: "#F8F8F8",
+            textAlign: "center",
+            marginTop: 24,
+            marginBottom: 60,
+          }}
+        >
           Já tem conta?{" "}
-          <Text style={{ color: "#5DD26C" }} onPress={() => router.push("/(auth)/login")}>
+          <Text
+            style={{ color: "#5DD26C" }}
+            onPress={() => router.push("/(auth)/login")}
+          >
             Entrar
           </Text>
         </Text>
       </ScrollView>
 
       {/* Modal separado */}
-      <BodyFormInviteModal showModal={showModal} onClose={() => setShowModal(false)} onPreencher={handleIrBodyForm} onPular={handlePular} />
+      <BodyFormInviteModal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+        onPreencher={handleIrBodyForm}
+        onPular={handlePular}
+      />
 
       {/* Modal Data de Nascimento */}
       {showDateModal && (
         <Modal transparent animationType="slide">
-          <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "flex-end" }}>
-            <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => setShowDateModal(false)} />
-            <View style={{ backgroundColor: "#1A1A1A", padding: 16, borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "rgba(0,0,0,0.4)",
+              justifyContent: "flex-end",
+            }}
+          >
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              activeOpacity={1}
+              onPress={() => setShowDateModal(false)}
+            />
+            <View
+              style={{
+                backgroundColor: "#1A1A1A",
+                padding: 16,
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
+              }}
+            >
               <DateTimePicker
                 value={dataNascimento || new Date(2000, 0, 1)}
                 mode="date"
                 display={Platform.OS === "ios" ? "spinner" : "default"}
-                onChange={(_, selectedDate) => selectedDate && setDataNascimento(selectedDate)}
+                onChange={(_, selectedDate) =>
+                  selectedDate && setDataNascimento(selectedDate)
+                }
                 maximumDate={new Date()}
                 style={{ backgroundColor: "#1A1A1A" }}
               />
-              <Button mt="$2" backgroundColor="#5DD26C" borderRadius={12} onPress={() => setShowDateModal(false)} style={{ alignSelf: "flex-end" }}>
+              <Button
+                mt="$2"
+                backgroundColor="#5DD26C"
+                borderRadius={12}
+                onPress={() => setShowDateModal(false)}
+                style={{ alignSelf: "flex-end" }}
+              >
                 <ButtonText>Confirmar</ButtonText>
               </Button>
             </View>
