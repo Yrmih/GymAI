@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, View, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { updateUserBody } from "@/src/data/redux/usuarioSlice";
@@ -19,44 +19,57 @@ import {
   SelectBackdrop,
 } from "@gluestack-ui/themed";
 
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  bodyFormSchema,
+  BodyFormData,
+  BiotipoEnum,
+  TempoTreinoEnum,
+  FrequenciaSemanalEnum,
+} from "@/src/data/schemas/bodyFormSchema";
+
 export default function BodyForm() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [altura, setAltura] = useState("");
-  const [peso, setPeso] = useState("");
-  const [biotipo, setBiotipo] = useState("Ectomorfo");
-  const [tempoTreino, setTempoTreino] = useState("0-6 meses");
-  const [frequenciaSemanal, setFrequenciaSemanal] = useState("3x por semana");
-  const [gruposPrioritarios, setGruposPrioritarios] = useState("");
-  const [lesoes, setLesoes] = useState("");
-  const [loading, setLoading] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<BodyFormData>({
+    resolver: zodResolver(bodyFormSchema),
+    defaultValues: {
+      altura: "",
+      peso: "",
+      biotipo: BiotipoEnum.Ectomorfo,
+      tempoTreino: TempoTreinoEnum["0-6 meses"],
+      frequenciaSemanal: FrequenciaSemanalEnum["3x por semana"],
+      gruposPrioritarios: "",
+      lesoes: "",
+    },
+  });
 
-  const handleContinue = () => {
-    if (!altura || !peso) {
-      alert("Por favor, preencha altura e peso.");
-      return;
-    }
-
-    setLoading(true);
-
+  const onSubmit: SubmitHandler<BodyFormData> = (data) => {
     dispatch(
       updateUserBody({
-        altura: Number(altura),
-        peso: Number(peso),
-        biotipo,
-        tempoTreino,
-        frequenciaSemanal,
-        gruposPrioritarios,
-        lesoes,
+        altura: Number(data.altura),
+        peso: Number(data.peso),
+        biotipo: data.biotipo,
+        tempoTreino: data.tempoTreino,
+        frequenciaSemanal: data.frequenciaSemanal,
+        gruposPrioritarios: data.gruposPrioritarios,
+        lesoes: data.lesoes,
       })
     );
 
     setTimeout(() => {
-      setLoading(false);
       router.replace("/(main)/index");
     }, 1000);
   };
+
+  const getBorderColor = (fieldName: keyof BodyFormData) =>
+    errors[fieldName] ? "#FF4D4F" : "#202020";
 
   return (
     <ScrollView
@@ -99,195 +112,208 @@ export default function BodyForm() {
 
         {/* ===== DADOS FÍSICOS ===== */}
         <View style={{ gap: 24 }}>
-          <Input
-            backgroundColor="#202020"
-            borderRadius={14}
-            paddingHorizontal={20}
-            height={56}
-          >
-            <InputField
-              value={altura}
-              onChangeText={setAltura}
-              keyboardType="numeric"
-              placeholder="Altura (cm)"
-              placeholderTextColor="#A1A1A1"
-              color="#F8F8F8"
-              fontSize={16}
-            />
-          </Input>
-
-          <Input
-            backgroundColor="#202020"
-            borderRadius={14}
-            paddingHorizontal={20}
-            height={56}
-          >
-            <InputField
-              value={peso}
-              onChangeText={setPeso}
-              keyboardType="numeric"
-              placeholder="Peso (kg)"
-              placeholderTextColor="#A1A1A1"
-              color="#F8F8F8"
-              fontSize={16}
-            />
-          </Input>
-
-          <View>
-            <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>
-              Biotipo corporal
-            </Text>
-            <Select selectedValue={biotipo} onValueChange={setBiotipo}>
-              <SelectTrigger
+          {/* Altura */}
+          <Controller
+            control={control}
+            name="altura"
+            render={({ field: { onChange, value } }) => (
+              <Input
                 backgroundColor="#202020"
                 borderRadius={14}
                 paddingHorizontal={20}
                 height={56}
+                style={{ borderColor: getBorderColor("altura"), borderWidth: 1 }}
               >
-                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
-                  {biotipo}
-                </Text>
-                <SelectIcon />
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop />
-                <SelectContent>
-                  <SelectItem label="Ectomorfo" value="Ectomorfo" />
-                  <SelectItem label="Mesomorfo" value="Mesomorfo" />
-                  <SelectItem label="Endomorfo" value="Endomorfo" />
-                </SelectContent>
-              </SelectPortal>
-            </Select>
-          </View>
+                <InputField
+                  value={value}
+                  onChangeText={onChange}
+                  keyboardType="numeric"
+                  placeholder="Altura (cm)"
+                  placeholderTextColor="#A1A1A1"
+                  color="#F8F8F8"
+                  fontSize={16}
+                />
+              </Input>
+            )}
+          />
+          {errors.altura && <Text style={{ color: "#FF4D4F" }}>{errors.altura.message}</Text>}
 
-          <View>
-            <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>
-              Tempo de treino
-            </Text>
-            <Select selectedValue={tempoTreino} onValueChange={setTempoTreino}>
-              <SelectTrigger
+          {/* Peso */}
+          <Controller
+            control={control}
+            name="peso"
+            render={({ field: { onChange, value } }) => (
+              <Input
                 backgroundColor="#202020"
                 borderRadius={14}
                 paddingHorizontal={20}
                 height={56}
+                style={{ borderColor: getBorderColor("peso"), borderWidth: 1 }}
               >
-                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
-                  {tempoTreino}
-                </Text>
-                <SelectIcon />
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop />
-                <SelectContent>
-                  <SelectItem label="0-6 meses" value="0-6 meses" />
-                  <SelectItem label="6-12 meses" value="6-12 meses" />
-                  <SelectItem label="1-2 anos" value="1-2 anos" />
-                  <SelectItem label="+2 anos" value="+2 anos" />
-                </SelectContent>
-              </SelectPortal>
-            </Select>
-          </View>
+                <InputField
+                  value={value}
+                  onChangeText={onChange}
+                  keyboardType="numeric"
+                  placeholder="Peso (kg)"
+                  placeholderTextColor="#A1A1A1"
+                  color="#F8F8F8"
+                  fontSize={16}
+                />
+              </Input>
+            )}
+          />
+          {errors.peso && <Text style={{ color: "#FF4D4F" }}>{errors.peso.message}</Text>}
+
+          {/* Biotipo */}
+          <Controller
+            control={control}
+            name="biotipo"
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Biotipo corporal</Text>
+                <Select
+                  selectedValue={value}
+                  onValueChange={onChange}
+                  style={{ borderColor: getBorderColor("biotipo"), borderWidth: 1, borderRadius: 14 }}
+                >
+                  <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
+                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value}</Text>
+                    <SelectIcon />
+                  </SelectTrigger>
+                  <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent>
+                      {Object.values(BiotipoEnum).map((b) => (
+                        <SelectItem key={b} label={b} value={b} />
+                      ))}
+                    </SelectContent>
+                  </SelectPortal>
+                </Select>
+                {errors.biotipo && <Text style={{ color: "#FF4D4F" }}>{errors.biotipo.message}</Text>}
+              </View>
+            )}
+          />
+
+          {/* Tempo de treino */}
+          <Controller
+            control={control}
+            name="tempoTreino"
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Tempo de treino</Text>
+                <Select
+                  selectedValue={value}
+                  onValueChange={onChange}
+                  style={{ borderColor: getBorderColor("tempoTreino"), borderWidth: 1, borderRadius: 14 }}
+                >
+                  <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
+                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value}</Text>
+                    <SelectIcon />
+                  </SelectTrigger>
+                  <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent>
+                      {Object.values(TempoTreinoEnum).map((t) => (
+                        <SelectItem key={t} label={t} value={t} />
+                      ))}
+                    </SelectContent>
+                  </SelectPortal>
+                </Select>
+                {errors.tempoTreino && <Text style={{ color: "#FF4D4F" }}>{errors.tempoTreino.message}</Text>}
+              </View>
+            )}
+          />
         </View>
 
         {/* ===== DADOS DE TREINO ===== */}
         <View style={{ gap: 24, marginTop: 8 }}>
-          <Text
-            style={{
-              color: "#F8F8F8",
-              fontSize: 18,
-              fontWeight: "bold",
-              marginBottom: 4,
-            }}
-          >
+          <Text style={{ color: "#F8F8F8", fontSize: 18, fontWeight: "bold", marginBottom: 4 }}>
             Preferências de treino
           </Text>
 
-          <View>
-            <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>
-              Frequência semanal
-            </Text>
-            <Select
-              selectedValue={frequenciaSemanal}
-              onValueChange={setFrequenciaSemanal}
-            >
-              <SelectTrigger
+          {/* Frequência semanal */}
+          <Controller
+            control={control}
+            name="frequenciaSemanal"
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Frequência semanal</Text>
+                <Select
+                  selectedValue={value}
+                  onValueChange={onChange}
+                  style={{ borderColor: getBorderColor("frequenciaSemanal"), borderWidth: 1, borderRadius: 14 }}
+                >
+                  <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
+                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value}</Text>
+                    <SelectIcon />
+                  </SelectTrigger>
+                  <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent>
+                      {Object.values(FrequenciaSemanalEnum).map((f) => (
+                        <SelectItem key={f} label={f} value={f} />
+                      ))}
+                    </SelectContent>
+                  </SelectPortal>
+                </Select>
+                {errors.frequenciaSemanal && <Text style={{ color: "#FF4D4F" }}>{errors.frequenciaSemanal.message}</Text>}
+              </View>
+            )}
+          />
+
+          {/* Grupos prioritários */}
+          <Controller
+            control={control}
+            name="gruposPrioritarios"
+            render={({ field: { onChange, value } }) => (
+              <Input
                 backgroundColor="#202020"
                 borderRadius={14}
                 paddingHorizontal={20}
                 height={56}
               >
-                <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
-                  {frequenciaSemanal}
-                </Text>
-                <SelectIcon />
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop />
-                <SelectContent>
-                  <SelectItem label="3x por semana" value="3x por semana" />
-                  <SelectItem label="4x por semana" value="4x por semana" />
-                  <SelectItem label="5x por semana" value="5x por semana" />
-                  <SelectItem label="6x por semana" value="6x por semana" />
-                  <SelectItem label="Todos os dias" value="Todos os dias" />
-                </SelectContent>
-              </SelectPortal>
-            </Select>
-          </View>
+                <InputField
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder="Grupos musculares prioritários (ex: costas e pernas)"
+                  placeholderTextColor="#A1A1A1"
+                  color="#F8F8F8"
+                  fontSize={16}
+                />
+              </Input>
+            )}
+          />
 
-          <Input
-            backgroundColor="#202020"
-            borderRadius={14}
-            paddingHorizontal={20}
-            height={56}
-          >
-            <InputField
-              value={gruposPrioritarios}
-              onChangeText={setGruposPrioritarios}
-              placeholder="Grupos musculares prioritários (ex: costas e pernas)"
-              placeholderTextColor="#A1A1A1"
-              color="#F8F8F8"
-              fontSize={16}
-            />
-          </Input>
-
-          <Input
-            backgroundColor="#202020"
-            borderRadius={14}
-            paddingHorizontal={20}
-            height={56}
-          >
-            <InputField
-              value={lesoes}
-              onChangeText={setLesoes}
-              placeholder="Possui alguma lesão ou limitação física?"
-              placeholderTextColor="#A1A1A1"
-              color="#F8F8F8"
-              fontSize={16}
-            />
-          </Input>
+          {/* Lesões */}
+          <Controller
+            control={control}
+            name="lesoes"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                backgroundColor="#202020"
+                borderRadius={14}
+                paddingHorizontal={20}
+                height={56}
+              >
+                <InputField
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder="Possui alguma lesão ou limitação física?"
+                  placeholderTextColor="#A1A1A1"
+                  color="#F8F8F8"
+                  fontSize={16}
+                />
+              </Input>
+            )}
+          />
         </View>
 
         {/* Botão Continuar */}
-        <MotiView
-          from={{ opacity: 0, translateY: 10 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Button
-            backgroundColor="#5DD26C"
-            borderRadius={14}
-            height={56}
-            onPress={handleContinue}
-            disabled={loading}
-          >
-            {loading && <ButtonSpinner color="#0F0F0F" />}
-            <ButtonText
-              color="#0F0F0F"
-              fontWeight="$bold"
-              fontSize="$lg"
-              marginLeft="$2"
-            >
-              {loading ? "Carregando..." : "Concluir cadastro corporal"}
+        <MotiView from={{ opacity: 0, translateY: 10 }} animate={{ opacity: 1, translateY: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+          <Button backgroundColor="#5DD26C" borderRadius={14} height={56} onPress={handleSubmit(onSubmit)} disabled={isSubmitting}>
+            {isSubmitting && <ButtonSpinner color="#0F0F0F" />}
+            <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg" marginLeft="$2">
+              {isSubmitting ? "Carregando..." : "Concluir cadastro corporal"}
             </ButtonText>
           </Button>
         </MotiView>
