@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
-import { View, Text, Divider } from "@gluestack-ui/themed";
+import { View, Text, Switch } from "@gluestack-ui/themed";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/src/data/redux/store";
+
 import AppIcon from "@/src/components/icons/AppIcon";
 import { logoutUsuario } from "@/src/data/redux/slices/usuarioSlice";
+
+import LanguageModal from "@/src/components/modal/LanguageModal";
+import LogoutModal from "@/src/components/modal/LogoutModal";
+
+import { router } from "expo-router";
 
 export default function Settings() {
   const usuario = useSelector((state: RootState) => state.usuario);
   const dispatch = useDispatch();
 
+  // Estados internos
+  const [darkMode, setDarkMode] = useState(false);
+  const [notifications, setNotifications] = useState(true);
+
+  const [languageModal, setLanguageModal] = useState(false);
+  const [logoutModal, setLogoutModal] = useState(false);
+
   const handleLogout = () => {
     dispatch(logoutUsuario());
-    console.log("Usuário deslogado");
-    // futuramente: router.replace("/auth/login");
+    setLogoutModal(false);
+    // futuro: router.replace("/auth/login");
   };
 
   return (
@@ -39,6 +52,7 @@ export default function Settings() {
           >
             <AppIcon name="person-circle-outline" size={72} color="#5DD26C" />
           </View>
+
           <Text color="#FFF" fontSize="$lg" fontWeight="$bold">
             {usuario.nome || "Treinador"}
           </Text>
@@ -47,82 +61,89 @@ export default function Settings() {
           </Text>
         </View>
 
-        {/* ⚙️ Seções de Configuração */}
+        {/* ⚙️ Conta */}
         <View gap={20}>
           <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Conta
           </Text>
 
+          {/* Editar Perfil */}
           <TouchableOpacity>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="create-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Editar Perfil
-              </Text>
+              <Text color="#FFF" fontSize="$sm">Editar Perfil</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          {/* Alterar Senha */}
+          <TouchableOpacity onPress={() => router.push("/main/settings/change-password")}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="key-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Alterar Senha
-              </Text>
+              <Text color="#FFF" fontSize="$sm">Alterar Senha</Text>
             </View>
           </TouchableOpacity>
+        </View>
 
-          <Divider bg="#222" mt={12} />
-
-          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mt={8}>
+        {/* 📱 Preferências */}
+        <View gap={20}>
+          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Preferências
           </Text>
 
-          <TouchableOpacity>
+          {/* MODO ESCURO */}
+          <View flexDirection="row" alignItems="center" justifyContent="space-between">
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="moon-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Modo Escuro
-              </Text>
+              <Text color="#FFF" fontSize="$sm">Modo Escuro</Text>
             </View>
-          </TouchableOpacity>
+            <Switch
+              value={darkMode}
+              onValueChange={setDarkMode}
+              size="lg"
+              trackColor={{ true: "#5DD26C" }}
+            />
+          </View>
 
-          <TouchableOpacity>
+          {/* NOTIFICAÇÕES */}
+          <View flexDirection="row" alignItems="center" justifyContent="space-between">
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="notifications-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Alertas de Treino
-              </Text>
+              <Text color="#FFF" fontSize="$sm">Notificações</Text>
             </View>
-          </TouchableOpacity>
+            <Switch
+              value={notifications}
+              onValueChange={setNotifications}
+              size="lg"
+              trackColor={{ true: "#5DD26C" }}
+            />
+          </View>
 
-          <TouchableOpacity>
+          {/* IDIOMA */}
+          <TouchableOpacity onPress={() => setLanguageModal(true)}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="language-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Idioma
-              </Text>
+              <Text color="#FFF" fontSize="$sm">Idioma</Text>
             </View>
           </TouchableOpacity>
+        </View>
 
-          <Divider bg="#222" mt={12} />
-
-          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold" mt={8}>
+        {/* 🧾 Sistema */}
+        <View gap={20}>
+          <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Sistema
           </Text>
 
           <TouchableOpacity>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="information-circle-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Sobre o App
-              </Text>
+              <Text color="#FFF" fontSize="$sm">Sobre o App</Text>
             </View>
           </TouchableOpacity>
         </View>
 
         {/* 🚪 Logout */}
         <TouchableOpacity
-          onPress={handleLogout}
+          onPress={() => setLogoutModal(true)}
           style={{
             marginTop: 40,
             alignSelf: "center",
@@ -137,6 +158,19 @@ export default function Settings() {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* ====== MODAIS INTEGRADOS ====== */}
+      <LanguageModal
+        visible={languageModal}
+        onClose={() => setLanguageModal(false)}
+        onSelect={(lang) => console.log("Idioma escolhido:", lang)}
+      />
+
+      <LogoutModal
+        visible={logoutModal}
+        onClose={() => setLogoutModal(false)}
+        onConfirm={handleLogout}
+      />
     </View>
   );
 }
