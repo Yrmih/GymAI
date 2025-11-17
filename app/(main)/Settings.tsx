@@ -2,9 +2,9 @@ import React from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import { View, Text, Divider } from "@gluestack-ui/themed";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/src/redux/store";
+import { RootState } from "@/src/data/redux/store";
 import AppIcon from "@/src/components/icons/AppIcon";
-import { logoutUsuario } from "@/src/redux/slices/usuarioSlice";
+import { logoutUsuario } from "@/src/data/redux/slices/usuarioSlice";
 
 export default function Settings() {
   const usuario = useSelector((state: RootState) => state.usuario);
