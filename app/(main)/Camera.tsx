@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { View, Text, Button, ButtonText, Spinner } from "@gluestack-ui/themed";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import { analyzeExerciseMock } from "@/src/mock/analyzeExerciseMock";
+import { analyzeExerciseMock } from "@/src/data/mock/analyzeExerciseMock";
 import { MotiView } from "moti";
 
 export default function CameraScreen() {
