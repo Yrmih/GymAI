@@ -1,4 +1,4 @@
-// app/(main)/WorkoutGallery.tsx
+
 import React from "react";
 import { ScrollView } from "react-native";
 import { useRouter } from "expo-router";

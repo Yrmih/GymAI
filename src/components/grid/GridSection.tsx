@@ -1,37 +1,38 @@
 import React from "react";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
-import { CardItem } from "@/src/types/CardItem";
+
 import HomeCard from "@/src/components/card/HomeCard";
-import AppIcon from "../icons/AppIcon";
+import AppIcon from "@/src/components/icons/AppIcon";
+import { CardItem } from "@/src/types/CardItem";
 
 export default function GridSection() {
   const router = useRouter();
 
   const cards: CardItem[] = [
     {
-      title: "Exercícios",
-      description: "Veja a lista completa de exercícios disponíveis",
-      icon: "barbell-outline",
-      route: "/Exercicies",
+      title: "Minha Coleção",
+      description: "Seus exercícios salvos e favoritos.",
+      icon: "heart-outline",
+      route: "/MyCollection",
     },
     {
-      title: "Progresso",
-      description: "Acompanhe sua evolução e gráficos de desempenho",
+      title: "GymAI Chat",
+      description: "Tire dúvidas de treino com a IA.",
+      icon: "chatbubble-ellipses-outline",
+      route: "/GymAIChat",
+    },
+    {
+      title: "Meu Progresso",
+      description: "Sua consistência e estatísticas.",
       icon: "stats-chart-outline",
       route: "/Progress",
     },
     {
-      title: "Perfil",
-      description: "Edite suas informações e preferências",
-      icon: "person-circle-outline",
-      route: "/Profile",
-    },
-    {
-      title: "Configurações",
-      description: "Personalize seu treino e preferências do app",
-      icon: "settings-outline",
-      route: "/Settings",
+      title: "Histórico",
+      description: "Últimos aparelhos identificados.",
+      icon: "time-outline",
+      route: "/History",
     },
   ];
 
@@ -56,17 +57,17 @@ export default function GridSection() {
           from={{
             opacity: 0,
             translateY: 20,
-            scale: 0.9, // 👈 começa um pouco menor
+            scale: 0.9,
           }}
           animate={{
             opacity: 1,
             translateY: 0,
-            scale: 1, // 👈 cresce com elasticidade
+            scale: 1,
           }}
           transition={{
-            type: "spring", // 👈 spring dá o efeito “mola”
-            damping: 12, // controla o quão “bouncy” fica
-            delay: index * 120, // 👈 efeito cascata entre os cards
+            type: "spring",
+            damping: 12,
+            delay: index * 120,
           }}
           style={{ width: "47%" }}
         >
@@ -74,7 +75,7 @@ export default function GridSection() {
             title={card.title}
             description={card.description}
             onPress={() => router.push(card.route)}
-            icon={<AppIcon name={card.icon} size={28} color="#fff" />}
+            icon={<AppIcon name={card.icon} size={28} color="#5DD26C" />}
           />
         </MotiView>
       ))}
