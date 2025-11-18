@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
-import { setUsuario } from "@/src/data/redux/slices/usuarioSlice";
+import { setUsuario } from "@/src/data/redux/slices/perfilSlice";
 import {
   Input,
   InputField,
@@ -32,9 +32,15 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import logo from "@/assets/brand/logo.png";
 import BodyFormInviteModal from "@/src/components/modal/BodyFormInviteModal";
 
-import { useForm, Controller, SubmitHandler, Resolver} from "react-hook-form";
+import { useForm, Controller, SubmitHandler, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema, RegisterFormData, SexoEnum, NivelEnum, ObjetivoEnum } from "@/src/data/schemas/registerSchema";
+import {
+  registerSchema,
+  RegisterFormData,
+  SexoEnum,
+  NivelEnum,
+  ObjetivoEnum,
+} from "@/src/data/schemas/registerSchema";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -51,7 +57,9 @@ export default function Register() {
     setValue,
     watch,
   } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema) as unknown as Resolver<RegisterFormData>,
+    resolver: zodResolver(
+      registerSchema
+    ) as unknown as Resolver<RegisterFormData>,
     defaultValues: {
       nome: "",
       email: "",
@@ -65,19 +73,19 @@ export default function Register() {
   });
 
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
-  setLoading(true);
-  setTimeout(() => {
-    dispatch(
-      setUsuario({
-        nome: data.nome,
-        email: data.email,
-        logado: true,
-      })
-    );
-    setLoading(false);
-    setShowModal(true);
-  }, 1500);
-};
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(
+        setUsuario({
+          nome: data.nome,
+          email: data.email,
+          logado: true,
+        })
+      );
+      setLoading(false);
+      setShowModal(true);
+    }, 1500);
+  };
 
   const handleIrBodyForm = () => {
     setShowModal(false);
@@ -145,7 +153,9 @@ export default function Register() {
                 />
               </Input>
               {errors.nome && (
-                <Text style={{ color: "red", fontSize: 12 }}>{errors.nome.message}</Text>
+                <Text style={{ color: "red", fontSize: 12 }}>
+                  {errors.nome.message}
+                </Text>
               )}
             </>
           )}
@@ -182,7 +192,9 @@ export default function Register() {
                 />
               </Input>
               {errors.email && (
-                <Text style={{ color: "red", fontSize: 12 }}>{errors.email.message}</Text>
+                <Text style={{ color: "red", fontSize: 12 }}>
+                  {errors.email.message}
+                </Text>
               )}
             </>
           )}
@@ -218,7 +230,9 @@ export default function Register() {
                 />
               </Input>
               {errors.senha && (
-                <Text style={{ color: "red", fontSize: 12 }}>{errors.senha.message}</Text>
+                <Text style={{ color: "red", fontSize: 12 }}>
+                  {errors.senha.message}
+                </Text>
               )}
             </>
           )}
@@ -319,7 +333,10 @@ export default function Register() {
               : [
                   { label: "Ganho de massa", value: ObjetivoEnum.Massa },
                   { label: "Perda de gordura", value: ObjetivoEnum.Gordura },
-                  { label: "Condicionamento", value: ObjetivoEnum.Condicionamento },
+                  {
+                    label: "Condicionamento",
+                    value: ObjetivoEnum.Condicionamento,
+                  },
                 ];
 
           return (
@@ -329,7 +346,10 @@ export default function Register() {
               name={fieldName}
               render={({ field }) => (
                 <>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger
                       bg="#202020"
                       borderRadius={12}
@@ -358,7 +378,11 @@ export default function Register() {
                           <SelectDragIndicator />
                         </SelectDragIndicatorWrapper>
                         {options.map((item, i) => (
-                          <SelectItem key={i} label={item.label} value={item.value} />
+                          <SelectItem
+                            key={i}
+                            label={item.label}
+                            value={item.value}
+                          />
                         ))}
                       </SelectContent>
                     </SelectPortal>
