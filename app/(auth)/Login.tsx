@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { login } from "@/src/data/redux/usuarioSlice";
+import { login } from "@/src/data/redux/slices/usuarioBodySlice";
 import { useRouter } from "expo-router";
 import {
   Input,
