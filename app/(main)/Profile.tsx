@@ -1,12 +1,13 @@
-import React from "react";
-import { ScrollView, Text } from "react-native";
+import React, { useLayoutEffect } from "react";
+import { ScrollView, Text, TouchableOpacity } from "react-native";
 import { MotiView } from "moti";
 import { View, Avatar, Image } from "@gluestack-ui/themed";
-import { useRouter } from "expo-router";
-import AppIcon from "@/src/components/icons/AppIcon";
+import { useRouter, useNavigation } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
 
   // Mock (depois conecta com Firebase)
   const nivel = 5;
@@ -14,6 +15,30 @@ export default function ProfileScreen() {
   const xpProximo = 500;
   const progressoXP = xpAtual / xpProximo;
   const aparelhosDescobertos = 12;
+
+  // === HEADER CONFIG ===
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: { backgroundColor: "#0F0F0F" },
+      headerTintColor: "#FFF",
+      headerTitle: "",
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => router.push("/main/settings")}
+          style={{ paddingRight: 16 }}
+        >
+          <Ionicons
+            name="settings-outline"
+            size={26}
+            color="#5DD26C"
+          />
+        </TouchableOpacity>
+      ),
+      headerRightContainerStyle: {
+        paddingRight: 16,
+      },
+    });
+  }, [navigation]);
 
   return (
     <View flex={1} bg="#0F0F0F">
@@ -30,7 +55,6 @@ export default function ProfileScreen() {
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ type: "timing", duration: 600 }}
         >
-
           {/* Avatar e Identidade */}
           <View style={{ alignItems: "center", marginBottom: 32 }}>
             <Avatar
@@ -122,7 +146,7 @@ export default function ProfileScreen() {
               borderRadius: 16,
               marginBottom: 24,
             }}
-            onTouchEnd={() => router.push("/Progress")}
+            onTouchEnd={() => router.push("/main/Progress")}
           >
             <View style={{ alignItems: "center", marginBottom: 16 }}>
               <View
@@ -135,7 +159,7 @@ export default function ProfileScreen() {
                   alignItems: "center",
                 }}
               >
-                <AppIcon name="stats-chart" size={40} color="#5DD26C" />
+                <Ionicons name="stats-chart" size={40} color="#5DD26C" />
               </View>
             </View>
 
