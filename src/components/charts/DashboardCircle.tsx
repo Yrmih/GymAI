@@ -5,6 +5,11 @@ import { MotiText } from "moti";
 
 interface DashboardCircleProps {
   progress?: number;
+  radius?: number;
+  size?: number;
+  strokeColor?: string;
+  backgroundColor?: string;
+  glow?: boolean;
 }
 
 export default function DashboardCircle({
