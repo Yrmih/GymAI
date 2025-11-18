@@ -24,7 +24,7 @@ export default function ProfileScreen() {
       headerTitle: "",
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => router.push("/main/settings")}
+          onPress={() => router.push("/EditProfile")}
           style={{ paddingRight: 16 }}
         >
           <Ionicons
