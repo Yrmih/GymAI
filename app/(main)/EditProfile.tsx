@@ -1,7 +1,21 @@
 // app/(main)/EditProfile.tsx
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, Image } from "react-native";
-import { View, Avatar, Button, ButtonText, ButtonSpinner, Input, InputField, Select, SelectTrigger, SelectContent, SelectItem, SelectIcon, SelectPortal, SelectBackdrop } from "@gluestack-ui/themed";
+import { ScrollView, Text, TouchableOpacity, Image, View } from "react-native";
+import {
+  Avatar,
+  Button,
+  ButtonText,
+  ButtonSpinner,
+  Input,
+  InputField,
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectIcon,
+  SelectPortal,
+  SelectBackdrop,
+} from "@gluestack-ui/themed";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editProfileSchema, EditProfileFormData, MetaFitnessEnum } from "@/src/data/schemas/editProfileSchema";
@@ -41,8 +55,12 @@ export default function EditProfile() {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <MotiView from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0 }} transition={{ duration: 0.6 }} style={{ gap: 32 }}>
-        
+      <MotiView
+        from={{ opacity: 0, translateY: 20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.6 }}
+        style={{ gap: 32 }}
+      >
         {/* Avatar */}
         <View style={{ alignItems: "center", marginBottom: 16 }}>
           <Avatar
@@ -136,7 +154,6 @@ export default function EditProfile() {
               borderRadius={14}
               paddingHorizontal={20}
               height={80}
-              multiline
               style={{ borderColor: errors.bio ? "#FF4D4F" : "#202020", borderWidth: 1 }}
             >
               <InputField
@@ -146,6 +163,7 @@ export default function EditProfile() {
                 placeholderTextColor="#A1A1A1"
                 color="#F8F8F8"
                 fontSize={16}
+                multiline // ✅ corrigido aqui
               />
             </Input>
           )}
@@ -159,7 +177,11 @@ export default function EditProfile() {
           render={({ field: { onChange, value } }) => (
             <View>
               <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Meta Fitness</Text>
-              <Select selectedValue={value} onValueChange={onChange} style={{ borderColor: "#202020", borderWidth: 1, borderRadius: 14 }}>
+              <Select
+                selectedValue={value}
+                onValueChange={onChange}
+                style={{ borderColor: "#202020", borderWidth: 1, borderRadius: 14 }}
+              >
                 <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
                   <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value || "Selecione sua meta"}</Text>
                   <SelectIcon />
@@ -167,8 +189,8 @@ export default function EditProfile() {
                 <SelectPortal>
                   <SelectBackdrop />
                   <SelectContent>
-                    {Object.values(MetaFitnessEnum._def.values).map((m) => (
-                      <SelectItem key={m} label={m} value={m} />
+                    {Object.values(MetaFitnessEnum.enum).map((m) => (
+                      <SelectItem key={String(m)} label={String(m)} value={String(m)} />
                     ))}
                   </SelectContent>
                 </SelectPortal>
@@ -178,8 +200,18 @@ export default function EditProfile() {
         />
 
         {/* Botão Salvar */}
-        <MotiView from={{ opacity: 0, translateY: 10 }} animate={{ opacity: 1, translateY: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <Button backgroundColor="#5DD26C" borderRadius={14} height={56} onPress={handleSubmit(onSubmit)} disabled={isSubmitting}>
+        <MotiView
+          from={{ opacity: 0, translateY: 10 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Button
+            backgroundColor="#5DD26C"
+            borderRadius={14}
+            height={56}
+            onPress={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+          >
             {isSubmitting && <ButtonSpinner color="#0F0F0F" />}
             <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg" marginLeft="$2">
               {isSubmitting ? "Salvando..." : "Salvar alterações"}
