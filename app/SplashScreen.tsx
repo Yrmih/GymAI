@@ -12,7 +12,7 @@ interface SplashScreenProps {
 
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
   const router = useRouter();
-  const usuarioLogado = useSelector((state: RootState) => state.usuario.logado);
+  const usuarioLogado = useSelector((state: RootState) => state.perfil.usuario.logado);
   const [fadeOut, setFadeOut] = useState(false);
 
   // ✅ useVideoPlayer precisa estar fora de qualquer if
