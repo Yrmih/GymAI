@@ -5,4 +5,5 @@ export interface PerfilUsuario {
   email?: string;
   foto?: string;
   token?: string;
+  avatar?: string;
 }

@@ -16,6 +16,7 @@ const initialState: UsuarioState = {
     tempoTreino: undefined,
     email: "",
     foto: "",
+    avatar: "",
     token: "",
   },
 };
@@ -37,6 +38,7 @@ const usuarioSlice = createSlice({
         tempoTreino: undefined,
         email: "",
         foto: "",
+        avatar: "",
         token: "",
       };
     },
