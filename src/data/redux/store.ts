@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import usuarioReducer from './usuarioSlice';
+import perfilReducer from "./slices/perfilSlice";
+import bodyReducer from "./slices/usuarioBodySlice";
 
 export const store = configureStore({
   reducer: {
-    usuario: usuarioReducer,
+    perfil: perfilReducer,
+    body: bodyReducer,
   },
-})
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
