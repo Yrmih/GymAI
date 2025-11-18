@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/src/data/redux/store";
 
 import AppIcon from "@/src/components/icons/AppIcon";
-import { logoutUsuario } from "@/src/data/redux/slices/usuarioSlice";
+import { logoutUsuario } from "@/src/data/redux/slices/perfilSlice";
 
 import LanguageModal from "@/src/components/modal/LanguageModal";
 import LogoutModal from "@/src/components/modal/LogoutModal";
@@ -71,7 +71,9 @@ export default function Settings() {
           <TouchableOpacity>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="create-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">Editar Perfil</Text>
+              <Text color="#FFF" fontSize="$sm">
+                Editar Perfil
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -79,7 +81,9 @@ export default function Settings() {
           <TouchableOpacity onPress={() => router.push("/Change-password")}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="key-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">Alterar Senha</Text>
+              <Text color="#FFF" fontSize="$sm">
+                Alterar Senha
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -91,10 +95,16 @@ export default function Settings() {
           </Text>
 
           {/* MODO ESCURO */}
-          <View flexDirection="row" alignItems="center" justifyContent="space-between">
+          <View
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="moon-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">Modo Escuro</Text>
+              <Text color="#FFF" fontSize="$sm">
+                Modo Escuro
+              </Text>
             </View>
             <Switch
               value={darkMode}
@@ -105,10 +115,16 @@ export default function Settings() {
           </View>
 
           {/* NOTIFICAÇÕES */}
-          <View flexDirection="row" alignItems="center" justifyContent="space-between">
+          <View
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="notifications-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">Notificações</Text>
+              <Text color="#FFF" fontSize="$sm">
+                Notificações
+              </Text>
             </View>
             <Switch
               value={notifications}
@@ -122,7 +138,9 @@ export default function Settings() {
           <TouchableOpacity onPress={() => setLanguageModal(true)}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="language-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">Idioma</Text>
+              <Text color="#FFF" fontSize="$sm">
+                Idioma
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -136,7 +154,9 @@ export default function Settings() {
           <TouchableOpacity>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="information-circle-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">Sobre o App</Text>
+              <Text color="#FFF" fontSize="$sm">
+                Sobre o App
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
