@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, View, Text } from "react-native";
 import { useDispatch } from "react-redux";
-import { updateUserBody } from "@/src/data/redux/usuarioSlice";
+import { updateUserBody } from "@/src/data/redux/slices/usuarioBodySlice";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
 import {
@@ -122,7 +122,10 @@ export default function BodyForm() {
                 borderRadius={14}
                 paddingHorizontal={20}
                 height={56}
-                style={{ borderColor: getBorderColor("altura"), borderWidth: 1 }}
+                style={{
+                  borderColor: getBorderColor("altura"),
+                  borderWidth: 1,
+                }}
               >
                 <InputField
                   value={value}
@@ -136,7 +139,9 @@ export default function BodyForm() {
               </Input>
             )}
           />
-          {errors.altura && <Text style={{ color: "#FF4D4F" }}>{errors.altura.message}</Text>}
+          {errors.altura && (
+            <Text style={{ color: "#FF4D4F" }}>{errors.altura.message}</Text>
+          )}
 
           {/* Peso */}
           <Controller
@@ -162,7 +167,9 @@ export default function BodyForm() {
               </Input>
             )}
           />
-          {errors.peso && <Text style={{ color: "#FF4D4F" }}>{errors.peso.message}</Text>}
+          {errors.peso && (
+            <Text style={{ color: "#FF4D4F" }}>{errors.peso.message}</Text>
+          )}
 
           {/* Biotipo */}
           <Controller
@@ -170,14 +177,28 @@ export default function BodyForm() {
             name="biotipo"
             render={({ field: { onChange, value } }) => (
               <View>
-                <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Biotipo corporal</Text>
+                <Text
+                  style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}
+                >
+                  Biotipo corporal
+                </Text>
                 <Select
                   selectedValue={value}
                   onValueChange={onChange}
-                  style={{ borderColor: getBorderColor("biotipo"), borderWidth: 1, borderRadius: 14 }}
+                  style={{
+                    borderColor: getBorderColor("biotipo"),
+                    borderWidth: 1,
+                    borderRadius: 14,
+                  }}
                 >
-                  <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
-                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value}</Text>
+                  <SelectTrigger
+                    backgroundColor="#202020"
+                    paddingHorizontal={20}
+                    height={56}
+                  >
+                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
+                      {value}
+                    </Text>
                     <SelectIcon />
                   </SelectTrigger>
                   <SelectPortal>
@@ -189,7 +210,11 @@ export default function BodyForm() {
                     </SelectContent>
                   </SelectPortal>
                 </Select>
-                {errors.biotipo && <Text style={{ color: "#FF4D4F" }}>{errors.biotipo.message}</Text>}
+                {errors.biotipo && (
+                  <Text style={{ color: "#FF4D4F" }}>
+                    {errors.biotipo.message}
+                  </Text>
+                )}
               </View>
             )}
           />
@@ -200,14 +225,28 @@ export default function BodyForm() {
             name="tempoTreino"
             render={({ field: { onChange, value } }) => (
               <View>
-                <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Tempo de treino</Text>
+                <Text
+                  style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}
+                >
+                  Tempo de treino
+                </Text>
                 <Select
                   selectedValue={value}
                   onValueChange={onChange}
-                  style={{ borderColor: getBorderColor("tempoTreino"), borderWidth: 1, borderRadius: 14 }}
+                  style={{
+                    borderColor: getBorderColor("tempoTreino"),
+                    borderWidth: 1,
+                    borderRadius: 14,
+                  }}
                 >
-                  <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
-                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value}</Text>
+                  <SelectTrigger
+                    backgroundColor="#202020"
+                    paddingHorizontal={20}
+                    height={56}
+                  >
+                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
+                      {value}
+                    </Text>
                     <SelectIcon />
                   </SelectTrigger>
                   <SelectPortal>
@@ -219,7 +258,11 @@ export default function BodyForm() {
                     </SelectContent>
                   </SelectPortal>
                 </Select>
-                {errors.tempoTreino && <Text style={{ color: "#FF4D4F" }}>{errors.tempoTreino.message}</Text>}
+                {errors.tempoTreino && (
+                  <Text style={{ color: "#FF4D4F" }}>
+                    {errors.tempoTreino.message}
+                  </Text>
+                )}
               </View>
             )}
           />
@@ -227,7 +270,14 @@ export default function BodyForm() {
 
         {/* ===== DADOS DE TREINO ===== */}
         <View style={{ gap: 24, marginTop: 8 }}>
-          <Text style={{ color: "#F8F8F8", fontSize: 18, fontWeight: "bold", marginBottom: 4 }}>
+          <Text
+            style={{
+              color: "#F8F8F8",
+              fontSize: 18,
+              fontWeight: "bold",
+              marginBottom: 4,
+            }}
+          >
             Preferências de treino
           </Text>
 
@@ -237,14 +287,28 @@ export default function BodyForm() {
             name="frequenciaSemanal"
             render={({ field: { onChange, value } }) => (
               <View>
-                <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Frequência semanal</Text>
+                <Text
+                  style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}
+                >
+                  Frequência semanal
+                </Text>
                 <Select
                   selectedValue={value}
                   onValueChange={onChange}
-                  style={{ borderColor: getBorderColor("frequenciaSemanal"), borderWidth: 1, borderRadius: 14 }}
+                  style={{
+                    borderColor: getBorderColor("frequenciaSemanal"),
+                    borderWidth: 1,
+                    borderRadius: 14,
+                  }}
                 >
-                  <SelectTrigger backgroundColor="#202020" paddingHorizontal={20} height={56}>
-                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value}</Text>
+                  <SelectTrigger
+                    backgroundColor="#202020"
+                    paddingHorizontal={20}
+                    height={56}
+                  >
+                    <Text style={{ color: "#F8F8F8", fontSize: 16 }}>
+                      {value}
+                    </Text>
                     <SelectIcon />
                   </SelectTrigger>
                   <SelectPortal>
@@ -256,7 +320,11 @@ export default function BodyForm() {
                     </SelectContent>
                   </SelectPortal>
                 </Select>
-                {errors.frequenciaSemanal && <Text style={{ color: "#FF4D4F" }}>{errors.frequenciaSemanal.message}</Text>}
+                {errors.frequenciaSemanal && (
+                  <Text style={{ color: "#FF4D4F" }}>
+                    {errors.frequenciaSemanal.message}
+                  </Text>
+                )}
               </View>
             )}
           />
@@ -309,10 +377,25 @@ export default function BodyForm() {
         </View>
 
         {/* Botão Continuar */}
-        <MotiView from={{ opacity: 0, translateY: 10 }} animate={{ opacity: 1, translateY: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <Button backgroundColor="#5DD26C" borderRadius={14} height={56} onPress={handleSubmit(onSubmit)} disabled={isSubmitting}>
+        <MotiView
+          from={{ opacity: 0, translateY: 10 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Button
+            backgroundColor="#5DD26C"
+            borderRadius={14}
+            height={56}
+            onPress={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+          >
             {isSubmitting && <ButtonSpinner color="#0F0F0F" />}
-            <ButtonText color="#0F0F0F" fontWeight="$bold" fontSize="$lg" marginLeft="$2">
+            <ButtonText
+              color="#0F0F0F"
+              fontWeight="$bold"
+              fontSize="$lg"
+              marginLeft="$2"
+            >
               {isSubmitting ? "Carregando..." : "Concluir cadastro corporal"}
             </ButtonText>
           </Button>
