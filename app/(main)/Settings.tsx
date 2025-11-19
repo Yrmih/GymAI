@@ -13,7 +13,7 @@ import LogoutModal from "@/src/components/modal/LogoutModal";
 import { router } from "expo-router";
 
 export default function Settings() {
-  const usuario = useSelector((state: RootState) => state.usuario);
+  const usuario = useSelector((state: RootState) => state.perfil.usuario);
   const dispatch = useDispatch();
 
   // Estados internos
