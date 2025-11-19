@@ -49,7 +49,7 @@ export default function Home() {
           </Avatar>
 
           <Text color="$white" fontWeight="$bold" fontSize="$lg" style={{ marginLeft: 10 }}>
-            Olá, {usuario?.nome || "Treinador"}!
+            Olá, {usuario?.nome || "Atleta"}!
           </Text>
         </TouchableOpacity>
 
