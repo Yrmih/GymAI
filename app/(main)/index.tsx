@@ -1,4 +1,3 @@
-// app/(main)/Home.tsx
 import React from "react";
 import {
   ScrollView,
