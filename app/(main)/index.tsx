@@ -14,7 +14,7 @@ import AppIcon from "@/src/components/icons/AppIcon";
 export default function Home() {
   const router = useRouter();
 
-  // Agora realmente refletindo o store:
+  // Agora acessando corretamente do slice "usuario"
   const usuario = useSelector((state: RootState) => state.perfil.usuario);
 
   const avatarUri =
@@ -24,6 +24,7 @@ export default function Home() {
 
   return (
     <View flex={1} bg="#121212">
+      
       {/* Cabeçalho */}
       <View
         flexDirection="row"
@@ -70,10 +71,6 @@ export default function Home() {
         >
           <DashboardCircle
             progress={66}
-            radius={100} 
-            strokeColor="#5DD26C"
-            backgroundColor="#1A1A1A"
-            glow
           />
 
           <Text color="$white" fontSize="$xl" fontWeight="$bold" marginTop={12}>
@@ -101,14 +98,25 @@ export default function Home() {
         bg="#000000"
         paddingHorizontal={24}
       >
-        <TouchableOpacity>
-          <AppIcon name="home-outline" size={28} color="#5DD26C" />
+        {/* Botão Perfil (usuário) */}
+        <TouchableOpacity onPress={() => router.push("/Profile")}>
+          <AppIcon name="person-circle-outline" size={28} color="#CCCCCC" />
         </TouchableOpacity>
 
-        <FloatingCameraButton />
+        {/* Botão central FLOAT FIXADO */}
+        <View
+          style={{
+            position: "absolute",
+            bottom: 22,
+            alignSelf: "center",
+          }}
+        >
+          <FloatingCameraButton />
+        </View>
 
+        {/* Botão Treinos */}
         <TouchableOpacity onPress={() => router.push("/Treinos")}>
-          <AppIcon name="barbell" size={28} color="#CCCCCC" /> 
+          <AppIcon name="barbell" size={28} color="#CCCCCC" />
         </TouchableOpacity>
       </View>
     </View>
