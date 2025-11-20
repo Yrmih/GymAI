@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import AppIcon from "@/src/components/icons/AppIcon";
 
-
 interface EditPhotoSheetProps {
   onTakePhoto: () => void;
   onPickPhoto: () => void;
@@ -16,7 +15,7 @@ const EditPhotoSheet = forwardRef<BottomSheet, EditPhotoSheetProps>(
 
     return (
       <BottomSheet
-        ref={ref} // ref tipado como BottomSheet
+        ref={ref}
         index={-1}
         snapPoints={snapPoints}
         enablePanDownToClose
@@ -44,7 +43,6 @@ const EditPhotoSheet = forwardRef<BottomSheet, EditPhotoSheetProps>(
           <TouchableOpacity
             style={styles.cancel}
             onPress={() => {
-              // ref pode ser null ou função, então checamos
               if (ref && typeof ref === "object" && "current" in ref) {
                 ref.current?.close();
               }
