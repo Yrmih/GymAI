@@ -1,10 +1,13 @@
-// src/data/redux/store.ts
+
 import { configureStore } from "@reduxjs/toolkit";
 import perfilReducer from "./slices/perfilSlice";
 import bodyReducer from "./slices/usuarioBodySlice";
-import achievementsReducer, { achievementsMiddleware } from "./slices/achievementsSlice";
+import achievementsReducer, {
+  achievementsMiddleware,
+} from "./slices/achievementsSlice";
 import xpReducer from "./slices/xpSlice";
-import uiReducer from "./slices/uiSlice"; // opcional: para mostrar o XP toast — se não tiver, posso mandar o slice
+import uiReducer from "./slices/uiSlice";
+import frequencyReducer from "./slices/frequencySlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,10 +15,13 @@ export const store = configureStore({
     body: bodyReducer,
     achievements: achievementsReducer,
     xp: xpReducer,
-    ui: uiReducer ?? (() => ({})), // se não existir, remova ou crie uiSlice
+    ui: uiReducer ?? (() => ({})),
+    frequency: frequencyReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(achievementsMiddleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      achievementsMiddleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
