@@ -7,17 +7,17 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/data/redux/store";
 import AchievementsGrid from "@/src/components/achievements/AchievementsGrid";
+import XPBar from "@/src/components/bar/XPBar";
 import data from "@/src/data/achievements/achievements.json";
 
 export default function ProfileScreen() {
   const router = useRouter();
   const navigation = useNavigation();
 
-  // XP mock — depois substituímos pelo Redux XP Slice
-  const nivel = 5;
-  const xpAtual = 300;
-  const xpProximo = 500;
-  const progressoXP = xpAtual / xpProximo;
+  // XP REAL vindo do Redux
+  const { level, xpTotal, nextLevelXP } = useSelector(
+    (state: RootState) => state.xp
+  );
 
   // Achievements Redux
   const earned = useSelector((state: RootState) => state.achievements.earned);
@@ -38,9 +38,7 @@ export default function ProfileScreen() {
           <Ionicons name="settings-outline" size={26} color="#5DD26C" />
         </TouchableOpacity>
       ),
-      headerRightContainerStyle: {
-        paddingRight: 16,
-      },
+      headerRightContainerStyle: { paddingRight: 16 },
     });
   }, [navigation]);
 
@@ -59,7 +57,7 @@ export default function ProfileScreen() {
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ type: "timing", duration: 600 }}
         >
-          {/* Avatar e Identidade */}
+          {/* Avatar */}
           <View style={{ alignItems: "center", marginBottom: 32 }}>
             <Avatar
               size="xl"
@@ -67,7 +65,6 @@ export default function ProfileScreen() {
                 borderWidth: 3,
                 borderColor: "#5DD26C",
                 shadowColor: "#5DD26C",
-                shadowOffset: { width: 0, height: 0 },
                 shadowOpacity: 0.8,
                 shadowRadius: 10,
               }}
@@ -92,57 +89,9 @@ export default function ProfileScreen() {
             <Text style={{ color: "#AAAAAA", fontSize: 16 }}>@iangymai</Text>
           </View>
 
-          {/* Barra de Nível / XP */}
-          <View
-            style={{
-              backgroundColor: "#1A1A1A",
-              padding: 20,
-              borderRadius: 16,
-              marginBottom: 24,
-            }}
-          >
-            <Text
-              style={{
-                color: "#FFFFFF",
-                fontSize: 18,
-                fontWeight: "600",
-                marginBottom: 12,
-              }}
-            >
-              Nível {nivel} — Explorador
-            </Text>
+          <XPBar />
 
-            <View
-              style={{
-                width: "100%",
-                height: 10,
-                backgroundColor: "#333",
-                borderRadius: 10,
-                overflow: "hidden",
-              }}
-            >
-              <View
-                style={{
-                  width: `${progressoXP * 100}%`,
-                  height: "100%",
-                  backgroundColor: "#5DD26C",
-                }}
-              />
-            </View>
-
-            <Text
-              style={{
-                color: "#AAAAAA",
-                fontSize: 12,
-                marginTop: 8,
-                textAlign: "right",
-              }}
-            >
-              {xpAtual} / {xpProximo} XP
-            </Text>
-          </View>
-
-          {/* Coleção de Equipamentos (mock) */}
+          {/* Coleção de Equipamentos */}
           <View
             style={{
               backgroundColor: "#1A1A1A",
@@ -163,11 +112,11 @@ export default function ProfileScreen() {
             </Text>
 
             <Text style={{ color: "#AAAAAA", fontSize: 14 }}>
-              12 aparelhos descobertos até agora 🔥
+              12 aparelhos descobertos 🔥
             </Text>
           </View>
 
-          {/* 🔥 CONQUISTAS AQUI */}
+          {/* Conquistas */}
           <View
             style={{
               backgroundColor: "#1A1A1A",
@@ -179,7 +128,6 @@ export default function ProfileScreen() {
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "center",
                 justifyContent: "space-between",
                 marginBottom: 12,
               }}
@@ -194,15 +142,17 @@ export default function ProfileScreen() {
                 Conquistas
               </Text>
 
-              {/* Contador */}
               <Text
-                style={{ color: "#5DD26C", fontSize: 14, fontWeight: "500" }}
+                style={{
+                  color: "#5DD26C",
+                  fontSize: 14,
+                  fontWeight: "500",
+                }}
               >
                 {earned.length} / {allAchievementsCount}
               </Text>
             </View>
 
-            {/* Grid animada */}
             <MotiView
               from={{ opacity: 0, translateY: 10 }}
               animate={{ opacity: 1, translateY: 0 }}
@@ -211,7 +161,6 @@ export default function ProfileScreen() {
               <AchievementsGrid limit={6} />
             </MotiView>
 
-            {/* Botão Ver Todas */}
             <TouchableOpacity
               onPress={() => router.push("/Achievements")}
               style={{
@@ -230,7 +179,7 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Botão de Logout */}
+          {/* Logout */}
           <MotiView
             from={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -242,10 +191,6 @@ export default function ProfileScreen() {
                 padding: 16,
                 borderRadius: 12,
                 alignItems: "center",
-                shadowColor: "#E53935",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.5,
-                shadowRadius: 6,
               }}
               onTouchEnd={() => console.log("Logout")}
             >

@@ -1,4 +1,4 @@
-// app/_layout.tsx
+
 import { useState } from "react";
 import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";

@@ -4,13 +4,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface XPState {
   level: number;
   currentXP: number; // XP dentro do nível atual
-  xpTotal: number; // XP acumulado total (opcional, útil para analytics)
+  xpTotal: number;
+  nextLevelXP: number; // XP acumulado total (opcional, útil para analytics)
 }
 
 const initialState: XPState = {
   level: 1,
   currentXP: 0,
   xpTotal: 0,
+  nextLevelXP: 100,
 };
 
 // Fórmula (Modelo B): XP required next = level^2 * 50
