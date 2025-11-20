@@ -8,6 +8,8 @@ import { store } from "../src/data/redux/store";
 import { Slot } from "expo-router";
 import SplashScreen from "./SplashScreen";
 
+import XPToast from "@/src/components/toast/XPToast";
+
 export default function RootLayout() {
   const [splashFinished, setSplashFinished] = useState(false);
 
@@ -15,11 +17,15 @@ export default function RootLayout() {
     <Provider store={store}>
       <GluestackUIProvider config={config} colorMode="dark">
         <SafeAreaProvider>
+          {/* Splash */}
           <SplashScreen
             visible={!splashFinished}
             onFinish={() => setSplashFinished(true)}
           />
+
           <Slot />
+
+          <XPToast />
         </SafeAreaProvider>
       </GluestackUIProvider>
     </Provider>
