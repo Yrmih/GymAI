@@ -1,6 +1,7 @@
-// app/components/modal/EditPhotoPerfilModal.tsx
+// src/components/modal/EditPhotoPerfilModal.tsx
 import React from "react";
-import { Modal, View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import Modal from "react-native-modal";
 import AppIcon from "@/src/components/icons/AppIcon";
 
 interface EditPhotoPerfilModalProps {
@@ -19,38 +20,43 @@ export default function EditPhotoPerfilModal({
   onRemovePhoto,
 }: EditPhotoPerfilModalProps) {
   return (
-    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={styles.container}>
-          <TouchableOpacity style={styles.option} onPress={() => { onTakePhoto(); onClose(); }}>
-            <AppIcon name="camera-outline" size={22} color="#5DD26C" />
-            <Text style={styles.optionText}>Tirar Foto</Text>
-          </TouchableOpacity>
+    <Modal
+      isVisible={visible}
+      onBackdropPress={onClose}
+      onBackButtonPress={onClose}
+      style={styles.modal}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      backdropTransitionOutTiming={0}
+    >
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.option} onPress={onTakePhoto}>
+          <AppIcon name="camera-outline" size={22} color="#5DD26C" />
+          <Text style={styles.optionText}>Tirar Foto</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.option} onPress={() => { onPickPhoto(); onClose(); }}>
-            <AppIcon name="image-outline" size={22} color="#5DD26C" />
-            <Text style={styles.optionText}>Escolher da Galeria</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.option} onPress={onPickPhoto}>
+          <AppIcon name="image-outline" size={22} color="#5DD26C" />
+          <Text style={styles.optionText}>Escolher da Galeria</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.option} onPress={() => { onRemovePhoto(); onClose(); }}>
-            <AppIcon name="trash-outline" size={22} color="#FF4D4F" />
-            <Text style={[styles.optionText, { color: "#FF4D4F" }]}>Remover Foto</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.option} onPress={onRemovePhoto}>
+          <AppIcon name="trash-outline" size={22} color="#FF4D4F" />
+          <Text style={[styles.optionText, { color: "#FF4D4F" }]}>Remover Foto</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cancel} onPress={onClose}>
-            <Text style={styles.cancelText}>Cancelar</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.cancel} onPress={onClose}>
+          <Text style={styles.cancelText}>Cancelar</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
+  modal: {
     justifyContent: "flex-end",
+    margin: 0,
   },
   container: {
     backgroundColor: "#1A1A1A",
@@ -66,7 +72,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     gap: 12,
   },
-  optionText: { color: "#F8F8F8", fontSize: 16 },
+  optionText: {
+    color: "#F8F8F8",
+    fontSize: 16,
+  },
   cancel: {
     marginTop: 6,
     paddingVertical: 12,
