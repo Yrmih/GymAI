@@ -19,3 +19,5 @@ export default function useXP() {
     xpTotal: xpState.xpTotal,
   };
 }
+
+//hook useXP para consumo de dados de XP do Redux
