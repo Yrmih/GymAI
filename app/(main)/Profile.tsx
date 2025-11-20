@@ -213,7 +213,7 @@ export default function ProfileScreen() {
 
             {/* Botão Ver Todas */}
             <TouchableOpacity
-              onPress={() => router.push("/main/Achievements")}
+              onPress={() => router.push("/Achievements")}
               style={{
                 marginTop: 16,
                 paddingVertical: 10,
