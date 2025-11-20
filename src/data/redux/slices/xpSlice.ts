@@ -1,37 +1,46 @@
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface XPState {
+export interface XPState {
   level: number;
-  currentXP: number;
-  nextXP: number;
+  currentXP: number; // XP dentro do nível atual
+  xpTotal: number; // XP acumulado total (opcional, útil para analytics)
 }
 
 const initialState: XPState = {
   level: 1,
   currentXP: 0,
-  nextXP: 100, // XP necessário pra upar do nível 1 para o 2
+  xpTotal: 0,
 };
+
+// Fórmula (Modelo B): XP required next = level^2 * 50
+export function xpForNext(level: number) {
+  return Math.max(1, level * level * 50);
+}
 
 const xpSlice = createSlice({
   name: "xp",
   initialState,
   reducers: {
     addXP: (state, action: PayloadAction<number>) => {
-      state.currentXP += action.payload;
+      const amount = action.payload;
+      state.currentXP += amount;
+      state.xpTotal += amount;
 
-      // Se passou do necessário, aumenta o level automaticamente
-      while (state.currentXP >= state.nextXP) {
-        state.currentXP -= state.nextXP;
+      // sobe de nível enquanto currentXP >= xpForNext(level)
+      while (state.currentXP >= xpForNext(state.level)) {
+        state.currentXP -= xpForNext(state.level);
         state.level += 1;
-
-        // Fórmula do XP do próximo nível (pode ajustar depois)
-        state.nextXP = Math.floor(state.nextXP * 1.25);
       }
     },
 
-    resetXP: () => initialState,
+    setXPState: (state, action: PayloadAction<Partial<XPState>>) => {
+      Object.assign(state, action.payload);
+    },
+
+    resetXPMonthly: () => initialState,
   },
 });
 
-export const { addXP, resetXP } = xpSlice.actions;
+export const { addXP, setXPState, resetXPMonthly } = xpSlice.actions;
 export default xpSlice.reducer;
