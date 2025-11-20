@@ -16,7 +16,6 @@ import { MotiView } from "moti";
 
 import DashboardCircle from "@/src/components/charts/DashboardCircle";
 import AppIcon from "@/src/components/icons/AppIcon";
-import { Feather } from "@expo/vector-icons";
 import FloatingCameraButton from "@/src/components/button/FloatingCameraButton";
 
 const { width: SCREEN_W } = Dimensions.get("window");
@@ -84,13 +83,8 @@ export default function Home() {
         </MotiView>
       </ScrollView>
 
-      {/* Bottom bar + glow */}
+      {/* Bottom bar sem glow */}
       <RNView style={styles.bottomWrapper}>
-
-        {/* Glow suave que não vaza (corrigido) */}
-        <RNView style={styles.bottomGlow} pointerEvents="none" />
-
-        {/* Barra real */}
         <RNView style={styles.bottomBar}>
           <TouchableOpacity
             onPress={() => router.push("/Profile")}
@@ -103,7 +97,7 @@ export default function Home() {
           <RNView style={{ width: 84 }} />
 
           <TouchableOpacity
-            onPress={() => router.push("/Treinos")}
+            onPress={() => router.push("/WorkoutGallery")}
             activeOpacity={0.85}
             style={styles.sideButton}
           >
@@ -111,9 +105,8 @@ export default function Home() {
           </TouchableOpacity>
         </RNView>
 
-        {/* FAB com glow suave */}
+        {/* FAB (glow removido da home!) */}
         <RNView style={styles.fabLayer}>
-          <RNView style={styles.fabGlow} pointerEvents="none" />
           <FloatingCameraButton />
         </RNView>
 
@@ -151,19 +144,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 999,
   },
-  bottomGlow: {
-    position: "absolute",
-    bottom: 40,
-    width: 200,
-    height: 70,
-    borderRadius: 100,
-    backgroundColor: "#5DD26C15",
-    shadowColor: "#5DD26C",
-    shadowOpacity: 0.25,
-    shadowRadius: 28,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 10,
-  },
+
   bottomBar: {
     width: SCREEN_W - 24,
     height: 74,
@@ -173,34 +154,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 32,
     alignItems: "center",
-    shadowColor: "#5DD26C",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.18,
-    shadowRadius: 16,
-    elevation: 6,
   },
+
   sideButton: {
     alignItems: "center",
     transform: [{ translateY: -6 }],
   },
 
-  /* FAB layers */
+  /* FAB */
   fabLayer: {
     position: "absolute",
     bottom: 3,
     alignSelf: "center",
     alignItems: "center",
-  },
-  fabGlow: {
-    position: "absolute",
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: "#5DD26C18",
-    shadowColor: "#5DD26C",
-    shadowOpacity: 0.4,
-    shadowRadius: 55,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 12,
   },
 });
