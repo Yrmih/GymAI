@@ -1,0 +1,78 @@
+{
+  "unique": [
+    {
+      "id": "first_checkin",
+      "name": "Primeiro Check-in",
+      "description": "Você tirou sua primeira foto!",
+      "icon": "⭐"
+    },
+    {
+      "id": "first_week",
+      "name": "Primeira Semana Registrada",
+      "description": "Completou sua primeira semana de treinos.",
+      "icon": "📅"
+    },
+    {
+      "id": "first_goal_done",
+      "name": "Primeiro Objetivo Concluído",
+      "description": "Você bateu sua primeira meta!",
+      "icon": "🏆"
+    },
+    {
+      "id": "first_training",
+      "name": "Primeiro Treino Registrado",
+      "description": "Seu primeiro treino foi criado!",
+      "icon": "💪"
+    }
+  ],
+
+  "monthly": [
+    {
+      "id": "streak_3",
+      "name": "3 Dias Seguidos",
+      "description": "Treinou 3 dias consecutivos.",
+      "icon": "🔥",
+      "streak": 3
+    },
+    {
+      "id": "streak_5",
+      "name": "5 Dias Seguidos",
+      "description": "Treinou 5 dias consecutivos.",
+      "icon": "🔥",
+      "streak": 5
+    },
+    {
+      "id": "streak_7",
+      "name": "7 Dias Seguidos",
+      "description": "Treinou 7 dias consecutivos.",
+      "icon": "🔥",
+      "streak": 7
+    },
+    {
+      "id": "camera_10",
+      "name": "10 Check-ins",
+      "description": "Você usou a câmera 10 vezes este mês.",
+      "icon": "📸",
+      "count": 10
+    },
+    {
+      "id": "camera_20",
+      "name": "20 Check-ins",
+      "description": "Você usou a câmera 20 vezes este mês.",
+      "icon": "📸",
+      "count": 20
+    },
+    {
+      "id": "weekly_goal",
+      "name": "Cumpriu a Meta da Semana",
+      "description": "Você bateu sua meta semanal.",
+      "icon": "🏅"
+    },
+    {
+      "id": "monthly_goal",
+      "name": "Mês Concluído",
+      "description": "Você completou as semanas necessárias no mês.",
+      "icon": "🎖️"
+    }
+  ]
+}
