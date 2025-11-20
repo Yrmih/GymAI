@@ -1,4 +1,3 @@
-
 import React from "react";
 import { ScrollView } from "react-native";
 import { useRouter } from "expo-router";
@@ -12,14 +11,12 @@ export default function WorkoutGallery() {
 
   return (
     <View flex={1} bg="#121212">
-      {/* Cabeçalho */}
       <View paddingHorizontal={24} paddingTop={48} paddingBottom={24}>
         <Text color="$white" fontSize="$2xl" fontWeight="$bold">
           Guia de Treino
         </Text>
       </View>
 
-      {/* Conteúdo principal: Grid */}
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
