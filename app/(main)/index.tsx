@@ -18,7 +18,6 @@ import DashboardCircle from "@/src/components/charts/DashboardCircle";
 import AppIcon from "@/src/components/icons/AppIcon";
 import FloatingCameraButton from "@/src/components/button/FloatingCameraButton";
 
-// ✅ IMPORTA OS NOVOS MINI BOTÕES
 import MiniFloatButtonPerfil from "@/src/components/button/MiniFloatButtonPerfil";
 import MiniFloatButtonWorkout from "@/src/components/button/MiniFloatButtonWorkout";
 
@@ -29,13 +28,10 @@ export default function Home() {
   const usuario = useSelector((state: RootState) => state.perfil?.usuario);
 
   const avatarUri =
-    usuario?.avatar ||
-    usuario?.foto ||
-    "https://i.pravatar.cc/100?img=68";
+    usuario?.avatar || usuario?.foto || "https://i.pravatar.cc/100?img=68";
 
   return (
     <View flex={1} bg="#121212">
-      
       {/* Cabeçalho */}
       <View style={styles.headerContainer}>
         <TouchableOpacity
@@ -50,12 +46,20 @@ export default function Home() {
             />
           </Avatar>
 
-          <Text color="$white" fontWeight="$bold" fontSize="$lg" style={{ marginLeft: 10 }}>
+          <Text
+            color="$white"
+            fontWeight="$bold"
+            fontSize="$lg"
+            style={{ marginLeft: 10 }}
+          >
             Olá, {usuario?.nome || "Atleta"}!
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.push("/Settings")} activeOpacity={0.8}>
+        <TouchableOpacity
+          onPress={() => router.push("/Settings")}
+          activeOpacity={0.8}
+        >
           <AppIcon name="cog-outline" size={24} color="#CCCCCC" />
         </TouchableOpacity>
       </View>
@@ -87,19 +91,13 @@ export default function Home() {
         </MotiView>
       </ScrollView>
 
-      {/* --- BOTÕES FLOAT --- */}
-      {/* Botão Perfil */}
       <MiniFloatButtonWorkout />
 
-      {/* Botão Workout */}
-      
       <MiniFloatButtonPerfil />
 
-      {/* Botão central da câmera */}
       <RNView style={styles.fabLayer}>
         <FloatingCameraButton />
       </RNView>
-
     </View>
   );
 }

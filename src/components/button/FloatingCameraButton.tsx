@@ -9,10 +9,9 @@ export default function FloatingCameraButton() {
 
   return (
     <View style={styles.wrapper}>
-      {/* Glow suave e limpo (não mancha mais a barra inferior) */}
       <MotiView
         from={{ opacity: 0.4, scale: 1 }}
-        animate={{ opacity: 0.9, scale: 1.20 }}
+        animate={{ opacity: 0.9, scale: 1.2 }}
         transition={{
           loop: true,
           duration: 2000,
@@ -58,19 +57,16 @@ const styles = StyleSheet.create({
     zIndex: 9999,
   },
 
-  /* Glow corrigido — cor suave + bordas difusas */
   glow: {
     position: "absolute",
     width: 120,
     height: 120,
     borderRadius: 60,
 
-    // COR SUAVE que NÃO cria manchas
-    backgroundColor: "rgba(93, 210, 108, 0.20)", // <— AQUI É A CURA
+    backgroundColor: "rgba(93, 210, 108, 0.20)",
 
     shadowColor: "#5DD26C",
-    shadowOpacity: 0.35,   // reduzido para parar de manchar
-    shadowRadius: 35,
+    shadowOpacity: 0.35,
     shadowOffset: { width: 0, height: 0 },
 
     elevation: 12,
