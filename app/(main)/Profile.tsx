@@ -4,19 +4,27 @@ import { MotiView } from "moti";
 import { View, Avatar, Image } from "@gluestack-ui/themed";
 import { useRouter, useNavigation } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useSelector } from "react-redux";
+import { RootState } from "@/src/data/redux/store";
+import AchievementsGrid from "@/src/components/achievements/AchievementsGrid";
+import data from "@/src/data/achievements/achievements.json";
 
 export default function ProfileScreen() {
   const router = useRouter();
   const navigation = useNavigation();
 
-  // Mock (depois conecta com Firebase)
+  // XP mock — depois substituímos pelo Redux XP Slice
   const nivel = 5;
   const xpAtual = 300;
   const xpProximo = 500;
   const progressoXP = xpAtual / xpProximo;
-  const aparelhosDescobertos = 12;
 
-  // === HEADER CONFIG ===
+  // Achievements Redux
+  const earned = useSelector((state: RootState) => state.achievements.earned);
+
+  // Total de conquistas disponíveis
+  const allAchievementsCount = data.unique.length + data.monthly.length;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: { backgroundColor: "#0F0F0F" },
@@ -27,11 +35,7 @@ export default function ProfileScreen() {
           onPress={() => router.push("/EditProfile")}
           style={{ paddingRight: 16 }}
         >
-          <Ionicons
-            name="settings-outline"
-            size={26}
-            color="#5DD26C"
-          />
+          <Ionicons name="settings-outline" size={26} color="#5DD26C" />
         </TouchableOpacity>
       ),
       headerRightContainerStyle: {
@@ -138,55 +142,7 @@ export default function ProfileScreen() {
             </Text>
           </View>
 
-          {/* Card Minha Jornada */}
-          <View
-            style={{
-              backgroundColor: "#1A1A1A",
-              padding: 24,
-              borderRadius: 16,
-              marginBottom: 24,
-            }}
-            onTouchEnd={() => router.push("/main/Progress")}
-          >
-            <View style={{ alignItems: "center", marginBottom: 16 }}>
-              <View
-                style={{
-                  width: 70,
-                  height: 70,
-                  borderRadius: 16,
-                  backgroundColor: "#5DD26C20",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons name="stats-chart" size={40} color="#5DD26C" />
-              </View>
-            </View>
-
-            <Text
-              style={{
-                color: "#FFFFFF",
-                fontSize: 20,
-                fontWeight: "600",
-                textAlign: "center",
-                marginBottom: 6,
-              }}
-            >
-              Minha Jornada
-            </Text>
-
-            <Text
-              style={{
-                color: "#AAAAAA",
-                textAlign: "center",
-                fontSize: 14,
-              }}
-            >
-              Seu progresso, aparelhos usados e evolução geral
-            </Text>
-          </View>
-
-          {/* Resumo da Coleção */}
+          {/* Coleção de Equipamentos (mock) */}
           <View
             style={{
               backgroundColor: "#1A1A1A",
@@ -207,8 +163,71 @@ export default function ProfileScreen() {
             </Text>
 
             <Text style={{ color: "#AAAAAA", fontSize: 14 }}>
-              {aparelhosDescobertos} aparelhos descobertos até agora 🔥
+              12 aparelhos descobertos até agora 🔥
             </Text>
+          </View>
+
+          {/* 🔥 CONQUISTAS AQUI */}
+          <View
+            style={{
+              backgroundColor: "#1A1A1A",
+              padding: 20,
+              borderRadius: 16,
+              marginBottom: 24,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 12,
+              }}
+            >
+              <Text
+                style={{
+                  color: "#FFFFFF",
+                  fontSize: 18,
+                  fontWeight: "600",
+                }}
+              >
+                Conquistas
+              </Text>
+
+              {/* Contador */}
+              <Text
+                style={{ color: "#5DD26C", fontSize: 14, fontWeight: "500" }}
+              >
+                {earned.length} / {allAchievementsCount}
+              </Text>
+            </View>
+
+            {/* Grid animada */}
+            <MotiView
+              from={{ opacity: 0, translateY: 10 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ delay: 150, duration: 500 }}
+            >
+              <AchievementsGrid limit={6} />
+            </MotiView>
+
+            {/* Botão Ver Todas */}
+            <TouchableOpacity
+              onPress={() => router.push("/main/Achievements")}
+              style={{
+                marginTop: 16,
+                paddingVertical: 10,
+                borderRadius: 10,
+                backgroundColor: "#5DD26C20",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{ color: "#5DD26C", fontSize: 14, fontWeight: "600" }}
+              >
+                Ver todas as conquistas
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {/* Botão de Logout */}

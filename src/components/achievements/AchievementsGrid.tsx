@@ -1,32 +1,36 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/data/redux/store";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import AchievementBadge from "./AchievementBadge";
 import data from "@/src/data/achievements/achievements.json";
 
-export default function AchievementsGrid() {
+interface AchievementsGridProps {
+  limit?: number;
+}
+
+export default function AchievementsGrid({ limit }: AchievementsGridProps) {
   const earned = useSelector((state: RootState) => state.achievements.earned);
 
   const all = [...data.unique, ...data.monthly];
 
+  const items = limit ? all.slice(0, limit) : all;
+
   return (
-    <ScrollView>
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          paddingTop: 20
-        }}
-      >
-        {all.map((item) => (
-          <AchievementBadge
-            key={item.id}
-            item={item}
-            earned={earned.includes(item.id)}
-          />
-        ))}
-      </View>
-    </ScrollView>
+    <View
+      style={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        paddingBottom: 10
+      }}
+    >
+      {items.map((item) => (
+        <AchievementBadge
+          key={item.id}
+          item={item}
+          earned={earned.includes(item.id)}
+        />
+      ))}
+    </View>
   );
 }
