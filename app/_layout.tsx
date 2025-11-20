@@ -7,6 +7,7 @@ import { config } from "../gluestack-ui.config";
 import { store } from "../src/data/redux/store";
 import { Slot } from "expo-router";
 import SplashScreen from "./SplashScreen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   const [splashFinished, setSplashFinished] = useState(false);
@@ -15,11 +16,13 @@ export default function RootLayout() {
     <Provider store={store}>
       <GluestackUIProvider config={config} colorMode="dark">
         <SafeAreaProvider>
-          <SplashScreen
-            visible={!splashFinished}
-            onFinish={() => setSplashFinished(true)}
-          />
-          <Slot />
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <SplashScreen
+              visible={!splashFinished}
+              onFinish={() => setSplashFinished(true)}
+            />
+            <Slot />
+          </GestureHandlerRootView>
         </SafeAreaProvider>
       </GluestackUIProvider>
     </Provider>
