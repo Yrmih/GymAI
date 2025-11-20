@@ -34,14 +34,12 @@ export default function EditProfile() {
     defaultValues: {
       nome: "",
       username: "",
-      bio: "",
       metaFitness: undefined,
     },
   });
 
   const onSubmit: SubmitHandler<EditProfileFormData> = (data) => {
     console.log("Dados enviados:", data);
-    // Aqui você chamaria a action/redux ou API
   };
 
   return (
@@ -76,6 +74,7 @@ export default function EditProfile() {
           >
             <Image source={{ uri: imageUri }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
           </Avatar>
+
           <TouchableOpacity
             style={{
               position: "absolute",
@@ -144,32 +143,6 @@ export default function EditProfile() {
         />
         {errors.username && <Text style={{ color: "#FF4D4F" }}>{errors.username.message}</Text>}
 
-        {/* Bio */}
-        <Controller
-          control={control}
-          name="bio"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              backgroundColor="#202020"
-              borderRadius={14}
-              paddingHorizontal={20}
-              height={80}
-              style={{ borderColor: errors.bio ? "#FF4D4F" : "#202020", borderWidth: 1 }}
-            >
-              <InputField
-                value={value}
-                onChangeText={onChange}
-                placeholder="Bio"
-                placeholderTextColor="#A1A1A1"
-                color="#F8F8F8"
-                fontSize={16}
-                multiline // ✅ corrigido aqui
-              />
-            </Input>
-          )}
-        />
-        {errors.bio && <Text style={{ color: "#FF4D4F" }}>{errors.bio.message}</Text>}
-
         {/* Meta Fitness */}
         <Controller
           control={control}
@@ -177,6 +150,7 @@ export default function EditProfile() {
           render={({ field: { onChange, value } }) => (
             <View>
               <Text style={{ color: "#F8F8F8", marginBottom: 10, fontSize: 15 }}>Meta Fitness</Text>
+
               <Select
                 selectedValue={value}
                 onValueChange={onChange}
@@ -186,6 +160,7 @@ export default function EditProfile() {
                   <Text style={{ color: "#F8F8F8", fontSize: 16 }}>{value || "Selecione sua meta"}</Text>
                   <SelectIcon />
                 </SelectTrigger>
+
                 <SelectPortal>
                   <SelectBackdrop />
                   <SelectContent>
