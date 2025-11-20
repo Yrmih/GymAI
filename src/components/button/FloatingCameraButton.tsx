@@ -1,14 +1,30 @@
+
 import React from "react";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { MotiView } from "moti";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/src/data/redux/store";
+
+// Função que registra treino, soma XP e desbloqueia conquistas
+import { registerTrainingSession } from "@/src/data/redux/frequencyThunks";
 
 export default function FloatingCameraButton() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handlePress = () => {
+    // Marca treino, soma XP, atualiza conquistas
+    dispatch(registerTrainingSession());
+
+    // Vai pra câmera
+    router.push("/Camera");
+  };
 
   return (
     <View style={styles.wrapper}>
+      {/* Glow animado */}
       <MotiView
         from={{ opacity: 0.4, scale: 1 }}
         animate={{ opacity: 0.9, scale: 1.2 }}
@@ -36,7 +52,7 @@ export default function FloatingCameraButton() {
         <TouchableOpacity
           activeOpacity={0.85}
           style={styles.button}
-          onPress={() => router.push("/Camera")}
+          onPress={handlePress}
         >
           <Feather name="camera" size={32} color="#0F0F0F" />
         </TouchableOpacity>
@@ -62,13 +78,10 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-
     backgroundColor: "rgba(93, 210, 108, 0.20)",
-
     shadowColor: "#5DD26C",
     shadowOpacity: 0.35,
     shadowOffset: { width: 0, height: 0 },
-
     elevation: 12,
     transform: [{ translateY: -4 }],
   },
