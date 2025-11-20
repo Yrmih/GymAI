@@ -18,6 +18,10 @@ import DashboardCircle from "@/src/components/charts/DashboardCircle";
 import AppIcon from "@/src/components/icons/AppIcon";
 import FloatingCameraButton from "@/src/components/button/FloatingCameraButton";
 
+// ✅ IMPORTA OS NOVOS MINI BOTÕES
+import MiniFloatButtonPerfil from "@/src/components/button/MiniFloatButtonPerfil";
+import MiniFloatButtonWorkout from "@/src/components/button/MiniFloatButtonWorkout";
+
 const { width: SCREEN_W } = Dimensions.get("window");
 
 export default function Home() {
@@ -83,34 +87,19 @@ export default function Home() {
         </MotiView>
       </ScrollView>
 
-      {/* Bottom bar sem glow */}
-      <RNView style={styles.bottomWrapper}>
-        <RNView style={styles.bottomBar}>
-          <TouchableOpacity
-            onPress={() => router.push("/Profile")}
-            activeOpacity={0.85}
-            style={styles.sideButton}
-          >
-            <AppIcon name="person-circle-outline" size={28} color="#FFFFFF" />
-          </TouchableOpacity>
+      {/* --- BOTÕES FLOAT --- */}
+      {/* Botão Perfil */}
+      <MiniFloatButtonWorkout />
 
-          <RNView style={{ width: 84 }} />
+      {/* Botão Workout */}
+      
+      <MiniFloatButtonPerfil />
 
-          <TouchableOpacity
-            onPress={() => router.push("/WorkoutGallery")}
-            activeOpacity={0.85}
-            style={styles.sideButton}
-          >
-            <AppIcon name="barbell" size={28} color="#FFFFFF" />
-          </TouchableOpacity>
-        </RNView>
-
-        {/* FAB (glow removido da home!) */}
-        <RNView style={styles.fabLayer}>
-          <FloatingCameraButton />
-        </RNView>
-
+      {/* Botão central da câmera */}
+      <RNView style={styles.fabLayer}>
+        <FloatingCameraButton />
       </RNView>
+
     </View>
   );
 }
@@ -135,37 +124,11 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
   },
 
-  /* --- Bottom Bar --- */
-  bottomWrapper: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 12,
-    alignItems: "center",
-    zIndex: 999,
-  },
-
-  bottomBar: {
-    width: SCREEN_W - 24,
-    height: 74,
-    borderRadius: 18,
-    backgroundColor: "rgba(0,0,0,0.85)",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 32,
-    alignItems: "center",
-  },
-
-  sideButton: {
-    alignItems: "center",
-    transform: [{ translateY: -6 }],
-  },
-
-  /* FAB */
   fabLayer: {
     position: "absolute",
     bottom: 3,
     alignSelf: "center",
     alignItems: "center",
+    zIndex: 999,
   },
 });

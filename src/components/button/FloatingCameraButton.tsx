@@ -9,26 +9,27 @@ export default function FloatingCameraButton() {
 
   return (
     <View style={styles.wrapper}>
-      {/* Glow pulsante (menor e deslocado pra cima) */}
+      {/* Glow suave e limpo (não mancha mais a barra inferior) */}
       <MotiView
-        from={{ opacity: 0.55, scale: 1 }}
-        animate={{ opacity: 1, scale: 1.25 }}
+        from={{ opacity: 0.4, scale: 1 }}
+        animate={{ opacity: 0.9, scale: 1.20 }}
         transition={{
           loop: true,
           duration: 2000,
           type: "timing",
+          repeatReverse: true,
         }}
         style={styles.glow}
       />
 
-      {/* Camada de vibração (amplitude reduzida para evitar que o botão "toque" a barra) */}
+      {/* Vibração leve */}
       <MotiView
         from={{ translateY: 0 }}
-        animate={{ translateY: -2 }} // amplitude menor
+        animate={{ translateY: -1.5 }}
         transition={{
           loop: true,
           type: "timing",
-          duration: 900,
+          duration: 950,
           repeatReverse: true,
         }}
         style={styles.vibrationLayer}
@@ -49,27 +50,31 @@ const styles = StyleSheet.create({
   wrapper: {
     position: "absolute",
     alignSelf: "center",
-    bottom: 26,           // dá uma folga pra barra inferior do aparelho
+    bottom: 26,
     width: 180,
-    height: 140,
+    height: 150,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 9999,         // garante que glow e botão fiquem sobre a barra
+    zIndex: 9999,
   },
 
-  /* Glow redondo, deslocado pra cima via translateY no próprio style */
+  /* Glow corrigido — cor suave + bordas difusas */
   glow: {
     position: "absolute",
-    width: 130,
-    height: 130,
-    borderRadius: 65,
-    backgroundColor: "#5DD26C44",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+
+    // COR SUAVE que NÃO cria manchas
+    backgroundColor: "rgba(93, 210, 108, 0.20)", // <— AQUI É A CURA
+
     shadowColor: "#5DD26C",
-    shadowOpacity: 0.9,
-    shadowRadius: 44,
+    shadowOpacity: 0.35,   // reduzido para parar de manchar
+    shadowRadius: 35,
     shadowOffset: { width: 0, height: 0 },
-    elevation: 18,
-    transform: [{ translateY: -10 }], // desloca o glow pra cima — evita tocar a barra
+
+    elevation: 12,
+    transform: [{ translateY: -4 }],
   },
 
   vibrationLayer: {
@@ -77,7 +82,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  /* Botão redondo principal — mantive tamanho grande */
   button: {
     backgroundColor: "#5DD26C",
     width: 95,
