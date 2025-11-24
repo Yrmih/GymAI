@@ -27,10 +27,17 @@ export default function FrequencyModal({ visible, onClose }: FrequencyModalProps
   );
 
   const handleSave = () => {
+    if (!usuario) return;
+
     dispatch(
       updateUserBody({
-        ...usuario,
+        altura: usuario.altura ?? 0,
+        peso: usuario.peso ?? 0,
+        biotipo: usuario.biotipo ?? "Ectomorfo",
+        tempoTreino: usuario.tempoTreino ?? "0-6 meses",
         frequenciaSemanal: selectedFrequency,
+        gruposPrioritarios: usuario.gruposPrioritarios ?? "",
+        lesoes: usuario.lesoes ?? "",
       })
     );
     onClose();
@@ -39,7 +46,14 @@ export default function FrequencyModal({ visible, onClose }: FrequencyModalProps
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View flex={1} justifyContent="flex-end" bg="rgba(0,0,0,0.6)">
-        <View bg="#121212" borderTopRadius={20} padding={24} maxHeight="60%">
+        <View
+          bg="#121212"
+          borderTopLeftRadius={20}
+          borderTopRightRadius={20}
+          padding={24}
+          maxHeight="60%"
+        >
+          {/* Cabeçalho */}
           <Text color="#5DD26C" fontSize={18} fontWeight="bold" mb={12}>
             Ajuste sua Frequência Semanal
           </Text>
@@ -48,6 +62,7 @@ export default function FrequencyModal({ visible, onClose }: FrequencyModalProps
             Essa configuração ajuda a ajustar sua meta semanal no app e no dashboard.
           </Text>
 
+          {/* Opções de Frequência */}
           <ScrollView style={{ gap: 12 }}>
             {FREQUENCY_OPTIONS.map((f) => (
               <TouchableOpacity
@@ -60,13 +75,19 @@ export default function FrequencyModal({ visible, onClose }: FrequencyModalProps
                   backgroundColor: selectedFrequency === f ? "#5DD26C" : "#202020",
                 }}
               >
-                <Text style={{ color: selectedFrequency === f ? "#0F0F0F" : "#FFF", fontSize: 16 }}>
+                <Text
+                  style={{
+                    color: selectedFrequency === f ? "#0F0F0F" : "#FFF",
+                    fontSize: 16,
+                  }}
+                >
                   {f}
                 </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
 
+          {/* Botão Salvar */}
           <TouchableOpacity
             onPress={handleSave}
             style={{
@@ -82,6 +103,7 @@ export default function FrequencyModal({ visible, onClose }: FrequencyModalProps
             </Text>
           </TouchableOpacity>
 
+          {/* Botão Cancelar */}
           <TouchableOpacity
             onPress={onClose}
             style={{ marginTop: 12, alignItems: "center" }}

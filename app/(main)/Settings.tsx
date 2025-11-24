@@ -9,6 +9,7 @@ import { logoutUsuario } from "@/src/data/redux/slices/perfilSlice";
 
 import LanguageModal from "@/src/components/modal/LanguageModal";
 import LogoutModal from "@/src/components/modal/LogoutModal";
+import FrequencyModal from "@/src/components/modal/FrequencyModal"; // <- import do modal de frequência
 
 import { router } from "expo-router";
 
@@ -22,6 +23,7 @@ export default function Settings() {
 
   const [languageModal, setLanguageModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
+  const [frequencyModal, setFrequencyModal] = useState(false); // <- novo estado para o modal de frequência
 
   const handleLogout = () => {
     dispatch(logoutUsuario());
@@ -143,6 +145,16 @@ export default function Settings() {
               </Text>
             </View>
           </TouchableOpacity>
+
+          {/* FREQUÊNCIA SEMANAL */}
+          <TouchableOpacity onPress={() => setFrequencyModal(true)}>
+            <View flexDirection="row" alignItems="center" gap={12}>
+              <AppIcon name="calendar-outline" size={22} />
+              <Text color="#FFF" fontSize="$sm">
+                Frequência Semanal
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         {/* 🧾 Sistema */}
@@ -190,6 +202,11 @@ export default function Settings() {
         visible={logoutModal}
         onClose={() => setLogoutModal(false)}
         onConfirm={handleLogout}
+      />
+
+      <FrequencyModal
+        visible={frequencyModal}
+        onClose={() => setFrequencyModal(false)}
       />
     </View>
   );
