@@ -2,34 +2,31 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import { MotiText } from "moti";
+import { useSelector } from "react-redux";
+import { RootState } from "@/src/data/redux/store";
 
-interface DashboardCircleProps {
-  progress?: number;
-  radius?: number;
-  size?: number;
-  strokeColor?: string;
-  backgroundColor?: string;
-  glow?: boolean;
-}
 
-export default function DashboardCircle({
-  progress = 72,
-}: DashboardCircleProps) {
-  const size = 180; // Tamanho total do componente
-  const center = size / 2; // Centro (90)
-  const radius = 70; // Raio
+export default function DashboardCircle() {
+  const { weeklySessions, weeklyGoal } = useSelector(
+    (state: RootState) => state.frequency
+  );
+
+  const progressPercentage = Math.min(
+    (weeklySessions / weeklyGoal) * 100,
+    100
+  );
+
+  const size = 180;
+  const center = size / 2;
+  const radius = 70;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (circumference * progress) / 100;
+  const strokeDashoffset =
+    circumference - (circumference * progressPercentage) / 100;
 
   return (
-    // Aplicamos o estilo do container para definir o tamanho
     <View style={styles.container}>
-      {/* 👇 A CORREÇÃO ESTÁ AQUI 👇
-        Adicionamos width e height ao Svg 
-      */}
       <Svg width={size} height={size}>
-        {/* Círculo de fundo */}
         <Circle
           cx={center}
           cy={center}
@@ -38,7 +35,6 @@ export default function DashboardCircle({
           strokeWidth={strokeWidth}
           fill="none"
         />
-        {/* Círculo de progresso */}
         <Circle
           cx={center}
           cy={center}
@@ -52,7 +48,6 @@ export default function DashboardCircle({
         />
       </Svg>
 
-      {/* Texto centralizado */}
       <View style={styles.centerText}>
         <MotiText
           from={{ opacity: 0 }}
@@ -60,7 +55,7 @@ export default function DashboardCircle({
           transition={{ delay: 300, duration: 500 }}
           style={styles.progressText}
         >
-          {progress}%
+          {Math.round(progressPercentage)}%
         </MotiText>
         <Text style={styles.label}>do treino</Text>
       </View>
@@ -70,14 +65,14 @@ export default function DashboardCircle({
 
 const styles = StyleSheet.create({
   container: {
-    width: 180, // Define a largura do container
-    height: 180, // Define a altura do container
+    width: 180,
+    height: 180,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
   },
   centerText: {
-    position: "absolute", // Põe o texto sobre o Svg
+    position: "absolute",
     alignItems: "center",
     justifyContent: "center",
   },

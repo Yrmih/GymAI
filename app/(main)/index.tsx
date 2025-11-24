@@ -27,17 +27,14 @@ export default function Home() {
   const router = useRouter();
 
   const usuario = useSelector((state: RootState) => state.perfil?.usuario);
-
-  const weeklySessions = useSelector((state: RootState) => state.frequency.weeklySessions ?? 0);
-
-  const streak = useSelector(( state: RootState ) => state.achievements?.streak ?? 0)
+  const { weeklySessions, weeklyGoal } = useSelector(
+    (state: RootState) => state.frequency
+  );
+  const streak = useSelector((state: RootState) => state.achievements?.streak ?? 0);
 
   const avatarUri =
     usuario?.avatar || usuario?.foto || "https://i.pravatar.cc/100?img=68";
 
-  const WEEKLY_GOAL = 3;
-
-  const progress = Math.min((weeklySessions / WEEKLY_GOAL) * 100, 100);
   return (
     <View flex={1} bg="#121212">
       {/* Cabeçalho */}
@@ -83,10 +80,10 @@ export default function Home() {
           transition={{ duration: 500 }}
           style={{ alignItems: "center" }}
         >
-          <DashboardCircle progress={Math.round(progress)} />
+          <DashboardCircle />
 
           <Text color="$white" fontSize="$xl" fontWeight="$bold" marginTop={12}>
-           {weeklySessions} de {WEEKLY_GOAL}
+            {weeklySessions} de {weeklyGoal}
           </Text>
 
           <Text color="#AAAAAA" fontSize="$sm">
@@ -96,14 +93,13 @@ export default function Home() {
           <Text color="$white" fontSize="$md" marginTop={8}>
             Sua Meta Semanal
           </Text>
-          <Text style={{ color: "#AAAAAA", marginTop: 8}}>
+          <Text style={{ color: "#AAAAAA", marginTop: 8 }}>
             Streak: {streak} dias
           </Text>
         </MotiView>
       </ScrollView>
 
       <MiniFloatButtonWorkout />
-
       <MiniFloatButtonPerfil />
 
       <RNView style={styles.fabLayer}>
@@ -132,7 +128,6 @@ const styles = StyleSheet.create({
     gap: 24,
     paddingVertical: 40,
   },
-
   fabLayer: {
     position: "absolute",
     bottom: 3,

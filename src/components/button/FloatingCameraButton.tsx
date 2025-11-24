@@ -1,11 +1,10 @@
-
 import React from "react";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { MotiView } from "moti";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/src/data/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/src/data/redux/store";
 
 // Função que registra treino, soma XP e desbloqueia conquistas
 import { registerTrainingSession } from "@/src/data/redux/frequencyThunks";
@@ -14,7 +13,16 @@ export default function FloatingCameraButton() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
+  const { weeklySessions, weeklyGoal } = useSelector(
+    (state: RootState) => state.frequency
+  );
+
   const handlePress = () => {
+    if (weeklySessions >= weeklyGoal) {
+      console.log("Você já completou sua meta semanal!");
+      return;
+    }
+
     // Marca treino, soma XP, atualiza conquistas
     dispatch(registerTrainingSession());
 
