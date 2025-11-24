@@ -86,7 +86,7 @@ export default function Home() {
           <DashboardCircle progress={Math.round(progress)} />
 
           <Text color="$white" fontSize="$xl" fontWeight="$bold" marginTop={12}>
-            2 de 3
+           {weeklySessions} de {WEEKLY_GOAL}
           </Text>
 
           <Text color="#AAAAAA" fontSize="$sm">
