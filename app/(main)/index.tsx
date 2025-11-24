@@ -25,7 +25,10 @@ const { width: SCREEN_W } = Dimensions.get("window");
 
 export default function Home() {
   const router = useRouter();
+
   const usuario = useSelector((state: RootState) => state.perfil?.usuario);
+
+  const weeklySessions = useSelector((state: RootState) => state.frequency.weeklySessions ?? 0);
 
   const avatarUri =
     usuario?.avatar || usuario?.foto || "https://i.pravatar.cc/100?img=68";
