@@ -18,15 +18,14 @@ export default function FloatingCameraButton() {
   );
 
   const handlePress = () => {
-    if (weeklySessions >= weeklyGoal) {
-      console.log("Você já completou sua meta semanal!");
-      return;
+    // Registra treino apenas se não atingiu a meta
+    if (weeklySessions < weeklyGoal) {
+      dispatch(registerTrainingSession());
+    } else {
+      console.log("Meta semanal já atingida!");
     }
 
-    // Marca treino, soma XP, atualiza conquistas
-    dispatch(registerTrainingSession());
-
-    // Vai pra câmera
+    // Sempre abre a câmera
     router.push("/Camera");
   };
 
