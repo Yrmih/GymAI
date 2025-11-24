@@ -80,6 +80,7 @@ export default function Home() {
           transition={{ duration: 500 }}
           style={{ alignItems: "center" }}
         >
+          {/* DashboardCircle já usa o weeklySessions e weeklyGoal do Redux */}
           <DashboardCircle />
 
           <Text color="$white" fontSize="$xl" fontWeight="$bold" marginTop={12}>
