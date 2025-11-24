@@ -96,6 +96,9 @@ export default function Home() {
           <Text color="$white" fontSize="$md" marginTop={8}>
             Sua Meta Semanal
           </Text>
+          <Text>
+            Streak: {streak} dias
+          </Text>
         </MotiView>
       </ScrollView>
 
