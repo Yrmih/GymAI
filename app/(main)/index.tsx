@@ -30,9 +30,14 @@ export default function Home() {
 
   const weeklySessions = useSelector((state: RootState) => state.frequency.weeklySessions ?? 0);
 
+  const streak = useSelector(( state: RootState ) => state.achievements?.streak ?? 0)
+
   const avatarUri =
     usuario?.avatar || usuario?.foto || "https://i.pravatar.cc/100?img=68";
 
+  const WEEKLY_GOAL = 3;
+
+  const progress = Math.min((weeklySessions / WEEKLY_GOAL) * 100, 100);
   return (
     <View flex={1} bg="#121212">
       {/* Cabeçalho */}
@@ -78,7 +83,7 @@ export default function Home() {
           transition={{ duration: 500 }}
           style={{ alignItems: "center" }}
         >
-          <DashboardCircle progress={66} />
+          <DashboardCircle progress={Math.round(progress)} />
 
           <Text color="$white" fontSize="$xl" fontWeight="$bold" marginTop={12}>
             2 de 3
