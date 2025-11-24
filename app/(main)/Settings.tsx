@@ -9,7 +9,7 @@ import { logoutUsuario } from "@/src/data/redux/slices/perfilSlice";
 
 import LanguageModal from "@/src/components/modal/LanguageModal";
 import LogoutModal from "@/src/components/modal/LogoutModal";
-import FrequencyModal from "@/src/components/modal/FrequencyModal"; // <- import do modal de frequência
+import FrequencyModal from "@/src/components/modal/FrequencyModal";
 
 import { router } from "expo-router";
 
@@ -17,13 +17,12 @@ export default function Settings() {
   const usuario = useSelector((state: RootState) => state.perfil.usuario);
   const dispatch = useDispatch();
 
-  // Estados internos
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
 
   const [languageModal, setLanguageModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
-  const [frequencyModal, setFrequencyModal] = useState(false); // <- novo estado para o modal de frequência
+  const [frequencyModal, setFrequencyModal] = useState(false);
 
   const handleLogout = () => {
     dispatch(logoutUsuario());
@@ -90,13 +89,11 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
 
-        {/* 📱 Preferências */}
         <View gap={20}>
           <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Preferências
           </Text>
 
-          {/* MODO ESCURO */}
           <View
             flexDirection="row"
             alignItems="center"
@@ -116,7 +113,6 @@ export default function Settings() {
             />
           </View>
 
-          {/* NOTIFICAÇÕES */}
           <View
             flexDirection="row"
             alignItems="center"
@@ -136,7 +132,6 @@ export default function Settings() {
             />
           </View>
 
-          {/* IDIOMA */}
           <TouchableOpacity onPress={() => setLanguageModal(true)}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="language-outline" size={22} />
@@ -146,7 +141,6 @@ export default function Settings() {
             </View>
           </TouchableOpacity>
 
-          {/* FREQUÊNCIA SEMANAL */}
           <TouchableOpacity onPress={() => setFrequencyModal(true)}>
             <View flexDirection="row" alignItems="center" gap={12}>
               <AppIcon name="calendar-outline" size={22} />
@@ -157,7 +151,6 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
 
-        {/* 🧾 Sistema */}
         <View gap={20}>
           <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Sistema
@@ -191,7 +184,6 @@ export default function Settings() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* ====== MODAIS INTEGRADOS ====== */}
       <LanguageModal
         visible={languageModal}
         onClose={() => setLanguageModal(false)}
