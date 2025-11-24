@@ -20,7 +20,7 @@ export default function GridSection() {
       title: "GymAI Chat",
       description: "Tire dúvidas de treino com a IA.",
       icon: "chatbubble-ellipses-outline",
-      route: "/GymAIChat",
+      route: "/ChatAI",
     },
     {
       title: "Meu Progresso",
