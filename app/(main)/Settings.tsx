@@ -55,7 +55,7 @@ export default function Settings() {
           </View>
 
           <Text color="#FFF" fontSize="$lg" fontWeight="$bold">
-            {usuario.nome || "Treinador"}
+            {usuario.nome || "Atleta"}
           </Text>
           <Text color="#9B9B9B" fontSize="$sm">
             {usuario.email || "usuario@email.com"}
@@ -67,17 +67,7 @@ export default function Settings() {
           <Text color="#5DD26C" fontSize="$md" fontWeight="$bold">
             Conta
           </Text>
-
-          {/* Editar Perfil */}
-          <TouchableOpacity>
-            <View flexDirection="row" alignItems="center" gap={12}>
-              <AppIcon name="create-outline" size={22} />
-              <Text color="#FFF" fontSize="$sm">
-                Editar Perfil
-              </Text>
-            </View>
-          </TouchableOpacity>
-
+    
           {/* Alterar Senha */}
           <TouchableOpacity onPress={() => router.push("/Change-password")}>
             <View flexDirection="row" alignItems="center" gap={12}>
