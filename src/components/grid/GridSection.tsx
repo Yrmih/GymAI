@@ -14,7 +14,7 @@ export default function GridSection() {
       title: "Minha Coleção",
       description: "Seus exercícios salvos e favoritos.",
       icon: "heart-outline",
-      route: "/MyCollection",
+      route: "/Exercicies",
     },
     {
       title: "GymAI Chat",
